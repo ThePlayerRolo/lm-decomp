@@ -29,7 +29,8 @@ from tools.project import (
 # Game versions
 DEFAULT_VERSION = 0
 VERSIONS = [
-    "GAMEID",  # 0
+    "GLMJ01",  # Japan
+    "GLME01",  # USA (Rev 0)
 ]
 
 parser = argparse.ArgumentParser()
@@ -210,6 +211,8 @@ cflags_base = [
     "-str reuse",
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
     "-i include",
+    "-i libs",
+    "-i libs/MSL/MSL_C/MSL_Common/include",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
@@ -233,9 +236,10 @@ elif args.warn == "error":
 # Metrowerks library flags
 cflags_runtime = [
     *cflags_base,
+    "-i libs/Runtime.PPCEABI.H/include",
     "-use_lmw_stmw on",
     "-str reuse,pool,readonly",
-    "-gccinc",
+    # "-gccinc",
     "-common off",
     "-inline auto",
 ]
@@ -247,7 +251,7 @@ cflags_rel = [
     "-sdata2 0",
 ]
 
-config.linker_version = "GC/1.3.2"
+config.linker_version = "GC/1.0"
 
 
 # Helper function for Dolphin libraries
@@ -290,6 +294,7 @@ config.libs = [
         "mw_version": config.linker_version,
         "cflags": cflags_runtime,
         "progress_category": "sdk",  # str | List[str]
+        "src_dir": "libs/",
         "objects": [
             Object(NonMatching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
             Object(NonMatching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
