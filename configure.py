@@ -306,6 +306,9 @@ config.libs = [
     DolphinLib("base", [
         Object(Matching, "base/PPCArch.c")
     ]),
+    DolphinLib("ai", [
+        Object(Matching, "ai/ai.c")
+    ]),
 ]
 
 
