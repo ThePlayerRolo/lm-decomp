@@ -279,6 +279,18 @@ def Rel(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     }
 
 
+# Helper function for Runtime
+def Runtime(objects: List[Object]) -> Dict[str, Any]:
+    return {
+        "lib": "Runtime.PPCEABI.H",
+        "mw_version": config.linker_version,
+        "cflags": cflags_runtime,
+        "progress_category": "sdk",
+        "src_dir": "libs/",
+        "objects": objects,
+    }
+
+
 Matching = True                   # Object matches and should be linked
 NonMatching = False               # Object does not match and should not be linked
 Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
@@ -292,22 +304,22 @@ def MatchingFor(*versions):
 config.warn_missing_config = True
 config.warn_missing_source = False
 config.libs = [
-    {
-        "lib": "Runtime.PPCEABI.H",
-        "mw_version": config.linker_version,
-        "cflags": cflags_runtime,
-        "progress_category": "sdk",  # str | List[str]
-        "src_dir": "libs/",
-        "objects": [
-            Object(Matching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
-            Object(Matching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
-        ],
-    },
     DolphinLib("base", [
         Object(Matching, "base/PPCArch.c")
     ]),
+    DolphinLib("os", [
+        Object(Matching, "os/OSAlarm.c"),
+        Object(Matching, "os/OSArena.c")
+    ]),
     DolphinLib("ai", [
         Object(Matching, "ai/ai.c")
+    ]),
+    Runtime([
+        Object(Matching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
+        Object(Matching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
+    ]),
+    DolphinLib("amcstubs", [
+        Object(Matching, "amcstubs/AmcExi2Stubs.c")
     ]),
 ]
 
