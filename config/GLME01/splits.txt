@@ -28,6 +28,20 @@ os/OSAudioSystem.c:
 	.text       start:0x801DAF70 end:0x801DB1DC
 	.data       start:0x80394A40 end:0x80394AC0
 
+os/OSCache.c:
+	.text       start:0x801DB1DC end:0x801DB7BC
+	.data       start:0x80394AC0 end:0x80394CF0
+
+os/OSContext.c:
+	.text       start:0x801DB7BC end:0x801DC150
+	.data       start:0x80394CF0 end:0x80394EC8
+
+os/OSError.c:
+	.text       start:0x801DC150 end:0x801DC48C
+	.data       start:0x80394EC8 end:0x80395100
+	.bss        start:0x804CB148 end:0x804CB188
+	.sdata      start:0x804D7EB0 end:0x804D7EB8
+
 ai/ai.c:
 	.text       start:0x801EABD4 end:0x801EB4DC
 	.sbss       start:0x804D9748 end:0x804D9788
