@@ -206,7 +206,7 @@ cflags_base = [
     '-pragma "warn_notinlined off"',
     "-maxerrors 1",
     "-nosyspath",
-    "-RTTI off",
+    "-RTTI on",     # Only Gamecube/Wii game to actually use this
     "-fp_contract on",
     "-str reuse",
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
@@ -314,6 +314,8 @@ config.libs = [
         Object(Matching, "os/OSCache.c"),
         Object(Matching, "os/OSContext.c"),
         Object(Matching, "os/OSError.c"),
+        Object(Matching, "os/OSExi.c"),
+        Object(Matching, "os/OSInterrupt.c"),
     ]),
     DolphinLib("ai", [
         Object(Matching, "ai/ai.c")
