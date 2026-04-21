@@ -63,6 +63,9 @@ os/OSInterrupt.c:
 os/OSLink.c:
 	.text       start:0x801DE330 end:0x801DE348
 
+os/OSMessage.c:
+	.text       start:0x801DE348 end:0x801DE54C
+
 ai/ai.c:
 	.text       start:0x801EABD4 end:0x801EB4DC
 	.sbss       start:0x804D9748 end:0x804D9788
