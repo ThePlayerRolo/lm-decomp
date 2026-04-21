@@ -317,6 +317,7 @@ config.libs = [
         Object(NonMatching, "os/OSExi.c"),
         Object(Matching, "os/OSFont.c"),
         Object(Matching, "os/OSInterrupt.c"),
+        Object(Matching, "os/OSLink.c"),
     ]),
     DolphinLib("ai", [
         Object(Matching, "ai/ai.c")
