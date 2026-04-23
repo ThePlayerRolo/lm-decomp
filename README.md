@@ -1,5 +1,5 @@
 Luigi's Mansion
-[![Build Status]][actions] [![Code Progress]][progress] [![Data Progress]][progress] [![Code Progress_JPN]][progress] [![Data Progress_JPN]][progress]
+[![Build Status]][actions] [![Code Progress_JPN]][progress] [![Data Progress_JPN]][progress] [![Code Progress]][progress] [![Data Progress]][progress]
 =============
 
 <!--
@@ -11,10 +11,10 @@ Replace with your repository's URL.
 decomp.dev progress badges
 See https://decomp.dev/api for an API overview.
 -->
-[Code Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=code&label=USA Code
-[Data Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=USA Data
-[Code Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLMJ01.svg?mode=shield&measure=code&label=JPN Code
-[Data Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=JPN Data
+[Code Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=code&label=USA%20Code
+[Data Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=USA%20Data
+[Code Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLMJ01.svg?mode=shield&measure=code&label=JPN%20Code
+[Data Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=JPN%20Data
 [progress]: https://decomp.dev/theplayerrolo/lm-decomp
 
 A work-in-progress decompilation of Luigi's Mansion.
