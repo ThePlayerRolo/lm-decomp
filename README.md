@@ -11,10 +11,10 @@ Replace with your repository's URL.
 decomp.dev progress badges
 See https://decomp.dev/api for an API overview.
 -->
-[Code Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=code&label=Code
-[Data Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=Data
-[Code Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLMJ01.svg?mode=shield&measure=code&label=Code
-[Data Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=Data
+[Code Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=code&label=USA Code
+[Data Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=USA Data
+[Code Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLMJ01.svg?mode=shield&measure=code&label=JPN Code
+[Data Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=JPN Data
 [progress]: https://decomp.dev/theplayerrolo/lm-decomp
 
 A work-in-progress decompilation of Luigi's Mansion.
