@@ -323,6 +323,7 @@ config.libs = [
         Object(Matching, "os/OSMutex.c"),
         Object(Matching, "os/OSSerial.c"),
         Object(Matching, "os/OSSync.c"),
+        Object(Matching, "os/OSThread.c"),
         Object(Matching, "os/OSTime.c"),
 
     ]),
