@@ -29,8 +29,8 @@ from tools.project import (
 # Game versions
 DEFAULT_VERSION = 0
 VERSIONS = [
-    "GLMJ01",  # Japan
     "GLME01",  # USA (Rev 0)
+    "GLMJ01",  # Japan
 ]
 
 parser = argparse.ArgumentParser()

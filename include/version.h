@@ -3,7 +3,7 @@
 
 #include <dolphin/types.h>
 
-#define VERSION_JPN 0
-#define VERSION_USA 1
+#define VERSION_USA 0
+#define VERSION_JPN 1
 
 #endif

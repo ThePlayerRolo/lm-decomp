@@ -1,5 +1,5 @@
 Luigi's Mansion
-[![Build Status]][actions] [![Code Progress_JPN]][progress] [![Data Progress_JPN]][progress] [![Code Progress]][progress] [![Data Progress]][progress]
+[![Build Status]][actions] [![Code Progress_USA]][progress] [![Data Progress_USA]][progress][![Code Progress_JPN]][progress] [![Data Progress_JPN]][progress]
 =============
 
 <!--
@@ -11,8 +11,8 @@ Replace with your repository's URL.
 decomp.dev progress badges
 See https://decomp.dev/api for an API overview.
 -->
-[Code Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=code&label=USA%20Code
-[Data Progress]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=USA%20Data
+[Code Progress_USA]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=code&label=USA%20Code
+[Data Progress_USA]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=USA%20Data
 [Code Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLMJ01.svg?mode=shield&measure=code&label=JPN%20Code
 [Data Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=JPN%20Data
 [progress]: https://decomp.dev/theplayerrolo/lm-decomp
@@ -23,8 +23,8 @@ This repository does **not** contain any game assets or assembly whatsoever. An 
 
 Supported versions:
 
-- `GLMJ01`: Rev 0 (JPN)
 - `GLME01`: Rev 0 (USA)
+- `GLMJ01`: Rev 0 (JPN)
 
 Dependencies
 ============
