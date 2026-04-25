@@ -322,6 +322,7 @@ config.libs = [
         Object(Matching, "os/OSMessage.c"),
         Object(Matching, "os/OSMutex.c"),
         Object(Matching, "os/OSReboot.c"),
+        Object(Matching, "os/OSReset.c"),
         Object(Matching, "os/OSSerial.c"),
         Object(Matching, "os/OSSync.c"),
         Object(Matching, "os/OSThread.c"),

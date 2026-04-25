@@ -60,7 +60,7 @@
 static struct OSResetFunctionQueue ResetFunctionQueue;
 
 static int CallResetFunctions(int final);
-static asm void Reset(unsigned long resetCode);
+static asm void Reset(u32 resetCode);
 
 void OSRegisterResetFunction(struct OSResetFunctionInfo * info) {
     ASSERTLINE(0x76, info->func);
@@ -72,7 +72,7 @@ void OSUnregisterResetFunction(struct OSResetFunctionInfo * info) {
     DEQUEUE_INFO(info, &ResetFunctionQueue);
 }
 
-static int CallResetFunctions(int final) {
+static BOOL CallResetFunctions(int final) {
     struct OSResetFunctionInfo * info;
     int err = 0;
 
@@ -81,12 +81,12 @@ static int CallResetFunctions(int final) {
     }
     err |= !__OSSyncSram();
     if (err) {
-        return 0;
+        return FALSE;
     }
-    return 1;
+    return TRUE;
 }
 
-static asm void Reset(unsigned long resetCode) {
+static asm void Reset(u32 resetCode) {
     nofralloc
     b L_000001BC
 L_000001A0:
@@ -127,16 +127,42 @@ L_00000208:
     b L_000001A0
 }
 
-void OSResetSystem(int reset, unsigned long resetCode, int forceMenu) {
+void __OSDoHotReset(s32 arg0)
+{
+	OSDisableInterrupts();
+	__VIRegs[1] = 0;
+	ICFlashInvalidate();
+	Reset(arg0 * 8);
+}
+
+inline static void KillThreads(void)
+{
+	OSThread* thread;
+	OSThread* next;
+
+	for (thread = __OSActiveThreadQueue.head; thread; thread = next) {
+		next = thread->linkActive.next;
+		switch (thread->state) {
+		case 1:
+		case 4:
+			OSCancelThread(thread);
+			continue;
+		default:
+			continue;
+		}
+	}
+}
+
+void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
     int rc;
     int enabled;
     struct OSSram * sram;
 
     OSDisableScheduler();
     __OSStopAudioSystem();
-    do {} while (CallResetFunctions(0) == 0);
+    do {} while (CallResetFunctions(0) == FALSE);
 
-    if ((reset != 0 && (forceMenu != 0))) {
+    if ((reset != 0 && (forceMenu != FALSE))) {
         sram = __OSLockSram();
         sram->flags |= 0x40;
         __OSUnlockSram(1);
@@ -145,14 +171,20 @@ void OSResetSystem(int reset, unsigned long resetCode, int forceMenu) {
     enabled = OSDisableInterrupts();
     rc = CallResetFunctions(1);
     ASSERTLINE(0x117, rc);
-    if (reset != 0) {
-        ICFlashInvalidate();
-        Reset(resetCode * 8);
-    }
+    if (reset == 1) {
+		OSDisableInterrupts();
+		__VIRegs[1] = 0;
+		ICFlashInvalidate();
+		Reset(resetCode * 8);
+    } else {
+		KillThreads();
+		OSEnableScheduler();
+		__OSReboot(resetCode, forceMenu);
+	}
     OSRestoreInterrupts(enabled);
     OSEnableScheduler();
 }
 
-unsigned long OSGetResetCode() {
+u32 OSGetResetCode() {
     return (__PIRegs[9] & 0xFFFFFFF8) / 8;
 }

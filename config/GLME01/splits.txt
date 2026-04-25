@@ -74,6 +74,10 @@ os/OSReboot.c:
 	.bss        start:0x804CB240 end:0x804CB260
 	.sbss       start:0x804D95C8 end:0x804D95D0
 
+os/OSReset.c:
+	.text       start:0x801DE994 end:0x801DEC88
+	.sbss       start:0x804D95D0 end:0x804D95D8
+
 os/OSSerial.c:
 	.text       start:0x801DF87C end:0x801E01FC
 	.data       start:0x80395198 end:0x803951B0

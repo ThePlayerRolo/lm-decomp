@@ -46,6 +46,9 @@ void __OSUnlockAllMutex(struct OSThread *thread);
 int __OSCheckDeadLock(struct OSThread *thread);
 int __OSCheckMutexes(struct OSThread *thread);
 
+//OSReboot.c
+void __OSReboot(u32, u32);
+
 //OSReset.c
 void __OSDoHotReset(s32);
 

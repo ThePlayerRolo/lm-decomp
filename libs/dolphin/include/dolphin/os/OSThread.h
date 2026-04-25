@@ -78,6 +78,7 @@ s32 OSResumeThread(OSThread* thread);
 OSThread* OSGetCurrentThread(void);
 s32 OSEnableScheduler(void);
 s32 OSDisableScheduler(void);
+void OSCancelThread(OSThread* thread);
 
 #define IsSuspended(suspend) (suspend > 0)
 
