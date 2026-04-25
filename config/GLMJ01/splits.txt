@@ -82,6 +82,10 @@ os/OSResetSW.c:
 	.text       start:0x801D9728 end:0x801D9A10
 	.sbss       start:0x804A20D8 end:0x804A20F8
 
+os/OSRtc.c:
+	.text       start:0x801D9A10 end:0x801DA31C
+	.bss        start:0x80494A00 end:0x80494A58
+
 os/OSSerial.c:
 	.text       start:0x801DA31C end:0x801DAC9C
 	.data       start:0x8038A0F8 end:0x8038A110
