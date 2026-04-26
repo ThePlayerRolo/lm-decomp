@@ -108,6 +108,10 @@ os/OSTime.c:
 	.text       start:0x801DBE4C end:0x801DC270
 	.data       start:0x8038A110 end:0x8038A170
 
+os/OSUartExi.c:
+	.text       start:0x801DC270 end:0x801DC4C0
+	.sbss       start:0x804A2108 end:0x804A2110
+
 ai/ai.c:
 	.text       start:0x801E5674 end:0x801E5F7C
 	.sbss       start:0x804A2248 end:0x804A2288

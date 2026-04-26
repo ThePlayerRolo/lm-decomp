@@ -330,6 +330,7 @@ config.libs = [
         Object(Matching, "os/OSSync.c"),
         Object(Matching, "os/OSThread.c"),
         Object(Matching, "os/OSTime.c"),
+        Object(Matching, "os/OSUartExi.c"),
     ]),
     DolphinLib("ai", [
         Object(Matching, "ai/ai.c")
