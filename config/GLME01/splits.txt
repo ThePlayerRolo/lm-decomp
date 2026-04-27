@@ -124,6 +124,12 @@ db/db.c:
 	.data       start:0x80395210 end:0x80395228
 	.sbss       start:0x804D9610 end:0x804D9618
 
+vi/vi.c:
+	.text       start:0x801E6EE8 end:0x801E8724
+	.data       start:0x803957A8 end:0x80395910
+	.bss        start:0x804CC008 end:0x804CC150
+	.sbss       start:0x804D96D8 end:0x804D9718
+
 pad/Padclamp.c:
 	.text       start:0x801E8724 end:0x801E895C
 	.sdata      start:0x804D7EF0 end:0x804D7EF8
