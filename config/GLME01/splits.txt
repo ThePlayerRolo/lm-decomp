@@ -112,6 +112,13 @@ os/OSUartExi.c:
 	.text       start:0x801E17D0 end:0x801E1A20
 	.sbss       start:0x804D9608 end:0x804D9610
 
+os/__start.c:
+	.init       start:0x80003100 end:0x800032CC
+
+os/__ppc_eabi_init.c:
+	.init       start:0x800032CC end:0x80003320
+	.text       start:0x801E1A20 end:0x801E1AB4
+
 ai/ai.c:
 	.text       start:0x801EABD4 end:0x801EB4DC
 	.sbss       start:0x804D9748 end:0x804D9788

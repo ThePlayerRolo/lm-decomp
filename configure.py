@@ -331,6 +331,8 @@ config.libs = [
         Object(Matching, "os/OSThread.c"),
         Object(Matching, "os/OSTime.c"),
         Object(Matching, "os/OSUartExi.c"),
+        Object(Matching, "os/__start.c"),
+        Object(Matching, "os/__ppc_eabi_init.c"),
     ]),
     DolphinLib("ai", [
         Object(Matching, "ai/ai.c")
