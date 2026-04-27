@@ -337,6 +337,10 @@ config.libs = [
     DolphinLib("db", [
         Object(Matching, "db/db.c")
     ]),
+    DolphinLib("pad", [
+        Object(Matching, "pad/Padclamp.c"),
+        Object(Matching, "pad/Pad.c")
+    ]),
     DolphinLib("ai", [
         Object(Matching, "ai/ai.c")
     ]),

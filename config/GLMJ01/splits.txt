@@ -124,6 +124,17 @@ db/db.c:
 	.data       start:0x8038A170 end:0x8038A188
 	.sbss       start:0x804A2110 end:0x804A2118
 
+pad/Padclamp.c:
+	.text       start:0x801E31C4 end:0x801E33FC
+	.sdata      start:0x804A0A60 end:0x804A0A68
+
+pad/Pad.c:
+	.text       start:0x801E33FC end:0x801E5674
+	.data       start:0x8038A870 end:0x8038A8D8
+	.bss        start:0x804958F0 end:0x80495960
+	.sdata      start:0x804A0A68 end:0x804A0A90
+	.sbss       start:0x804A2218 end:0x804A2248
+
 ai/ai.c:
 	.text       start:0x801E5674 end:0x801E5F7C
 	.sbss       start:0x804A2248 end:0x804A2288

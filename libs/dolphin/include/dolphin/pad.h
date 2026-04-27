@@ -39,8 +39,7 @@
 
 #define RES_WIRELESS_LITE 0x40000
 
-typedef struct PADStatus
-{
+typedef struct PADStatus {
     /*0x00*/ u16 button;
     /*0x02*/ s8 stickX;
     /*0x03*/ s8 stickY;
@@ -54,21 +53,21 @@ typedef struct PADStatus
 } PADStatus;
 
 // PAD.c
-int PADReset(unsigned long mask);
+int PADReset(u32 mask);
 BOOL PADRecalibrate(u32 mask);
 BOOL PADInit();
-void PADRead(struct PADStatus * status);
-void PADSetSamplingRate(unsigned long msec);
-void __PADTestSamplingRate(unsigned long tvmode);
+u32 PADRead(PADStatus* status);
+void PADSetSamplingRate(u32 msec);
+void __PADTestSamplingRate(u32 tvmode);
 void PADControlAllMotors(const u32 *commandArray);
 void PADControlMotor(s32 chan, u32 command);
 void PADSetSpec(u32 spec);
-unsigned long PADGetSpec();
-int PADGetType(long chan, unsigned long * type);
+u32 PADGetSpec();
+int PADGetType(s32 chan, u32  type);
 BOOL PADSync(void);
 void PADSetAnalogMode(u32 mode);
 
 // Padclamp.c
-void PADClamp(PADStatus * status);
+void PADClamp(PADStatus* status);
 
 #endif
