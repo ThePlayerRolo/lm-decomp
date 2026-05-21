@@ -3,6 +3,7 @@
 
 #include <dolphin/types.h>
 #include <dolphin/os/OSException.h>
+#include <dolphin/os/OSTime.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -95,7 +96,7 @@ typedef void (*__OSInterruptHandler)(__OSInterrupt interrupt, OSContext* context
 
 extern volatile __OSInterrupt __OSLastInterrupt;
 extern volatile u32 __OSLastInterruptSrr0;
-extern volatile OSTime __OSLastInterruptTime;
+extern volatile s64 __OSLastInterruptTime;
 
 __OSInterruptHandler __OSSetInterruptHandler(__OSInterrupt interrupt, __OSInterruptHandler handler);
 

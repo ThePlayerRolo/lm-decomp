@@ -215,6 +215,7 @@ cflags_base = [
     "-i libs/PowerPC_EABI_Support/Runtime.PPCEABI.H/include",
     "-i libs/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/include",
     "-i libs/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/include",
+    "-i libs/TRK_MINNOW_DOLPHIN/include",
     "-i libs/dolphin/include",
     "-i libs/hvqm4/include",
     f"-i build/{config.version}/include",
@@ -301,6 +302,15 @@ def MetroworksLib(lib_name : str, objects: List[Object]) -> Dict[str, Any]:
         "objects": objects,
     }
 
+def Trk_Minnow_Dolphin(objects: List[Object]) -> Dict[str, Any]:
+    return {
+        "lib": "TRK_MINNOW_DOLPHIN",
+        "mw_version": "GC/1.1p1",
+        "cflags": [*cflags_base, "-O4,p", "-pool off", "-str readonly", "-enum min", "-sdatathreshold 0", "-lang=c"],
+        "progress_category": "sdk",
+        "src_dir": "libs/",
+        "objects": objects,
+    }
 
 def HVQM4(objects: List[Object]) -> Dict[str, Any]:
     return {
@@ -474,6 +484,30 @@ config.libs = [
         Object(Matching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__init_cpp_exceptions.cpp"),
         Object(Matching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__va_arg.c"),
         Object(Matching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__mem.c"),
+    ]),
+
+    Trk_Minnow_Dolphin([
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/mainloop.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/nubevent.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/nubinit.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/msg.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/msgbuf.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/serpoll.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/usr_put.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/dispatch.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/msghndlr.c"),
+        Object(NonMatching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/support.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/mutex_TRK.c"),
+        Object(NonMatching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/notify.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/__exception.s"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/main_TRK.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c"),
+        Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/targcont.c"),
     ]),
 
     DolphinLib("amcstubs", [
