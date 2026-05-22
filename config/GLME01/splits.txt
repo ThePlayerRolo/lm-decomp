@@ -25,6 +25,12 @@ Koga/Message.cpp:
 	.data       start:0x803640D8 end:0x80364180
 	.sdata      start:0x804D3F78 end:0x804D3F90
 
+JSystem/JKernel/JKRHeap.cpp:
+	.text       start:0x801CDFBC end:0x801CE9DC
+	.data       start:0x80393830 end:0x80393898
+	.sdata      start:0x804D7C88 end:0x804D7CA8
+	.sbss       start:0x804D94F0 end:0x804D9500
+
 base/PPCArch.c:
 	.text       start:0x801D9F7C end:0x801D9FE0
 
@@ -355,6 +361,11 @@ PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/abort_exit.c:
 	.text       start:0x802026D8 end:0x80202898
 	.bss        start:0x804CDB58 end:0x804CDD58
 	.sbss       start:0x804D9830 end:0x804D9848
+
+PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/ansi_fp.c:
+	.text       start:0x80202898 end:0x80202C4C
+	.rodata     start:0x802177D8 end:0x80217860
+	.sdata2     start:0x804DD8A0 end:0x804DD8C8
 
 PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/arith.c:
 	.text       start:0x80202C4C end:0x80202C5C

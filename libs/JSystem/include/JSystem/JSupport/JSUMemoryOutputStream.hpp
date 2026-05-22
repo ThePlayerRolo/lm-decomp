@@ -1,0 +1,25 @@
+#ifndef JSU_MEMORY_OUTPUT_STREAM_HPP
+#define JSU_MEMORY_OUTPUT_STREAM_HPP
+
+#include <JSystem/JSupport/JSURandomOutputStream.hpp>
+
+class JSUMemoryOutputStream : public JSURandomOutputStream {
+public:
+	JSUMemoryOutputStream(void* buffer, s32 size) { setBuffer(buffer, size); }
+
+	JSUMemoryOutputStream() { setBuffer(nullptr, 0); }
+
+	virtual int writeData(const void* buf, s32 count);
+	virtual int seekPos(s32 offset, JSUStreamSeekFrom from);
+	virtual int getLength() const { return mLength; }
+	virtual int getPosition() const { return mPosition; }
+
+	void setBuffer(void* buffer, s32 size);
+
+public:
+	void* mBuffer;
+	s32 mLength;
+	s32 mPosition;
+};
+
+#endif

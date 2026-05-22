@@ -12,3 +12,6 @@ extract:
     - symbol: staticdata_usa_arc
       binary: staticdata_usa.arc
       header: staticdata_usa_arc.inc
+    - symbol: lbl_80306560
+      binary: lbl_80306560.bfn
+      header: lbl_80306560.inc

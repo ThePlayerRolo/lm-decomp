@@ -216,8 +216,10 @@ cflags_base = [
     "-i libs/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/include",
     "-i libs/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/include",
     "-i libs/TRK_MINNOW_DOLPHIN/include",
+    "-i libs/PowerPC_EABI_Support/MSL/MSL_C++/MSL_Common/include",
     "-i libs/dolphin/include",
     "-i libs/hvqm4/include",
+    "-i libs/JSystem/include",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION={version_num}",
@@ -245,7 +247,7 @@ cflags_metrowerks = [
     "-str reuse,pool,readonly",
     # "-gccinc",
     "-common off",
-    "-inline deferred",
+    "-inline deferred,auto",
 ]
 
 cflags_game = [
@@ -253,6 +255,13 @@ cflags_game = [
     "-RTTI on",
     "-lang c++"
 ]
+
+cflags_jsystem = [
+    *cflags_base,
+    "-RTTI on",
+    "-lang c++"
+]
+
 # REL flags
 cflags_rel = [
     *cflags_base,
@@ -323,6 +332,17 @@ def HVQM4(objects: List[Object]) -> Dict[str, Any]:
     }
 
 
+def JSystem(objects: List[Object]) -> Dict[str, Any]:
+    return {
+        "lib": "JSystem",
+        "mw_version": "GC/1.2.5",
+        "cflags": cflags_jsystem,
+        "progress_category": "jsystem",
+        "src_dir": "libs/jsystem/src/",
+        "objects": objects,
+    }
+
+
 def Game(objects: List[Object]) -> Dict[str, Any]:
     return {
         "lib": "Game",
@@ -347,6 +367,11 @@ def MatchingFor(*versions):
 config.warn_missing_config = True
 config.warn_missing_source = False
 config.libs = [
+
+    JSystem([
+        Object(MatchingFor("GLME01"), "JSystem/JKernel/JKRHeap.cpp"),
+    ]),
+
     DolphinLib("base", [
         Object(Matching, "base/PPCArch.c")
     ]),
@@ -460,6 +485,7 @@ config.libs = [
 
     MetroworksLib("MSL_C", [
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/abort_exit.c"),
+        Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/ansi_fp.c", extra_cflags=["-sym on"]),
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/arith.c"),
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/buffer_io.c"),
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/ctype.c"),
@@ -550,6 +576,7 @@ config.progress_categories = [
     ProgressCategory("sdk", "SDK Code"),
     ProgressCategory("msl", "Metroworks Library Code"),
     ProgressCategory("hvqm4", "HVQM4 Library Code"),
+    ProgressCategory("jsystem", "JSystem Code"),
 ]
 config.progress_each_module = args.verbose
 # Optional extra arguments to `objdiff-cli report generate`

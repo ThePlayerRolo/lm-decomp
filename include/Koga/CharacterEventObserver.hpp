@@ -82,7 +82,9 @@ namespace Koga {
         /* Called when the player presses the A button on the actor; treasure chests only? */
         /* 0x44 */ virtual bool onPlayerTapped(CharacterEvent* msg);
 
-        /* TODO: What does this do? */
+        /* TODO: What does this do?
+            It seems to be related to loading zones/areas, but theres already PlayerLeft and Entered room?
+        */
         /* 0x48 */ virtual bool vt_48(CharacterEvent* msg);
     };
 }  // namespace Koga

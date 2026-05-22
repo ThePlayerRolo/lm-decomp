@@ -9,3 +9,7 @@ extract:
     - symbol: staticdata_arc
       binary: staticdata.arc
       header: staticdata_arc.inc
+
+    - symbol: lbl_802FB760
+      binary: lbl_802FB760.bfn
+      header: lbl_802FB760.inc

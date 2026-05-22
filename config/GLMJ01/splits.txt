@@ -344,6 +344,11 @@ PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/abort_exit.c:
 	.bss        start:0x804968B8 end:0x80496AB8
 	.sbss       start:0x804A2328 end:0x804A2340
 
+PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/ansi_fp.c:
+	.text       start:0x801F7928 end:0x801F7CDC
+	.rodata     start:0x8020CAA8 end:0x8020CB30
+	.sdata2     start:0x804A6350 end:0x804A6378
+
 PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/arith.c:
 	.text       start:0x801F7CDC end:0x801F7CEC
 
