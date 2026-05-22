@@ -475,16 +475,17 @@ TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/notify.c:
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c:
 	.text       start:0x80208F98 end:0x80208FD0
 
+PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__mem.c:
+	.init       start:0x80003320 end:0x80003464
+
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/mem_TRK.c:
+	.init       start:0x80003464 end:0x800034B8
 	.text       start:0x80208FD0 end:0x80209094
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c:
 	.text       start:0x80209094 end:0x8020A670
 	.data       start:0x80396848 end:0x80396878
 	.bss        start:0x804CF770 end:0x804CFCF0
-
-PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__mem.c:
-	.init       start:0x80003320 end:0x80003464
 
 TRK_MINNOW_DOLPHIN/src/__exception.s: comment:0
 	.init       start:0x800034B8 end:0x800053EC
@@ -503,6 +504,7 @@ TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/main_TRK.c:
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c:
 	.text       start:0x8020AC70 end:0x8020AFC8
+	.data       start:0x803968B8 end:0x803968D4
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/targcont.c:
 	.text       start:0x8020AFC8 end:0x8020AFFC
