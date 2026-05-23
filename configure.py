@@ -528,7 +528,7 @@ config.libs = [
         Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c"),
         Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
         Object(NonMatching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c"),
-        Object(Matching, "TRK_MINNOW_DOLPHIN/src/__exception.s"),
+        Object(NonMatching, "TRK_MINNOW_DOLPHIN/src/__exception.s"),
         Object(NonMatching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c"),
         Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
         Object(Matching, "TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/main_TRK.c"),
