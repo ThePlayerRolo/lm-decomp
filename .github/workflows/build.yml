@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         # Add game versions here
-        version: [GLME01, GLMJ01]
+        version: [GLME01, GLMJ01, GLMP01_00, GLMP01_01]
 
     steps:
     # Checkout the repository
