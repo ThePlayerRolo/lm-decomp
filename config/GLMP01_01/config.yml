@@ -1,0 +1,11 @@
+object_base: orig/GLMP01_01
+object: sys/main.dol
+hash: c9099665a33be49b16caa5c216c7e1094276c032
+symbols: config/GLMP01_01/symbols.txt
+splits: config/GLMP01_01/splits.txt
+mw_comment_version: 8
+
+extract:
+    - symbol: staticdata_pal_01_arc
+      binary: staticdata_pal_01.arc
+      header: staticdata_pal_01_arc.inc

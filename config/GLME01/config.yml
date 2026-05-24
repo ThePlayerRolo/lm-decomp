@@ -1,17 +1,15 @@
-# See config.example.yml for documentation.
 object_base: orig/GLME01
 object: sys/main.dol
 hash: 77d49225e7d28b9777916cdbe5809345c570ecbc
 symbols: config/GLME01/symbols.txt
 splits: config/GLME01/splits.txt
-# Change this to match the linker version.
-# See config.example.yml for a list.
 mw_comment_version: 8
 
 extract:
     - symbol: staticdata_usa_arc
       binary: staticdata_usa.arc
       header: staticdata_usa_arc.inc
+
     - symbol: lbl_80306560
       binary: lbl_80306560.bfn
       header: lbl_80306560.inc

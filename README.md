@@ -1,20 +1,18 @@
 Luigi's Mansion
-[![Build Status]][actions] [![Code Progress_USA]][progress] [![Data Progress_USA]][progress][![Code Progress_JPN]][progress] [![Data Progress_JPN]][progress]
+[![Build Status]][actions] [![Code Progress_USA]][progress] [![Data Progress_USA]][progress][![Code Progress_JPN]][progress] [![Data Progress_JPN]][progress] [![Code Progress_PAL_00]][progress] [![Data Progress_PAL_00]][progress] [![Code Progress_PAL_01]][progress] [![Data Progress_PAL_01]][progress]
 =============
 
-<!--
-Replace with your repository's URL.
--->
 [Build Status]: https://github.com/theplayerrolo/lm-decomp/actions/workflows/build.yml/badge.svg
 [actions]: https://github.com/theplayerrolo/lm-decomp/actions/workflows/build.yml
-<!--
-decomp.dev progress badges
-See https://decomp.dev/api for an API overview.
--->
+
 [Code Progress_USA]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=code&label=USA%20Code
 [Data Progress_USA]: https://decomp.dev/theplayerrolo/lm-decomp/GLME01.svg?mode=shield&measure=data&label=USA%20Data
 [Code Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLMJ01.svg?mode=shield&measure=code&label=JPN%20Code
 [Data Progress_JPN]: https://decomp.dev/theplayerrolo/lm-decomp/GLMJ01.svg?mode=shield&measure=data&label=JPN%20Data
+[Code Progress_PAL_00]: https://decomp.dev/theplayerrolo/lm-decomp/GLMP01_00.svg?mode=shield&measure=data&label=PAL%20Rev%200%20Code
+[Data Progress_PAL_00]: https://decomp.dev/theplayerrolo/lm-decomp/GLMP01_00.svg?mode=shield&measure=data&label=PAL%20Rev%200%20Data
+[Code Progress_PAL_01]: https://decomp.dev/theplayerrolo/lm-decomp/GLMP01_01.svg?mode=shield&measure=data&label=PAL%20Rev%201%20Code
+[Data Progress_PAL_01]: https://decomp.dev/theplayerrolo/lm-decomp/GLMP01_01.svg?mode=shield&measure=data&label=PAL%20Rev%201%20Data
 [progress]: https://decomp.dev/theplayerrolo/lm-decomp
 
 A work-in-progress decompilation of Luigi's Mansion.
@@ -28,6 +26,8 @@ Supported versions:
 
 - `GLME01`: Rev 0 (USA)
 - `GLMJ01`: Rev 0 (JPN)
+- `GLMP01_00`: Rev 0 (PAL)
+- `GLMP01_01`: Rev 1 (PAL)
 
 Dependencies
 ============
@@ -35,7 +35,7 @@ Dependencies
 Windows
 --------
 
-On Windows, it's **highly recommended** to use native tooling. WSL or msys2 are **not** required.  
+On Windows, it's **highly recommended** to use native tooling. WSL or msys2 are **not** required.
 When running under WSL, [objdiff](#diffing) is unable to get filesystem notifications for automatic rebuilds.
 
 - Install [Python](https://www.python.org/downloads/) and add it to `%PATH%`.

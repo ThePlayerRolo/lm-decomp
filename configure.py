@@ -31,6 +31,8 @@ DEFAULT_VERSION = 0
 VERSIONS = [
     "GLME01",  # USA (Rev 0)
     "GLMJ01",  # Japan
+    "GLMP01_00", # PAL (Rev 0)
+    "GLMP01_01", # PAL (Rev 1)
 ]
 
 parser = argparse.ArgumentParser()
