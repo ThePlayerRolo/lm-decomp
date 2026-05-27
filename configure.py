@@ -413,6 +413,7 @@ config.libs = [
         Object(NonMatching, "JSystem/JSupport/JSUList.cpp"),
 
         Object(Matching, "JSystem/JUtility/JUTPalette.cpp"),
+        Object(NonMatching, "JSystem/JUtility/JUTDirectPrint.cpp"),
     ]),
 
     DolphinLib("base", [

@@ -3,6 +3,8 @@
 
 #include <dolphin/macros.h>
 
+#define ARRAY_COUNT(arr) (int)(sizeof(arr) / sizeof(arr[0]))
+
 #define dummy_float_data() \
     static f32 dummy_float_data[6] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
 
