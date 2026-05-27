@@ -1,6 +1,7 @@
 #ifndef JKR_ARAM_HPP
 #define JKR_ARAM_HPP
 
+#include "JSystem/JKernel/JKRAramPiece.hpp"
 #include <JSystem/JKernel/JKRAramHeap.hpp>
 #include <JSystem/JKernel/JKRThread.hpp>
 #include <JSystem/JKernel/JKREnum.hpp>
@@ -44,6 +45,11 @@ public:
 	                         u32*);
 	static u8* aramToMainRam(JKRAramBlock*, u8*, u32, u32, JKRExpandSwitch, u32,
 	                         JKRHeap*, int, u32*);
+	static JKRAMCommand* aramToMainRam_Async(u32, u8*, u32, JKRExpandSwitch, u32, JKRHeap*,
+		JKRAMCommand::AsyncCallback, int);
+
+	static bool aramSync(JKRAMCommand *command, int param_2);
+
 	static void dump(void);
 
 	static JKRAram* getManager() { return sAramObject; }
@@ -66,6 +72,8 @@ public:
 	static void setSzpBufferSize(u32 size) { szpBufferSize = size; }
 
 	static OSMessageQueue sMessageQueue;
+
+	void aramSync(JKRAMCommand*, int);
 
 private:
 	static JKRAram* sAramObject;

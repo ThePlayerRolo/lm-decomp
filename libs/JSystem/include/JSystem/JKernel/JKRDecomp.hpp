@@ -13,11 +13,10 @@ public:
 	~JKRDecompCommand();
 
 public:
-	/* 0x00 */ u32 field_0x0;
 	/* 0x04 */ u8* mSrcBuffer;
 	/* 0x08 */ u8* mDstBuffer;
 	/* 0x0C */ u32 mSrcLength;
-	/* 0x10 */ u32 mDstLength;
+	// /* 0x10 */ u32 mDstLength;
 	/* 0x14 */ AsyncCallback mCallback;
 	/* 0x18 */ JKRDecompCommand* mThis;
 	/* 0x1C */ OSMessageQueue* field_0x1c;
@@ -39,15 +38,15 @@ private:
 
 public:
 	static JKRDecomp* create(s32);
-	static JKRDecompCommand* prepareCommand(u8*, u8*, u32, u32,
+	static JKRDecompCommand* prepareCommand(u8*, u8*, u32,
 	                                        JKRDecompCommand::AsyncCallback);
 	static void sendCommand(JKRDecompCommand*);
 	static bool sync(JKRDecompCommand*, int);
 	static JKRDecompCommand* orderAsync(u8*, u8*, u32, u32,
 	                                    JKRDecompCommand::AsyncCallback);
-	static bool orderSync(u8*, u8*, u32, u32);
-	static void decode(u8*, u8*, u32, u32);
-	static void decodeSZP(u8*, u8*, u32, u32);
+	static bool orderSync(u8*, u8*, u32);
+	static void decode(u8*, u8*, u32);
+	static void decodeSZP(u8*, u8*, u32);
 	static void decodeSZS(u8*, u8*, u32, u32);
 	static JKRCompression checkCompressed(u8*);
 
@@ -59,7 +58,7 @@ public:
 inline void JKRDecompress(u8* srcBuffer, u8* dstBuffer, u32 srcLength,
                           u32 dstLength)
 {
-	JKRDecomp::orderSync(srcBuffer, dstBuffer, srcLength, dstLength);
+	JKRDecomp::orderSync(srcBuffer, dstBuffer, srcLength);
 }
 
 inline JKRDecomp* JKRCreateDecompManager(s32 priority)
@@ -72,6 +71,9 @@ inline JKRCompression JKRCheckCompressed(u8* pBuf)
 	return JKRDecomp::checkCompressed(pBuf);
 }
 
+inline bool JKRCheckCompressedNot(u8* pBuf) {
+	return JKRCheckCompressed(pBuf) != JKR_COMPRESSION_NONE;
+}
 inline u32 JKRDecompExpandSize(u8* pBuf)
 {
 	return (pBuf[4] << 24) | (pBuf[5] << 16) | (pBuf[6] << 8) | pBuf[7];

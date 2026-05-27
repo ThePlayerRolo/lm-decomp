@@ -54,8 +54,29 @@ JSystem/JKernel/JKRThread.cpp:
 	.bss        start:0x804CAF28 end:0x804CAF40
 	.sdata      start:0x804D7CF0 end:0x804D7D00
 
+JSystem/JKernel/JKRAram.cpp:
+	.text       start:0x801D0C30 end:0x801D1698
+	.ctors      start:0x8020BDB8 end:0x8020BDBC
+	.data       start:0x80393A20 end:0x80393B28
+	.bss        start:0x804CAF40 end:0x804CAF58
+	.sdata      start:0x804D7D00 end:0x804D7D20
+	.sbss       start:0x804D9520 end:0x804D9528
+
+JSystem/JKernel/JKRDecomp.cpp:
+	.text       start:0x801D4290 end:0x801D4868
+	.data       start:0x80393E40 end:0x80393EC8
+	.sdata      start:0x804D7DC0 end:0x804D7DD8
+	.sbss       start:0x804D9548 end:0x804D9550
+
 JSystem/JSupport/JSUList.cpp:
 	.text       start:0x801D4868 end:0x801D4D9C
+
+JSystem/JUtility/JUTResource.cpp:
+	.text       start:0x801D5664 end:0x801D5794
+
+JSystem/JUtility/JUTTexture.cpp:
+	.text       start:0x801D5794 end:0x801D5C50
+	.sdata2     start:0x804DD668 end:0x804DD680
 
 JSystem/JUtility/JUTPalette.cpp:
 	.text       start:0x801D5C50 end:0x801D5D80

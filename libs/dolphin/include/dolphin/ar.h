@@ -3,6 +3,10 @@
 
 #include <dolphin/types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef void (*ARQCallback)(u32 pointerToARQRequest);
 
 struct ARQRequest
@@ -57,5 +61,9 @@ void ARQRemoveOwnerRequest(u32 owner);
 void ARQFlushQueue(void);
 void ARQSetChunkSize(u32 size);
 u32 ARQGetChunkSize(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

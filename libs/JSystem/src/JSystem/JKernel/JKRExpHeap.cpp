@@ -166,7 +166,6 @@ void* JKRExpHeap::allocFromHead(u32 size, int align)
 	CMemBlock* newUsedBlock = nullptr;
 
 	for (CMemBlock* block = mHead; block; block = block->mNext) {
-		// this bastard is the problem
 		void* content = block->getContent();
 		u32 offset    = ALIGN_NEXT((u32)content, align) - (u32)content;
 

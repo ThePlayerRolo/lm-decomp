@@ -4,6 +4,7 @@
 #include <JSystem/JKernel/JKREnum.hpp>
 #include <JSystem/JKernel/JKRDisposer.hpp>
 #include <JSystem/JSupport/JSUList.hpp>
+#include <stddef.h>
 
 class JKRFileFinder;
 

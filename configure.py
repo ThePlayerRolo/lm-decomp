@@ -405,13 +405,22 @@ config.warn_missing_source = False
 config.libs = [
 
     JSystem([
+        # Kernel
         Object(Matching, "JSystem/JKernel/JKRHeap.cpp"),
         Object(NonMatching, "JSystem/JKernel/JKRExpHeap.cpp"),
         Object(Matching, "JSystem/JKernel/JKRSolidHeap.cpp"),
         Object(Matching, "JSystem/JKernel/JKRDisposer.cpp"),
         Object(NonMatching, "JSystem/JKernel/JKRThread.cpp"),
+        Object(NonMatching, "JSystem/JKernel/JKRAram.cpp"),
+
+
+        Object(NonMatching, "JSystem/JKernel/JKRDecomp.cpp"),
+        # Support
         Object(NonMatching, "JSystem/JSupport/JSUList.cpp"),
 
+        # Utility
+        Object(Matching, "JSystem/JUtility/JUTResource.cpp"),
+        Object(Matching, "JSystem/JUtility/JUTTexture.cpp"),
         Object(Matching, "JSystem/JUtility/JUTPalette.cpp"),
         Object(NonMatching, "JSystem/JUtility/JUTDirectPrint.cpp"),
     ]),

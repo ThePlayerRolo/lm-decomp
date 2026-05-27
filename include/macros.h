@@ -3,10 +3,16 @@
 
 #include <dolphin/macros.h>
 
-#define ARRAY_COUNT(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 
 #define dummy_float_data() \
     static f32 dummy_float_data[6] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+
+
+#define ARRAY_COUNT(arr) (int)(sizeof(arr) / sizeof(arr[0]))
+
+#define READU32_BE(ptr, offset)                                                \
+	(((u32)ptr[offset] << 24) | ((u32)ptr[offset + 1] << 16)                   \
+	 | ((u32)ptr[offset + 2] << 8) | (u32)ptr[offset + 3]);
 
 #define FLAG_ON(V, F)    (((V) & (F)) == 0)
 #define FLAG_OFF(V, F)   (((V) & (F)) != 0)
