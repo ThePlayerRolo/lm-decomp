@@ -54,6 +54,9 @@ JSystem/JKernel/JKRThread.cpp:
 	.bss        start:0x804CAF28 end:0x804CAF40
 	.sdata      start:0x804D7CF0 end:0x804D7D00
 
+JSystem/JSupport/JSUList.cpp:
+	.text       start:0x801D4868 end:0x801D4D9C
+
 base/PPCArch.c:
 	.text       start:0x801D9F7C end:0x801D9FE0
 
