@@ -18,28 +18,43 @@ JUTDirectPrint::JUTDirectPrint() { changeFrameBuffer(NULL, 0, 0); }
 
 void JUTDirectPrint::erase(int x, int y, int width, int height)
 {
-	if (!field_0x00) {
-		return;
-	}
+    if (!field_0x00) {
+        return;
+    }
 
-	if (400 < mFrameBufferWidth) {
-		x     = x << 1;
-		width = width << 1;
-	}
+    if (400 < mFrameBufferWidth) {
+        x <<= 1;
+        y <<= 1;
+        width <<= 1;
+        height <<= 1;
+    }
 
-	if (300 < mFrameBufferHeight) {
-		y      = y << 1;
-		height = height << 1;
-	}
+    u16* pixel = mFrameBuffer + mStride * y + x;
 
-	u16* pixel = mFrameBuffer + mStride * y + x;
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
-			*pixel++ = 0x1080;
-		}
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
 
-		pixel += mStride - width;
-	}
+            u16 p = pixel[j];
+
+            int upper = (p >> 8);
+            upper &= 0xff;
+            upper -= 0x10;
+            upper >>= 2;
+
+            int lower = (u8)p;
+            lower -= 0x80;
+            lower >>= 2;
+
+            u16 out = lower + 0x80;
+            out &= 0xff;
+
+            out |= (upper + 0x10) << 8;
+
+            pixel[j] = out;
+        }
+
+        pixel += mStride;
+    }
 }
 
 u8 JUTDirectPrint::sAsciiTable[128] = {
@@ -83,7 +98,7 @@ u32 JUTDirectPrint::sFontData2[77] = {
 	0xA10AA288, 0x98CAA270, 0x00000000, 0x00000020, 0xF1EF1E20, 0x8A28A0F8,
 	0x8A281C20, 0xF1E80220, 0x80283C38, 0x00000000, 0x00000000, 0x8A28B688,
 	0x8A2A8888, 0x8A2A8878, 0x894A8808, 0x788536F0, 0x00000000, 0x00000000,
-	0xF8000000, 0x10000000, 0x20000000, 0x40000000, 0xF8000000
+	0xF8000000, 0x10000000, 0x20000000, 0x40000000, 0xF8000000,
 };
 
 void JUTDirectPrint::drawChar(int position_x, int position_y, int ch)
@@ -93,36 +108,58 @@ void JUTDirectPrint::drawChar(int position_x, int position_y, int ch)
 		codepoint = ch - 100;
 	else
 		codepoint = ch;
+
 	int col_index = (codepoint % 5) * 6;
 	int row_index = (codepoint / 5) * 7;
 
 	const u32* font_data
 	    = (100 > ch) ? sFontData + row_index : sFontData2 + row_index;
 
-	int scale_x = (mFrameBufferWidth < 400) ? 1 : 2;
-	int scale_y = (mFrameBufferHeight < 300) ? 1 : 2;
+    if (mFrameBufferWidth < 400) {
+        u16* pixel = mFrameBuffer + mFrameBufferWidth * position_y + position_x;
 
-	u16* pixel
-	    = mFrameBuffer + mStride * position_y * scale_y + position_x * scale_x;
-	for (int y = 0; y < 7; y++) {
-		u32 data = *font_data++ << col_index;
+        for (int y = 0; y < 7; y++) {
+            u32 data = *font_data++ << col_index;
 
-		for (int x = 0; x < 6; x++) {
-			u16 value = (data & 0x80000000) ? 0xeb80 : 0x80;
-			for (int y2 = 0; y2 < scale_y; y2++) {
-				int tmp = mStride * y2;
-				for (int x2 = 0; x2 < scale_x; x2++) {
-					u16* row = &pixel[tmp];
-					row[x2]  = value;
-				}
-			}
+            for (int x = 0; x < 6; x++) {
+                *pixel++ = (data & 0x80000000) ? 0xeb80 : 0x80;
 
-			data <<= 1;
-			pixel += scale_x;
-		}
+                data <<= 1;
+            }
 
-		pixel += mStride * scale_y - 6 * scale_x;
-	}
+            pixel += mFrameBufferWidth - 6;
+        }
+    } else {
+        u16* pixel = mFrameBuffer + (mFrameBufferWidth * position_y + position_x) * 2;
+
+        for (int y = 0; y < 7; y++) {
+            u32 data = *font_data++ << col_index;
+
+            for (int x = 0; x < 3; x++) {
+                u16 value;
+
+                value = (data & 0x80000000) ? 0xeb80 : 0x80;
+
+                pixel[0] = value;
+                pixel[1] = value;
+                pixel[mFrameBufferWidth] = value;
+                pixel[mFrameBufferWidth + 1] = value;
+
+                data <<= 1;
+                pixel += 2;
+
+                pixel[0] = value;
+                pixel[1] = value;
+                pixel[mFrameBufferWidth] = value;
+                pixel[mFrameBufferWidth + 1] = value;
+
+                data <<= 1;
+                pixel += 2;
+            }
+
+            pixel += (mFrameBufferWidth * 2) - 12;
+        }
+    }
 }
 
 void JUTDirectPrint::changeFrameBuffer(void* frameBuffer, u16 width, u16 height)
@@ -135,9 +172,44 @@ void JUTDirectPrint::changeFrameBuffer(void* frameBuffer, u16 width, u16 height)
 	mFrameBufferSize   = (u32)mStride * (u32)mFrameBufferHeight * 2;
 }
 
-void JUTDirectPrint::drawString(u16 position_x, u16 position_y, char* text)
+void JUTDirectPrint::drawString(u16 position_x, u16 position_y, const char* format, ...)
 {
-	drawString_f(position_x, position_y, "%s", text);
+	if (!mFrameBuffer)
+		return;
+
+	va_list args;
+	va_start(args, format);
+
+	char buffer[256];
+
+	int buffer_length = vsnprintf(buffer, ARRAY_COUNT(buffer), format, args);
+	u16 x             = position_x;
+	if (buffer_length > 0) {
+		char* ptr = buffer;
+		for (; 0 < buffer_length; buffer_length--, ptr++) {
+			int codepoint = sAsciiTable[*ptr & 0x7f];
+			if (codepoint == 0xfe) {
+				position_x = x;
+				position_y += 7;
+			} else if (codepoint == 0xfd) {
+				position_x
+				    = position_x + 0x30 - ((position_x - x + 0x2f) % 0x30);
+			} else {
+				if (codepoint != 0xff) {
+					drawChar(position_x, position_y, codepoint);
+				}
+				position_x += 6;
+			}
+			if (position_x > 310) {
+				position_x = 16;
+				position_y += 8;
+			}
+		}
+	}
+
+	DCFlushRange(mFrameBuffer, mFrameBufferSize);
+
+	va_end(args);
 }
 
 void JUTDirectPrint::drawString_f(u16 position_x, u16 position_y,

@@ -13,7 +13,7 @@ public:
 	void drawChar(int, int, int);
 	void changeFrameBuffer(void*, u16, u16);
 	void print(u16, u16, char const*, ...);
-	void drawString(u16, u16, char*);
+	void drawString(u16, u16, char const*, ...);
 	void drawString_f(u16, u16, char const*, ...);
 	void setCharColor(u8, u8, u8);
 	void setCharColor(JUtility::TColor);
