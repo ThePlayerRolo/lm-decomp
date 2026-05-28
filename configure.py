@@ -423,6 +423,7 @@ config.libs = [
         Object(NonMatching, "JSystem/JSupport/JSUList.cpp"),
 
         # Utility
+        Object(Matching, "JSystem/JUtility/JUTRect.cpp"),
         Object(Matching, "JSystem/JUtility/JUTResource.cpp"),
         Object(Matching, "JSystem/JUtility/JUTTexture.cpp"),
         Object(Matching, "JSystem/JUtility/JUTPalette.cpp"),

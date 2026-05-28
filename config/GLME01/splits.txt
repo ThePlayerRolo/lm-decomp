@@ -113,6 +113,9 @@ JSystem/JUtility/JUTPalette.cpp:
 	.text       start:0x801D5C50 end:0x801D5D80
 	.data       start:0x80394158 end:0x80394188
 
+JSystem/JUtility/JUTRect.cpp:
+	.text       start:0x801D5EA4 end:0x801D6080
+
 JSystem/JUtility/JUTDirectPrint.cpp:
 	.text       start:0x801D9604 end:0x801D9F7C
 	.data       start:0x803945C8 end:0x80394880
