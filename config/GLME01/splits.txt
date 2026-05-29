@@ -120,6 +120,11 @@ JSystem/JUtility/JUTPalette.cpp:
 JSystem/JUtility/JUTRect.cpp:
 	.text       start:0x801D5EA4 end:0x801D6080
 
+JSystem/JUtility/JUTGamePad.cpp:
+	.text       start:0x801D7298 end:0x801D833C
+	.ctors      start:0x8020BDC8 end:0x8020BDCC
+	.bss        start:0x804CAFB8 end:0x804CB130
+
 JSystem/JUtility/JUTDirectPrint.cpp:
 	.text       start:0x801D9604 end:0x801D9F7C
 	.data       start:0x803945C8 end:0x80394880
