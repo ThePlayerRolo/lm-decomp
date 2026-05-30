@@ -123,7 +123,10 @@ JSystem/JUtility/JUTRect.cpp:
 JSystem/JUtility/JUTGamePad.cpp:
 	.text       start:0x801D7298 end:0x801D833C
 	.ctors      start:0x8020BDC8 end:0x8020BDCC
-	.bss        start:0x804CAFB8 end:0x804CB130
+	.rodata     start:0x80217600 end:0x80217610
+	.data       start:0x803942C8 end:0x80394308
+	.bss        start:0x804CAFB8 end:0x804CB148
+	.sbss       start:0x804D9558 end:0x804D9588
 
 JSystem/JUtility/JUTDirectPrint.cpp:
 	.text       start:0x801D9604 end:0x801D9F7C
@@ -167,12 +170,12 @@ os/OSContext.c:
 os/OSError.c:
 	.text       start:0x801DC150 end:0x801DC48C
 	.data       start:0x80394EC8 end:0x80395100
-	.bss        start:0x804CB148 end:0x804CB188
+	.bss        start:0x804CB148 end:0x804CB188 align:4 common
 	.sdata      start:0x804D7EB0 end:0x804D7EB8
 
 os/OSExi.c:
 	.text       start:0x801DC48C end:0x801DDAB8
-	.bss        start:0x804CB188 end:0x804CB240
+	.bss        start:0x804CB188 end:0x804CB240 align:4 common
 
 os/OSFont.c:
 	.text       start:0x801DDAB8 end:0x801DDB10
@@ -194,7 +197,7 @@ os/OSMutex.c:
 
 os/OSReboot.c:
 	.text       start:0x801DE798 end:0x801DE994
-	.bss        start:0x804CB240 end:0x804CB260
+	.bss        start:0x804CB240 end:0x804CB260 align:4 common
 	.sbss       start:0x804D95C8 end:0x804D95D0
 
 os/OSReset.c:
@@ -207,19 +210,19 @@ os/OSResetSW.c:
 
 os/OSRtc.c:
 	.text       start:0x801DEF70 end:0x801DF87C
-	.bss        start:0x804CB260 end:0x804CB2B8
+	.bss        start:0x804CB260 end:0x804CB2B8 align:4 common
 
 os/OSSerial.c:
 	.text       start:0x801DF87C end:0x801E01FC
 	.data       start:0x80395198 end:0x803951B0
-	.bss        start:0x804CB2B8 end:0x804CB3D8
+	.bss        start:0x804CB2B8 end:0x804CB3D8 align:4 common
 
 os/OSSync.c:
 	.text       start:0x801E01FC end:0x801E0280
 
 os/OSThread.c:
 	.text       start:0x801E0280 end:0x801E13AC
-	.bss        start:0x804CB3D8 end:0x804CBDC0
+	.bss        start:0x804CB3D8 end:0x804CBDC0 align:4 common
 	.sbss       start:0x804D95F8 end:0x804D9608
 
 os/OSTime.c:
@@ -260,7 +263,7 @@ mtx/mtxvec.c:
 
 dvd/dvdlow.c:
 	.text       start:0x801E2A08 end:0x801E3968
-	.bss        start:0x804CBDC0 end:0x804CBEA0
+	.bss        start:0x804CBDC0 end:0x804CBEA0 align:4 common
 	.sdata      start:0x804D7EC8 end:0x804D7ED0
 	.sbss       start:0x804D9618 end:0x804D9660
 
@@ -273,13 +276,13 @@ dvd/dvdfs.c:
 dvd/dvd.c:
 	.text       start:0x801E4384 end:0x801E6970
 	.data       start:0x803955E0 end:0x803956F8
-	.bss        start:0x804CBEA0 end:0x804CBF78
+	.bss        start:0x804CBEA0 end:0x804CBF78 align:4 common
 	.sdata      start:0x804D7ED8 end:0x804D7EE0
 	.sbss       start:0x804D9680 end:0x804D96C8
 
 dvd/dvdqueue.c:
 	.text       start:0x801E6970 end:0x801E6B68
-	.bss        start:0x804CBF78 end:0x804CBF98
+	.bss        start:0x804CBF78 end:0x804CBF98 align:4 common
 
 dvd/dvderror.c:
 	.text       start:0x801E6B68 end:0x801E6CC0
@@ -288,14 +291,14 @@ dvd/dvderror.c:
 dvd/fstload.c:
 	.text       start:0x801E6CC0 end:0x801E6EE8
 	.data       start:0x80395738 end:0x803957A8
-	.bss        start:0x804CBF98 end:0x804CC008
+	.bss        start:0x804CBF98 end:0x804CC008 align:4 common
 	.sdata      start:0x804D7EE0 end:0x804D7EF0
 	.sbss       start:0x804D96C8 end:0x804D96D8
 
 vi/vi.c:
 	.text       start:0x801E6EE8 end:0x801E8724
 	.data       start:0x803957A8 end:0x80395910
-	.bss        start:0x804CC008 end:0x804CC150
+	.bss        start:0x804CC008 end:0x804CC150 align:4 common
 	.sbss       start:0x804D96D8 end:0x804D9718
 
 pad/Padclamp.c:
@@ -305,7 +308,7 @@ pad/Padclamp.c:
 pad/Pad.c:
 	.text       start:0x801E895C end:0x801EABD4
 	.data       start:0x80395910 end:0x80395978
-	.bss        start:0x804CC150 end:0x804CC1C0
+	.bss        start:0x804CC150 end:0x804CC1C0 align:4 common
 	.sdata      start:0x804D7EF8 end:0x804D7F20
 	.sbss       start:0x804D9718 end:0x804D9748
 
@@ -328,7 +331,7 @@ dsp/dsp.c:
 card/CARDBios.c:
 	.text       start:0x801ECAA0 end:0x801EDDB8
 	.data       start:0x80395978 end:0x80395988
-	.bss        start:0x804CC1C0 end:0x804CC3F0
+	.bss        start:0x804CC1C0 end:0x804CC3F0 align:4 common
 	.sbss       start:0x804D97C8 end:0x804D97D0
 
 card/CARDRdwr.c:
@@ -367,7 +370,7 @@ card/CARDStat.c:
 
 gx/GXInit.c:
 	.text       start:0x801F19EC end:0x801F29CC
-	.bss        start:0x804CC3F0 end:0x804CC968
+	.bss        start:0x804CC3F0 end:0x804CC968 align:4 common
 	.sdata      start:0x804D7F20 end:0x804D7F28
 	.sbss       start:0x804D97D0 end:0x804D97E0
 	.sdata2     start:0x804DD748 end:0x804DD768
@@ -420,7 +423,7 @@ gx/GXPixel.c:
 gx/GXDraw.c:
 	.text       start:0x801F8DF8 end:0x801F9DF4
 	.data       start:0x80395FC0 end:0x803962D0
-	.bss        start:0x804CC968 end:0x804CCBF0
+	.bss        start:0x804CC968 end:0x804CCBF0 align:4 common
 	.sdata2     start:0x804DD850 end:0x804DD890
 
 gx/GXStubs.c:
@@ -428,7 +431,7 @@ gx/GXStubs.c:
 
 gx/GXDisplayList.c:
 	.text       start:0x801F9DF8 end:0x801FA004
-	.bss        start:0x804CCBF0 end:0x804CD108
+	.bss        start:0x804CCBF0 end:0x804CD108 align:4 common
 	.sbss       start:0x804D9818 end:0x804D9820
 
 gx/GXTransform.c:
@@ -439,7 +442,7 @@ hvqm4dec/hvqm4dec.c:
 	.text       start:0x801FA5EC end:0x80200094
 	.rodata     start:0x80217610 end:0x80217628
 	.data       start:0x803962D0 end:0x803962E0
-	.bss        start:0x804CD108 end:0x804CDB48
+	.bss        start:0x804CD108 end:0x804CDB48 align:4 common
 	.sbss       start:0x804D9820 end:0x804D9828
 
 PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__va_arg.c:
@@ -458,7 +461,7 @@ PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__init_cpp_exceptions.cpp:
 
 PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/abort_exit.c:
 	.text       start:0x802026D8 end:0x80202898
-	.bss        start:0x804CDB58 end:0x804CDD58
+	.bss        start:0x804CDB58 end:0x804CDD58 align:4 common
 	.sbss       start:0x804D9830 end:0x804D9848
 
 PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/ansi_fp.c:
@@ -507,7 +510,7 @@ PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/scanf.c:
 
 PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/signal.c:
 	.text       start:0x8020507C end:0x80205130
-	.bss        start:0x804CDD58 end:0x804CDD70
+	.bss        start:0x804CDD58 end:0x804CDD70 align:4 common
 
 PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/string.c:
 	.text       start:0x80205130 end:0x802054C8
@@ -532,23 +535,23 @@ TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/mainloop.c:
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/nubevent.c:
 	.text       start:0x802068C4 end:0x80206B20
-	.bss        start:0x804CDD70 end:0x804CDD98
+	.bss        start:0x804CDD70 end:0x804CDD98 align:4 common
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/nubinit.c:
 	.text       start:0x80206B20 end:0x80206CB4
 	.rodata     start:0x80218088 end:0x802180A8
-	.bss        start:0x804CDD98 end:0x804CDDA0
+	.bss        start:0x804CDD98 end:0x804CDDA0 align:4 common
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/msg.c:
 	.text       start:0x80206CB4 end:0x80206CDC
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/msgbuf.c:
 	.text       start:0x80206CDC end:0x80207524
-	.bss        start:0x804CDDA0 end:0x804CF750
+	.bss        start:0x804CDDA0 end:0x804CF750 align:4 common
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/serpoll.c:
 	.text       start:0x80207524 end:0x802076EC
-	.bss        start:0x804CF750 end:0x804CF768
+	.bss        start:0x804CF750 end:0x804CF768 align:4 common
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/usr_put.c:
 	.text       start:0x802076EC end:0x802076F0
@@ -556,7 +559,7 @@ TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/usr_put.c:
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/dispatch.c:
 	.text       start:0x802076F0 end:0x80207788
 	.data       start:0x80396788 end:0x80396810
-	.bss        start:0x804CF768 end:0x804CF770
+	.bss        start:0x804CF768 end:0x804CF770 align:4 common
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/msghndlr.c:
 	.text       start:0x80207788 end:0x80208A2C
@@ -585,7 +588,7 @@ TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl
 	.text       start:0x80209094 end:0x8020A670
 	.rodata     start:0x802180A8 end:0x802180F4
 	.data       start:0x80396848 end:0x80396878
-	.bss        start:0x804CF770 end:0x804CFCF0
+	.bss        start:0x804CF770 end:0x804CFCF0 align:4 common
 
 TRK_MINNOW_DOLPHIN/src/__exception.s: comment:0
 	.init       start:0x800034B8 end:0x800053EC
@@ -594,14 +597,14 @@ TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c:
 	.init       start:0x800053EC end:0x8000540C
 	.text       start:0x8020A670 end:0x8020A8B0
 	.data       start:0x80396878 end:0x803968B8
-	.bss        start:0x804CFCF0 end:0x804CFCF8
+	.bss        start:0x804CFCF0 end:0x804CFCF8 align:4 common
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c:
 	.text       start:0x8020A8B0 end:0x8020AC28
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/main_TRK.c:
 	.text       start:0x8020AC28 end:0x8020AC70
-	.bss        start:0x804CFCF8 end:0x804CFCFC
+	.bss        start:0x804CFCF8 end:0x804CFCFC align:4 common
 
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c:
 	.text       start:0x8020AC70 end:0x8020AFC8

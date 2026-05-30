@@ -50,7 +50,7 @@ s32 JUTGamePad::sAnalogMode;
 BOOL JUTGamePad::init()
 {
 	PADSetSpec(PAD_SPEC_5);
-	setAnalogMode(3);
+	setAnalogMode(0);
 	return PADInit();
 }
 
@@ -404,8 +404,8 @@ void JUTGamePad::CRumble::clear(JUTGamePad* pad)
 void JUTGamePad::CRumble::startMotor(int port)
 {
 	if (isEnabled(channel_mask[port])) {
-		PADControlMotor(port, PAD_MOTOR_RUMBLE);
-		mStatus[port] = true;
+		PADControlMotor(port, 0);
+		mStatus[port] = false;
 	}
 }
 
