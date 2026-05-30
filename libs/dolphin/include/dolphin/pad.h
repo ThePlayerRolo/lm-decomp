@@ -55,6 +55,10 @@ typedef struct PADStatus {
     /*0x0A*/ s8 err;
 } PADStatus;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // PAD.c
 int PADReset(u32 mask);
 BOOL PADRecalibrate(u32 mask);
@@ -72,5 +76,9 @@ void PADSetAnalogMode(u32 mode);
 
 // Padclamp.c
 void PADClamp(PADStatus* status);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
