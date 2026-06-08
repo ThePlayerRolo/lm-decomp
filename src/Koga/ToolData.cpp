@@ -38,6 +38,7 @@ s32 Koga::ToolData::searchItemInfo(const char* key) const {
 	return -1;
 }
 
+// https://decomp.me/scratch/YrIgS
 BOOL Koga::ToolData::getValueBit(int entryIndex, const char* key, u8* bitOut) const {
 	s32 itemIndex = searchItemInfo(key);
 	if (itemIndex < 0) {
@@ -53,6 +54,7 @@ BOOL Koga::ToolData::getValueBit(int entryIndex, const char* key, u8* bitOut) co
 	return TRUE;
 }
 
+// https://decomp.me/scratch/7Ajss
 BOOL Koga::ToolData::getValueMasked(int entryIndex, const char* key, u32* valueOut) const {
     s32 itemIndex = searchItemInfo(key);
 	if (itemIndex < 0) {
