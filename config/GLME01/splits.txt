@@ -15,6 +15,11 @@ Sections:
 Unsorted/staticData.cpp:
 	.data       start:0x8021E000 end:0x802FB380
 
+Koga/ToolData.cpp:
+	.text       start:0x800BC9FC end:0x800BCDE8
+	.data       start:0x8035A0A0 end:0x8035A0D8
+	.sdata      start:0x804D2D30 end:0x804D2D40
+
 Koga/CharacterEventObserver.cpp:
 	.text       start:0x800EA1B4 end:0x800EA454
 	.data       start:0x80363FA0 end:0x803640D8

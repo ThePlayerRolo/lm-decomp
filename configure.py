@@ -639,6 +639,7 @@ config.libs = [
         # Koga
         Object(Matching, "Koga/CharacterEventObserver.cpp"),
         Object(NonMatching, "Koga/Message.cpp"),
+        Object(NonMatching, "Koga/ToolData.cpp"),
         # Unsorted
         Object(Matching, "Unsorted/staticData.cpp"),  # TODO Verify this is a seperate file
 
