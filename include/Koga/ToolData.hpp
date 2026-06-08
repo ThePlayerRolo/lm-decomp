@@ -2,13 +2,13 @@
 #define TOOL_DATA_H_
 
 #include "dolphin/types.h"
+#include "JSystem/JORReflexible.hpp"
 
 // Very similar to https://github.com/doldecomp/sms/blob/main/include/MarioUtil/ToolData.hpp
 // But searchItemInfo() isn't inlined here, and there are more getValue*() variants.
 
 namespace Koga {
-    // TODO: Needs to inherit from "JORReflexible"
-    class ToolData {
+    class ToolData : public JORReflexible {
     public:
         ToolData();
         virtual ~ToolData();
