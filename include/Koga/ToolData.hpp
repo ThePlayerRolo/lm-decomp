@@ -1,7 +1,7 @@
 #ifndef TOOL_DATA_H_
 #define TOOL_DATA_H_
 
-#include "dolphin/types.h"
+#include "types.h"
 #include "JSystem/JORReflexible.hpp"
 
 // Very similar to https://github.com/doldecomp/sms/blob/main/include/MarioUtil/ToolData.hpp

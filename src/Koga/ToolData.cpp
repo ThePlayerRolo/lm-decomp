@@ -1,14 +1,11 @@
 #include "Koga/ToolData.hpp"
-#include "types.h"
 #include "macros.h"
 
 Koga::ToolData::ToolData() {
     mData = nullptr;
 }
 
-Koga::ToolData::~ToolData() {
-
-}
+Koga::ToolData::~ToolData() { }
 
 BOOL Koga::ToolData::attach(const JMapData* data) {
     if (data == nullptr) {
