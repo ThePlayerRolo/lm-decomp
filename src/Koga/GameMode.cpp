@@ -1,15 +1,10 @@
 #include "Koga/GameMode.hpp"
-#include "macros.h"
 
+Koga::GameMode* Koga::GameModeBase::sCurrentGameMode = nullptr;
 int Koga::GameModeBase::sGameModeCount = 0;
 
-Koga::GameMode::GameMode() {
-    
-}
-
-Koga::GameMode::~GameMode() {
-    
-}
+Koga::GameMode::GameMode() { }
+Koga::GameMode::~GameMode() { }
 
 void Koga::GameMode::vt_C() { }
 void Koga::GameMode::vt_10() { }

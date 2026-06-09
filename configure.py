@@ -647,7 +647,7 @@ config.libs = [
         Object(Matching, "Koga/CharacterEventObserver.cpp"),
         Object(NonMatching, "Koga/Message.cpp"),
         Object(NonMatching, "Koga/ToolData.cpp"),
-        Object(NonMatching, "Koga/GameMode.cpp"),
+        Object(Matching, "Koga/GameMode.cpp"),
         # Unsorted
         Object(Matching, "Unsorted/staticData.cpp"),  # TODO Verify this is a seperate file
 

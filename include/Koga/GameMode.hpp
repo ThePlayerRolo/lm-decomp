@@ -2,15 +2,18 @@
 #define GAME_MODE_H_
 
 #include "types.h"
-#include "JSystem/JORReflexible.hpp"
 
 namespace Koga {
+    class GameMode;
+
     struct GameModeBase {
-        // 0 at title screen, 1 when actually playing.
+        // Set by fn_800B9D1C, destroyed by fn_800B9DD0 during exit to title screen
+        static GameMode* sCurrentGameMode;
+        // 0 at title screen, 1 when actually playing
         static int sGameModeCount;
 
         GameModeBase();
-        ~GameModeBase() { sGameModeCount -= 1; }
+        inline ~GameModeBase() { sGameModeCount -= 1; }
 
         static void incrementGameModeCount();
     };
@@ -18,9 +21,13 @@ namespace Koga {
     class GameMode : private GameModeBase {
     public:
         GameMode();
+        // Destructor is specifically non-virtual and isn't referenced in GameMode's vtable.
         ~GameMode();
 
+        // This looks like a destroy() function or something?
+        // It does destructor-like things when overridden in Koga::MissionMode.
         /* 0x08 */ virtual void vt_8() = 0;
+
         /* 0x0C */ virtual void vt_C();
         /* 0x10 */ virtual void vt_10();
         /* 0x14 */ virtual void vt_14();
