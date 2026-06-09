@@ -60,7 +60,7 @@ namespace Koga {
 
         template<typename T>
         inline const T getSignedValue(int entryIndex, int fieldIndex) const {
-            void* ptr = getDataPointer(mData, &mData->mItems[fieldIndex], entryIndex, fieldIndex);
+            const void* ptr = getDataPointer(mData, &mData->mItems[fieldIndex], entryIndex, fieldIndex);
             return *reinterpret_cast<const T*>(ptr);
         }
 
