@@ -21,7 +21,6 @@ namespace Koga {
     class GameMode : private GameModeBase {
     public:
         GameMode();
-        // Destructor is specifically non-virtual and isn't referenced in GameMode's vtable.
         ~GameMode();
 
         // This looks like a destroy() function or something?
