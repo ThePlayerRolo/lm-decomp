@@ -1,6 +1,7 @@
 #ifndef JMP_MESSAGE_H_
 #define JMP_MESSAGE_H_
 
+#include "JSystem/JORReflexible.hpp"
 #include "Koga/Message.hpp"
 
 namespace Koga {
@@ -30,9 +31,11 @@ public:
     unkJmpMessageSender2() { }
     ~unkJmpMessageSender2() { }
     void add(Koga::ToolData** member) { Koga::Array<Koga::ToolData*, 10>::add(member); }
+
+    Koga::ToolData* fn_800EBBA8(Koga::ToolData*);
 };
 
-class JmpMessageSender : public MessageSender {
+class JmpMessageSender : public MessageSender, public JORReflexible {
 public:
 
     JmpMessageSender();
@@ -41,14 +44,22 @@ public:
     /* 0x0C */ virtual void vt_0C();
     /* 0x10 */ virtual void vt_10();
 
-    BOOL fn_800EA900(Koga::ToolData* data);
-    void fn_800EA958(Koga::ToolData* data);
+    BOOL fn_800EA900(Koga::ToolData* pData);
+    BOOL fn_800EA958(Koga::ToolData* pData);
 
+    void fn_800EB634(Koga::ToolData*, s32, bool);
+    BOOL fn_800EAA00(const char*, int);
+
+    void fn_800EB1DC();
+    void fn_800EB27C();
+    void fn_800EB528();
+    void fn_800EB5CC(u8*);
+    void fn_800EB564(u8*);
 public:
     /* 0x038 */ unkJmpMessageSender1Arr _38;
     /* 0xCBC */ unkJmpMessageSender2 _CBC;
     /* 0xCE8 */ u8 _CE8;
-    /* 0xCEC */ u8 _CEC[0xDF0 - 0xCEC];
+    /* 0xCE8 */ u8 _CE9[262];
 };
 
 #endif

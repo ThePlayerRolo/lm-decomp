@@ -50,6 +50,10 @@ namespace Koga {
             mData = pData;
         }
 
+        inline s32 getDataEntryNum() {
+            return mData->mNumEntries;
+        }
+
         template<typename T>
         inline T getUnsignedValue(int entryIndex, int fieldIndex) const {
             const JMapItem* pField = &mData->mItems[fieldIndex];
@@ -113,6 +117,7 @@ namespace Koga {
             return *reinterpret_cast<const u32*>(ptr) & pField->mMask;
         }
 
+public:
         inline const char* getStringValue(int entryIndex, int fieldIndex) const {
             return reinterpret_cast<const char*>(getDataPointer(mData, &mData->mItems[fieldIndex], entryIndex, fieldIndex));
         };
