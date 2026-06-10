@@ -1,11 +1,13 @@
+//Warning: very messy
 #include "Koga/JmpMessage.hpp"
 #include "Koga/ToolData.hpp"
 
 dummy_float_data()
 
 extern int lbl_804D80B0;
-extern void fn_800620F4(char);
-extern bool fn_801883F8(s32);
+extern void fn_800620F4(int);
+extern void fn_800624BC(int);
+extern bool fn_801883F8(int);
 
 JmpMessageSender::JmpMessageSender() {
     _CE8 = 0;
@@ -33,7 +35,7 @@ BOOL JmpMessageSender::fn_800EA958(Koga::ToolData* pData) {
     if (newData == _CBC.getMaxMember())  {
          return 0;
     }
-    else if (_CBC.fn_800EBBA8(newData) == false) return 0;
+    else if (_CBC.fn_800EBBA8(newData) == nullptr) return 0;
 
     fn_800EB634(pData, 0, true);
     return true;
@@ -88,8 +90,28 @@ void JmpMessageSender::fn_800EB528() {
     fn_800EB564(_CE9);
 }
 
-void JmpMessageSender::fn_800EB564(char* param_1) {
+void JmpMessageSender::fn_800EB564(u8* param_1) {
+    u8* curChar = param_1;
 
+    for (s32 i = 0; i < 262; i++, curChar++) {
+        u8 val = *curChar;
+
+        if (val != 0  && !fn_801883F8(i)) {
+            fn_800620F4(i);
+        }
+    }
+}
+
+void JmpMessageSender::fn_800EB5CC(u8* param_1) {
+    u8* curChar = param_1;
+
+    for (s32 i = 0; i < 262; i++, curChar++) {
+        u8 val = *curChar;
+
+        if (val == 0  && !fn_801883F8(i)) {
+            fn_800620F4(i);
+        }
+    }
 }
 
 void JmpMessageSender::fn_800EB634(Koga::ToolData* pData, s32 param_2, bool param_3) {
@@ -110,6 +132,22 @@ void JmpMessageSender::fn_800EB634(Koga::ToolData* pData, s32 param_2, bool para
         //s32
     }
 }
+
+Koga::ToolData* unkJmpMessageSender2::fn_800EBBA8(Koga::ToolData* pData) {
+    u32 val = (int)mArr[mArraySize - (int)pData];
+
+    if (val > 0) {
+        Koga::ToolData* curToolData = pData;
+
+        for (; curToolData->getJMapData() != mArr[mArraySize]->getJMapData(); curToolData = mArr[mArraySize]) {
+            curToolData->setJMapData(mArr[mArraySize]->getJMapData());
+        }
+    }
+
+    mArraySize--;
+    return pData;
+}
+
 unkJmpMessageSender1Arr::unkJmpMessageSender1Arr() : _C80(0) { }
 
 unkJmpMessageSender1Arr::~unkJmpMessageSender1Arr() { }

@@ -32,7 +32,7 @@ public:
     ~unkJmpMessageSender2() { }
     void add(Koga::ToolData** member) { Koga::Array<Koga::ToolData*, 10>::add(member); }
 
-    bool fn_800EBBA8(Koga::ToolData*);
+    Koga::ToolData* fn_800EBBA8(Koga::ToolData*);
 };
 
 class JmpMessageSender : public MessageSender, public JORReflexible {
@@ -53,13 +53,13 @@ public:
     void fn_800EB1DC();
     void fn_800EB27C();
     void fn_800EB528();
-    void fn_800EB5CC(char*);
-    void fn_800EB564(char*);
+    void fn_800EB5CC(u8*);
+    void fn_800EB564(u8*);
 public:
     /* 0x038 */ unkJmpMessageSender1Arr _38;
     /* 0xCBC */ unkJmpMessageSender2 _CBC;
     /* 0xCE8 */ u8 _CE8;
-    /* 0xCE8 */ char _CE9[262];
+    /* 0xCE8 */ u8 _CE9[262];
 };
 
 #endif
