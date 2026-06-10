@@ -13,8 +13,7 @@ s32 lbl_804D2D18 = 0;
 
 namespace Koga {
 
-    MapCol::~MapCol() {
-    }
+    MapCol::~MapCol() { }
 
     void MapCol::newMapCol() {
         sCurMapCol = new MapCol();
@@ -77,8 +76,7 @@ namespace Koga {
         }
     }
 
-    void MapCol::fn_800BC898() {
-    }
+    void MapCol::fn_800BC898() { }
 
     void MapCol::fn_800BC89C(s32 param_1) {
         _8 |= 1 << param_1;
