@@ -158,11 +158,10 @@ namespace Koga {
         ToolData jmpToolData;
         jmpToolData.attach((ToolData::JMapData*)mMapArchive->getResource('JMP ', pName));
         ToolData* mapData = &mMapData[0];
-        ToolData* maxData = &mMapData[mJmpCount];
 
-        for (; mapData != maxData && mapData->getJMapData() != jmpToolData.getJMapData(); mapData++) {}
+        for (; mapData != &mMapData[mJmpCount] && mapData->getJMapData() != jmpToolData.getJMapData(); mapData++) {}
 
-        if (mapData == maxData || mapData->getJMapData() == nullptr)
+        if (mapData == &mMapData[mJmpCount] || mapData->getJMapData() == nullptr)
             return nullptr;
 
         return mapData;
