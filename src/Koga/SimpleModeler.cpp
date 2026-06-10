@@ -16,11 +16,13 @@ unkSimpleModeler3::~unkSimpleModeler3() {
 
 namespace Koga {
     
+    //https://decomp.me/scratch/ILg4C
     SimpleModeler::~SimpleModeler() {
         delete this;
         sSimpleModelerInitialized -= 1;
     }
 
+    //https://decomp.me/scratch/kmGpk
     void SimpleModeler::newSimpleModeler() {
         if (sSimpleModelerInitialized == 0) {
             //fn_800BB88C();
@@ -34,6 +36,7 @@ namespace Koga {
         }
     }
 
+    //Adding this here, although its probably some struct nonsense here: https://decomp.me/scratch/HzVXW
     bool SimpleModeler::fn_800BB6A4(f32 param_1, f32 param_2, void* param_3, void* param_4) {
         if (mUnk2._304 >= 32) {
             return false;

@@ -51,8 +51,8 @@ namespace Koga {
         // I opted to not match this name because 
         bool fn_800BB6A4(f32, f32, void*, void*);
 
-        bool fn_800BB70C(); //Seems to be some Matrix copying or something similar of unkSimpleModeler3
-        void fn_800BB778(); //Draws the models of each class in a loop
+        bool fn_800BB70C(); //Seems to be some Matrix copying or something similar of unkSimpleModeler3. Missing Args
+        void fn_800BB778(); //Draws the models of each class in a loop.
 
         SimpleModeler* fn_800BB88C();
         void fn_800BB8BC();
