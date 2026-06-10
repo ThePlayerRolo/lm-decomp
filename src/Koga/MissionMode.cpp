@@ -152,16 +152,16 @@ namespace Koga {
     }
 
 
-    //https://decomp.me/scratch/BIOPB
+    //https://decomp.me/scratch/FshSz
     ToolData* MissionMode::getMapSectionData(const char* pName) {
         ToolData jmpToolData;
         jmpToolData.attach((ToolData::JMapData*)mMapArchive->getResource('JMP ', pName));
         ToolData* mapData = &mMapData[0];
         ToolData* maxData = &mMapData[mJmpCount];
 
-        for (int i = 0; mapData != maxData; i++, mapData = &mMapData[i]) {}
+        for (; mapData != maxData && mapData->getJMapData() != jmpToolData.getJMapData(); mapData++) {}
 
-        if (mapData == maxData && mapData->getJMapData() == 0)
+        if (mapData == maxData || mapData->getJMapData() == nullptr)
             return nullptr;
 
         return mapData;
