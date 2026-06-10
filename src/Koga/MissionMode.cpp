@@ -44,7 +44,7 @@ namespace Koga {
 
     inline Koga::MissionMode::~MissionMode() {
         mMapArchive->unmount();
-        SimpleModeler::getCurSimpleModeler()->deleteSimpleModeler();
+        SimpleModeler::sCurSimpleModeler->deleteSimpleModeler();
         delete mEnGenMgr;
         delete mJmpMsgSender;
         delete mCharColMgr;
@@ -175,6 +175,6 @@ namespace Koga {
     }
 
     void MissionMode::vt_18() {
-        SimpleModeler::getCurSimpleModeler()->fn_800BB778();
+        SimpleModeler::sCurSimpleModeler->fn_800BB778();
     }
 }
