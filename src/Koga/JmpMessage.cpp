@@ -109,7 +109,7 @@ void JmpMessageSender::fn_800EB5CC(u8* param_1) {
         u8 val = *curChar;
 
         if (val == 0  && !fn_801883F8(i)) {
-            fn_800620F4(i);
+            fn_800624BC(i);
         }
     }
 }
