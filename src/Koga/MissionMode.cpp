@@ -1,7 +1,7 @@
 #include "Koga/MissionMode.hpp"
 #include <JSystem/JKernel/JKRFileFinder.hpp>
 #include <JSystem/JKernel/JKRArchive.hpp>
-#include "Koga/MapColl.hpp"
+#include "Koga/MapCol.hpp"
 #include "Koga/EnTypesManager.hpp"
 #include "Koga/EnManager.hpp"
 #include "Koga/EnemyGenManager.hpp"
@@ -30,7 +30,7 @@ namespace Koga {
         , mCharColMgr(nullptr)
         , mJmpMsgSender(nullptr)
     {
-        MapColl::newMapColl();
+        MapCol::newMapCol();
         EnTypesManager::newManager();
         mEnTypesMgr = EnTypesManager::getManager();
         mEnMgr = new EnManager();
@@ -51,7 +51,7 @@ namespace Koga {
         delete[] mMapData;
         delete mEnMgr;
         EnTypesManager::deleteManager();
-        MapColl::deleteMapColl();
+        MapCol::deleteMapCol();
         sMissionMode = 0;
     }
 
@@ -110,7 +110,7 @@ namespace Koga {
     }
 
     void MissionMode::loadCollisionInfo(const char* pFile, const char* pPath) {
-        MapColl* curColl = MapColl::getCurMapColl();
+        MapCol* curColl = MapCol::getCurMapCol();
 
         curColl->load(mMapArchive->getResource(pFile), mMapArchive->getResource(pPath));
     }
@@ -171,7 +171,7 @@ namespace Koga {
         mEnMgr->fn_800E5AE8();
         mJmpMsgSender->vt_0C();
         mEnGenMgr->fn_800C2F44();
-        MapColl::getCurMapColl()->fn_800BC898();
+        MapCol::getCurMapCol()->fn_800BC898();
     }
 
     void MissionMode::vt_18() {

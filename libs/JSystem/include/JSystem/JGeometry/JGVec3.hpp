@@ -307,6 +307,8 @@ public:
 	}
 };
 
+typedef TVec3<f32> TVec3f;
+
 } // namespace JGeometry
 
 #endif
