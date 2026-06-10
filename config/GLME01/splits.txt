@@ -33,6 +33,7 @@ Koga/MissionMode.cpp:
 Koga/MapCol.cpp:
 	.text       start:0x800BBA78 end:0x800BC9FC
 	.data       start:0x80359FD0 end:0x8035A084
+	.sdata      start:0x804D2D18 end:0x804D2D30
 
 Koga/ToolData.cpp:
 	.text       start:0x800BC9FC end:0x800BCEF8
