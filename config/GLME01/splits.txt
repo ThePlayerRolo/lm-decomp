@@ -15,6 +15,9 @@ Sections:
 Unsorted/staticData.cpp:
 	.data       start:0x8021E000 end:0x802FB380
 
+Unsorted/8006385C.cpp:
+	.text       start:0x8006385C end:0x80065DA4
+
 Koga/GameMode.cpp:
 	.text       start:0x800BA7E0 end:0x800BA8C8
 	.data       start:0x80359E18 end:0x80359E44
