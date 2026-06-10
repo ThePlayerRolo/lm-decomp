@@ -13,6 +13,7 @@ namespace Koga {
     public:
 
         //TODO: Verify this since its confusing
+        //The members function both as a int/short, and Vector
         struct unkSubStruct {
             JGeometry::TVec3f _0[5];
         };
