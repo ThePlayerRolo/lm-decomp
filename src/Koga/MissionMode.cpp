@@ -115,7 +115,8 @@ namespace Koga {
         curColl->load(mMapArchive->getResource(pFile), mMapArchive->getResource(pPath));
     }
 
-    void MissionMode::loadEnemyInfo(Mission mission) {
+    // Toggles the loaded JMP tables between their blackout mode variants
+    void MissionMode::toggleBlackoutTables(Mission mission) {
         switch (mission) {
         case MISSION_BLACKOUT:
             mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenEnemyInfo"));

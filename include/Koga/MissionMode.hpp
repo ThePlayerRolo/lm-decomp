@@ -35,7 +35,7 @@ namespace Koga {
         static MissionMode* create();
 
         void loadCollisionInfo(const char* pFile, const char* pPath);
-        void loadEnemyInfo(Mission mission);
+        void toggleBlackoutTables(Mission mission);
         void addJmpReceiver(void* pReceiver);
         void* getMapArchiveResource(const char* name, u32 type);
 
