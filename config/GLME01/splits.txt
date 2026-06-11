@@ -43,6 +43,16 @@ Koga/ToolData.cpp:
 	.data       start:0x8035A0A0 end:0x8035A0D8
 	.sdata      start:0x804D2D30 end:0x804D2D40
 
+Koga/EnemyStrategy.cpp:
+	.text       start:0x800C2238 end:0x800C24A4
+	.data       start:0x8035A4F8 end:0x8035A598
+	.sdata      start:0x804D2E60 end:0x804D2E78
+
+Koga/EnAttackBase.cpp:
+	.text       start:0x800CF63C end:0x800CF6A8
+	.data       start:0x80361E78 end:0x80361FA4
+	.sdata      start:0x804D3AF8 end:0x804D3B20
+
 Koga/CharacterEventObserver.cpp:
 	.text       start:0x800EA1B4 end:0x800EA454
 	.data       start:0x80363FA0 end:0x803640D8
