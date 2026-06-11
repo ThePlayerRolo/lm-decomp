@@ -13,8 +13,8 @@ typedef bool (EnemyStrategy::*EnemyStrategyStateFn)();
 struct EnemyStrategyState {
     /* 0x00 */ u16 stateIndex;
     /* 0x02 */ u16 padding;
-    /* 0x04 */ EnemyStrategyStateFn function1; // Called in overrides of EnemyStrategy_vt_20
-    /* 0x10 */ EnemyStrategyStateFn function2; // Called in overrides of EnemyStrategy_vt_1C
+    /* 0x04 */ EnemyStrategyStateFn function1; // Called in overrides of EnemyStrategy::vt_20
+    /* 0x10 */ EnemyStrategyStateFn function2; // Called in overrides of EnemyStrategy::vt_1C
 
     inline EnemyStrategyState(u16 _stateIndex,
         EnemyStrategyStateFn _function1,
@@ -26,12 +26,12 @@ class EnemyStrategy : public JORReflexible {
 public:
     EnemyStrategy();
     virtual ~EnemyStrategy();
-    virtual void EnemyStrategy_vt_0C();
-    virtual void EnemyStrategy_vt_10();
-    virtual bool EnemyStrategy_vt_14();
-    virtual void EnemyStrategy_vt_18();
-    virtual void EnemyStrategy_vt_1C();
-    virtual void EnemyStrategy_vt_20();
+    virtual void vt_0C();
+    virtual void vt_10();
+    virtual bool vt_14();
+    virtual void vt_18();
+    virtual void vt_1C();
+    virtual void vt_20();
 
     inline u16 getNextState() const { return mNextState; }
     inline u16 getCurrentState() const { return mCurrentState; }
@@ -59,7 +59,7 @@ public:
     EnemyStrategyDecorator();
     bool setNextStrategy(EnemyStrategy* strategy);
 
-    virtual void EnemyStrategy_vt_10();
+    virtual void vt_10();
     virtual ~EnemyStrategyDecorator(); // The destructor might be defined in another TU, not EnemyStrategy.cpp
 private:
     /* 0x14 */ EnemyStrategy* mNextStrategy;
