@@ -654,6 +654,7 @@ config.libs = [
         Object(NonMatching, "Koga/JmpMessage.cpp"),
         Object(NonMatching, "Koga/EnAttackBase.cpp"),
         Object(NonMatching, "Koga/EnemyStrategy.cpp"),
+        Object(NonMatching, "Koga/SimpleModeler.cpp"),
 
         # Unsorted
         Object(Matching, "Unsorted/staticData.cpp"),  # TODO Verify this is a seperate file

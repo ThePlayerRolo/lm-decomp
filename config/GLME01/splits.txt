@@ -33,6 +33,11 @@ Koga/MissionMode.cpp:
 	.sdata      start:0x804D2CE0 end:0x804D2D10
 	.sdata2     start:0x804DB628 end:0x804DB630
 
+Koga/SimpleModeler.cpp:
+	.text       start:0x800BB54C end:0x800BBA78
+	.data       start:0x80359F98 end:0x80359FD0
+	.sdata      start:0x804D2D10 end:0x804D2D18
+
 Koga/MapCol.cpp:
 	.text       start:0x800BBA78 end:0x800BC9FC
 	.data       start:0x80359FD0 end:0x8035A084
