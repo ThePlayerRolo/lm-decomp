@@ -1,31 +1,18 @@
 #include "Koga/SimpleModeler.hpp"
+#include "types.h"
 
 dummy_float_data()
 
-unkSimpleModeler1::~unkSimpleModeler1() {
-    delete this;
-}
-
-unkSimpleModeler2::~unkSimpleModeler2() {
-    delete this;
-}
-
-unkSimpleModeler3::~unkSimpleModeler3() {
-    delete this;    
-}
-
 namespace Koga {
-    
-    //https://decomp.me/scratch/ILg4C
+
     SimpleModeler::~SimpleModeler() {
-        delete this;
         sSimpleModelerInitialized -= 1;
     }
 
     //https://decomp.me/scratch/kmGpk
     void SimpleModeler::newSimpleModeler() {
         if (sSimpleModelerInitialized == 0) {
-            //fn_800BB88C();
+            //fn_800BB88C(); Something funky here, maybe its a part of inline constructor of SimpleModeler? Maybe has a base class?
             sCurSimpleModeler = new SimpleModeler();
         }
     }
@@ -38,11 +25,11 @@ namespace Koga {
 
     //Adding this here, although its probably some struct nonsense here: https://decomp.me/scratch/HzVXW
     bool SimpleModeler::fn_800BB6A4(f32 param_1, f32 param_2, void* param_3, void* param_4) {
-        if (mUnk2._304 >= 32) {
+        if (mUnk2._300 >= 32) {
             return false;
         }
 
-        fn_800BB9E4(&mUnk2, param_3);
+        mUnk2.fn_800BB9E4(param_3);
         return true;
     }
 
@@ -52,19 +39,19 @@ namespace Koga {
     }
 
     void SimpleModeler::fn_800BB8BC() {
-        sSimpleModelerInitialized+=1;
+        sSimpleModelerInitialized += 1;
     }
+}
 
-    // As noted in the header, these may just be functions in the class, unsure, but they match 100%
-    void SimpleModeler::fn_800BB8CC() {
-        mUnk3._F8 = 0;
-    }
+unkSimpleModeler3::unkSimpleModeler3() {
+    _680 = 0; //Could also be nullptr
+}
 
-    void SimpleModeler::fn_800BB998() {
-        mUnk2._7C = 0;
-    }
 
-    void SimpleModeler::fn_800BBA2C(){
-        mUnk1._280 = 0;
-    }
+unkSimpleModeler2::unkSimpleModeler2() {
+    _300 = 0; //Could also be nullptr
+}
+
+unkSimpleModeler1::unkSimpleModeler1() {
+    _280 = 0; //Could also be nullptr
 }
