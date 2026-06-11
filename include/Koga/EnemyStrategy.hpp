@@ -25,18 +25,19 @@ struct EnemyStrategyState {
 class EnemyStrategy : public JORReflexible {
 public:
     EnemyStrategy();
-    virtual ~EnemyStrategy();
-    virtual void vt_0C();
-    virtual void vt_10();
-    virtual bool vt_14();
-    virtual void vt_18();
-    virtual void vt_1C();
-    virtual void vt_20();
+    /* 0x08 */ virtual ~EnemyStrategy();
+    /* 0x0C */ virtual void init();
+    /* 0x10 */ virtual void update();
+    /* 0x14 */ virtual bool vt_14();
+    /* 0x18 */ virtual void vt_18();
+    /* 0x1C */ virtual void doBehavior();
+    /* 0x20 */ virtual void doBehaviorInit();
 
     inline u16 getNextState() const { return mNextState; }
     inline u16 getCurrentState() const { return mCurrentState; }
 
     void setNextState(u16 state);
+    void changeState();
 
     static u32 fn_800C2370(u32 arg0, u32 arg1);
 
@@ -44,25 +45,23 @@ public:
         noOpDelete(ptr);
     }
 protected:
-    /* 0x04 */ void* unk4;
-    /* 0x08 */ u32 unk8;
+    /* 0x04 */ void* mpZako;
+    /* 0x08 */ void* mpUserData;
     /* 0x0C */ u16 mNextState; // 0xFFFF = end strategy
     /* 0x0E */ u16 mCurrentState;
-    /* 0x10 */ u32 unk10;
+    /* 0x10 */ u32 mTimer;
 private:
-    void fn_800C2328();
     static void noOpDelete(void* ptr);
 };
 
 class EnemyStrategyDecorator : public EnemyStrategy {
 public:
     EnemyStrategyDecorator();
-    bool setNextStrategy(EnemyStrategy* strategy);
+    bool setTsuriStrategy(EnemyStrategy* strategy);
 
-    virtual void vt_10();
-    virtual ~EnemyStrategyDecorator(); // The destructor might be defined in another TU, not EnemyStrategy.cpp
+    virtual void update();
 private:
-    /* 0x14 */ EnemyStrategy* mNextStrategy;
+    /* 0x14 */ EnemyStrategy* mTsuriStrategy;
     /* 0x18 */ u16 unk18;
 };
 
