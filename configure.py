@@ -587,7 +587,7 @@ config.libs = [
 
     MetroworksLib("MSL_C", [
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/abort_exit.c"),
-        Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/ansi_fp.c", extra_cflags=["-sym on"]),
+        Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/ansi_fp.c"),
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/arith.c"),
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/buffer_io.c"),
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/ctype.c"),
@@ -605,6 +605,10 @@ config.libs = [
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/float.c"),
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/uart_console_io.c"),
         Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/wchar_io.c"),
+        Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Src/Math/Double_precision/s_frexp.c"),
+
+        Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Src/Math/Single_precision/trigf.c"),
+        Object(Matching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Src/Math/Single_precision/common_float_tables.c"),
     ]),
 
     MetroworksLib("Runtime.PPCEABI.H", [

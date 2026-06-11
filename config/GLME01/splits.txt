@@ -746,6 +746,20 @@ PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/uart_console_io.c:
 PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/src/wchar_io.c:
 	.text       start:0x80205BF0 end:0x80205C70
 
+PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Src/Math/Double_precision/s_frexp.c:
+	.text       start:0x80205C70 end:0x80205D0C
+	.sdata2     start:0x804DD8D0 end:0x804DD8D8
+
+PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Src/Math/Single_precision/trigf.c:
+	.text       start:0x80206204 end:0x802065F0
+	.ctors      start:0x8020BDCC end:0x8020BDD0
+	.rodata     start:0x80217C28 end:0x80217C38
+	.data       start:0x80396778 end:0x80396788
+	.sdata2     start:0x804DD900 end:0x804DD918
+
+PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Src/Math/Single_precision/common_float_tables.c:
+	.rodata     start:0x80217C38 end:0x80218088
+
 TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Portable/mainloop.c:
 	.text       start:0x8020675C end:0x802068C4
 
