@@ -1,7 +1,6 @@
 #ifndef EN_ATTACK_BASE_H_
 #define EN_ATTACK_BASE_H_
 
-#include "types.h"
 #include <Koga/CharacterEventObserver.hpp>
 #include <Sato/EnemyStrategy.hpp>
 
