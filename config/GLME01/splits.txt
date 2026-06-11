@@ -50,7 +50,7 @@ Koga/EnemyStrategy.cpp:
 
 Koga/EnAttackBase.cpp:
 	.text       start:0x800CF63C end:0x800CF6A8
-	.data       start:0x80361E78 end:0x80361FA4
+	.data       start:0x80361E78 end:0x80361FA8
 	.sdata      start:0x804D3AF8 end:0x804D3B20
 
 Koga/CharacterEventObserver.cpp:

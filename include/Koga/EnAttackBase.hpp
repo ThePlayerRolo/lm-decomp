@@ -10,6 +10,7 @@ class EnAttackBase : public EnemyStrategy, public Koga::CharacterEventObserver {
 public:
     virtual ~EnAttackBase();
     virtual void* EnAttackBase_vt_70(); // Seems to be in a different TU than the destructor
+    virtual void EnAttackBase_vt_74() = 0; // This might just be padding, idk yet
 };
 
 #endif
