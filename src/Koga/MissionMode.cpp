@@ -175,6 +175,6 @@ namespace Koga {
     }
 
     void MissionMode::vt_18() {
-        SimpleModeler::getCurSimpleModeler()->fn_800BB778();
+        SimpleModeler::getCurSimpleModeler()->draw();
     }
 }

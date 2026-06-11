@@ -1,5 +1,4 @@
 #include "Koga/SimpleModeler.hpp"
-#include "types.h"
 
 dummy_float_data()
 
