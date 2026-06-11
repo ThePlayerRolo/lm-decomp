@@ -21,6 +21,18 @@ Unsorted/8006385C.cpp:
 Koga/GameModeUtil.cpp:
 	.text       start:0x800B9D1C end:0x800B9F7C
 
+Koga/800B9F7C.cpp:
+	.text       start:0x800B9F7C end:0x800BA2D4
+
+Koga/UnkUtil.cpp:
+	.text       start:0x800BA2D4 end:0x800BA57C
+	.sdata2     start:0x804DB600 end:0x804DB628
+
+Koga/Param.cpp:
+	.text       start:0x800BA57C end:0x800BA7E0
+	.data       start:0x80359DCC end:0x80359DFC
+	.sdata      start:0x804D2CD0 end:0x804D2CD8
+
 Koga/GameMode.cpp:
 	.text       start:0x800BA7E0 end:0x800BA8C8
 	.data       start:0x80359E18 end:0x80359E44
