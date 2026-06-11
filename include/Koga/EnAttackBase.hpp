@@ -2,7 +2,6 @@
 #define EN_ATTACK_BASE_H_
 
 #include "types.h"
-#include <JSystem/JORReflexible.hpp>
 #include <Koga/CharacterEventObserver.hpp>
 #include <Koga/EnemyStrategy.hpp>
 
