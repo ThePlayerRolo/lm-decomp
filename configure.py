@@ -653,7 +653,7 @@ config.libs = [
         Object(NonMatching, "Koga/Message.cpp"),
         Object(NonMatching, "Koga/JmpMessage.cpp"),
         Object(NonMatching, "Koga/EnAttackBase.cpp"),
-        Object(NonMatching, "Koga/EnemyStrategy.cpp"),
+        Object(NonMatching, "Sato/EnemyStrategy.cpp"),
         Object(NonMatching, "Koga/SimpleModeler.cpp"),
 
         # Unsorted

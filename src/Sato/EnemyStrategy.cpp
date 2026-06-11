@@ -1,4 +1,4 @@
-#include "Koga/EnemyStrategy.hpp"
+#include "Sato/EnemyStrategy.hpp"
 
 EnemyStrategy::EnemyStrategy() {
     mpZako = nullptr;

@@ -48,7 +48,7 @@ Koga/ToolData.cpp:
 	.data       start:0x8035A0A0 end:0x8035A0D8
 	.sdata      start:0x804D2D30 end:0x804D2D40
 
-Koga/EnemyStrategy.cpp:
+Sato/EnemyStrategy.cpp:
 	.text       start:0x800C2238 end:0x800C24A4
 	.data       start:0x8035A4F8 end:0x8035A598
 	.sdata      start:0x804D2E60 end:0x804D2E78

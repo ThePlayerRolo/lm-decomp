@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include <Koga/CharacterEventObserver.hpp>
-#include <Koga/EnemyStrategy.hpp>
+#include <Sato/EnemyStrategy.hpp>
 
 class EnAttackBase : public EnemyStrategy, public Koga::CharacterEventObserver {
 public:
