@@ -9,8 +9,9 @@ class EnemyStrategy;
 typedef bool (EnemyStrategy::*EnemyStrategyStateFn)();
 
 // Each EnemyStrategy implementation has a static array of these structures.
+// In their vt_1C and vt_20, they search for an entry with a stateIndex that matches their mCurrentState.
 struct EnemyStrategyState {
-    /* 0x00 */ u16 stateIndex; // Compared with EnemyStrategy::mCurrentState
+    /* 0x00 */ u16 stateIndex;
     /* 0x02 */ u16 padding;
     /* 0x04 */ EnemyStrategyStateFn function1; // Called in overrides of EnemyStrategy_vt_20
     /* 0x10 */ EnemyStrategyStateFn function2; // Called in overrides of EnemyStrategy_vt_1C
@@ -38,6 +39,10 @@ public:
     void setNextState(u16 state);
 
     static u32 fn_800C2370(u32 arg0, u32 arg1);
+
+    void operator delete(void* ptr) {
+        noOpDelete(ptr);
+    }
 protected:
     /* 0x04 */ void* unk4;
     /* 0x08 */ u32 unk8;
@@ -47,10 +52,6 @@ protected:
 private:
     void fn_800C2328();
     static void noOpDelete(void* ptr);
-public:
-    void operator delete(void* ptr) {
-        noOpDelete(ptr);
-    }
 };
 
 class EnemyStrategyDecorator : public EnemyStrategy {
