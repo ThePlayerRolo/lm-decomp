@@ -42,7 +42,9 @@ namespace Koga {
         SimpleModeler() {}
 
         //https://decomp.me/scratch/ILg4C
-        /* 0x08 */ virtual ~SimpleModeler();
+        /* 0x08 */ virtual ~SimpleModeler() {
+            sSimpleModelerInitialized -= 1;
+        }
 
         static void newSimpleModeler();
         static void deleteSimpleModeler();

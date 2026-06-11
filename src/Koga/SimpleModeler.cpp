@@ -3,11 +3,6 @@
 dummy_float_data()
 
 namespace Koga {
-
-    SimpleModeler::~SimpleModeler() {
-        sSimpleModelerInitialized -= 1;
-    }
-
     //https://decomp.me/scratch/kmGpk
     void SimpleModeler::newSimpleModeler() {
         if (sSimpleModelerInitialized == 0) {
