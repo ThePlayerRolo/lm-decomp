@@ -1,12 +1,11 @@
 #include "Koga/MapCol.hpp"
-#include "JSystem/JGeometry/JGVec3.hpp"
 #include "Koga/ToolData.hpp"
+#include "Koga/GameModeUtil.hpp"
 
 dummy_float_data()
 
 static f32 dummy_float_data2[8] = {1.0f, 0.95f, 0.9f, 0.85f, 1.0f, 0.9f, 0.75f, 0.3f};
 
-extern Koga::ToolData* fn_800B9F50(const char*);
 extern int fn_8018D474(u16, u16, u16);
 
 s32 lbl_804D2D18 = 0;
@@ -26,8 +25,8 @@ namespace Koga {
 
     void MapCol::load(void* param_1, void* param_2) {
         _4 = (unkSubStruct*)param_1;
-        if (fn_800B9F50("SoundPolygonInfo") != nullptr) {
-            Koga::ToolData* soundPolygonInfo = fn_800B9F50("SoundPolygonInfo");
+        if (GameModeUtil::getMapSection("SoundPolygonInfo") != nullptr) {
+            Koga::ToolData* soundPolygonInfo = GameModeUtil::getMapSection("SoundPolygonInfo");
 
             _C = soundPolygonInfo->searchItemInfo("sound_material");
             _10 = soundPolygonInfo->searchItemInfo("sound_echo_switch");
@@ -95,7 +94,7 @@ namespace Koga {
         if (_C < 0)
             return 0;
 
-        Koga::ToolData* soundPolygonInfo = fn_800B9F50("SoundPolygonInfo");
+        Koga::ToolData* soundPolygonInfo = GameModeUtil::getMapSection("SoundPolygonInfo");
         u32 p1 = param_1;
         u32 firstVal = soundPolygonInfo->getUnsignedValue< u32 >(_C, param_1);
         u32 secondVal = soundPolygonInfo->getUnsignedValue< u32 >(_10, param_1);
@@ -104,6 +103,6 @@ namespace Koga {
     }
 
     ToolData* MapCol::getPolygonInfo() {
-        return fn_800B9F50("PolygonInfo");
+        return GameModeUtil::getMapSection("PolygonInfo");
     }
 };  // namespace Koga

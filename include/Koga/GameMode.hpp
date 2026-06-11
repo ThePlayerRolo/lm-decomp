@@ -26,7 +26,7 @@ namespace Koga {
 
         // This looks like a destroy() function or something?
         // It does destructor-like things when overridden in Koga::MissionMode.
-        /* 0x08 */ virtual void vt_8() = 0;
+        /* 0x08 */ virtual void vt_8(s16) = 0;
 
         /* 0x0C */ virtual void init();
         /* 0x10 */ virtual void vt_10();

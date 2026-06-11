@@ -1,7 +1,6 @@
 #ifndef MAP_COLL_H_
 #define MAP_COLL_H_
 
-
 #include "types.h"
 #include <JSystem/JORReflexible.hpp>
 #include <JSystem/JGeometry/JGVec3.hpp>

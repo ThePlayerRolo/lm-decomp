@@ -25,7 +25,7 @@ namespace Koga {
         MissionMode();
         ~MissionMode();
 
-        /* 0x08 */ virtual void vt_8();
+        /* 0x08 */ virtual void vt_8(s16);
 
         /* 0x0C */ virtual void init();
         /* 0x10 */ virtual void vt_10();
@@ -33,6 +33,7 @@ namespace Koga {
         /* 0x18 */ virtual void vt_18();
 
         static MissionMode* create();
+        static inline MissionMode* getMissionMode() { return sMissionMode; }
 
         void loadCollisionInfo(const char* pFile, const char* pPath);
         void toggleBlackoutTables(Mission mission);
@@ -41,6 +42,10 @@ namespace Koga {
 
         ToolData* getMapSectionData(const char* pName);
 
+        inline EnManager* getEnManager() { return mEnMgr; }
+        inline EnemyGenManager* getEnemyGenManager() { return mEnGenMgr; }
+        inline JKRArchive* getMapArchive() { return mMapArchive; }
+        inline JmpMessageSender* getJmpMsgSender() { return mJmpMsgSender; }
 
     public:
         /* 0x04 */ EnTypesManager* mEnTypesMgr;

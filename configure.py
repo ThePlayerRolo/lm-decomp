@@ -644,6 +644,7 @@ config.libs = [
 
     Game([
         # Koga
+        Object(NonMatching, "Koga/GameModeUtil.cpp"),
         Object(Matching, "Koga/GameMode.cpp"),
         Object(NonMatching, "Koga/MissionMode.cpp"),
         Object(NonMatching, "Koga/MapCol.cpp"),

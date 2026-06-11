@@ -55,8 +55,8 @@ namespace Koga {
         sMissionMode = 0;
     }
 
-    //https://decomp.me/scratch/A4A11
-    void Koga::MissionMode::vt_8() {
+    //https://decomp.me/scratch/2xA8s
+    void Koga::MissionMode::vt_8(s16) {
         delete this;
     }
 

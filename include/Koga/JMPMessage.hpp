@@ -49,12 +49,14 @@ public:
 
     void fn_800EB634(Koga::ToolData*, s32, bool);
     BOOL fn_800EAA00(const char*, int);
+    void fn_800EAB1C();
 
     void fn_800EB1DC();
     void fn_800EB27C();
     void fn_800EB528();
     void fn_800EB5CC(u8*);
     void fn_800EB564(u8*);
+
 public:
     /* 0x038 */ unkJmpMessageSender1Arr _38;
     /* 0xCBC */ unkJmpMessageSender2 _CBC;
