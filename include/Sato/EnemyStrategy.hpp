@@ -6,20 +6,22 @@
 
 class EnemyStrategy;
 
+typedef void* (EnemyStrategyInitFn)(void* buffer, u32 bufferSize);
 typedef bool (EnemyStrategy::*EnemyStrategyStateFn)();
 
 // Each EnemyStrategy implementation has a static array of these structures.
-// In their vt_1C and vt_20, they search for an entry with a stateIndex that matches their mCurrentState.
+// In their doBehavior and doBehaviorInit functions, they search for an entry
+// with a stateIndex that matches their mCurrentState.
 struct EnemyStrategyState {
     /* 0x00 */ u16 stateIndex;
     /* 0x02 */ u16 padding;
-    /* 0x04 */ EnemyStrategyStateFn function1; // Called in overrides of EnemyStrategy::vt_20
-    /* 0x10 */ EnemyStrategyStateFn function2; // Called in overrides of EnemyStrategy::vt_1C
+    /* 0x04 */ EnemyStrategyStateFn behaviorInitFunc; // Called in overrides of EnemyStrategy::doBehaviorInit
+    /* 0x10 */ EnemyStrategyStateFn behaviorFunc; // Called in overrides of EnemyStrategy::doBehavior
 
     inline EnemyStrategyState(u16 _stateIndex,
-        EnemyStrategyStateFn _function1,
-        EnemyStrategyStateFn _function2
-    ) : stateIndex(_stateIndex), padding(0), function1(_function1), function2(_function2) { }
+        EnemyStrategyStateFn _behaviorInitFunc,
+        EnemyStrategyStateFn _behaviorFunc
+    ) : stateIndex(_stateIndex), padding(0), behaviorInitFunc(_behaviorInitFunc), behaviorFunc(_behaviorFunc) { }
 };
 
 class EnemyStrategy : public JORReflexible {
@@ -39,7 +41,8 @@ public:
     void setNextState(u16 state);
     void changeState();
 
-    static u32 fn_800C2370(u32 arg0, u32 arg1);
+    static EnemyStrategyInitFn** getInitFunction(u32 index);
+    static void* fn_800C2370(u32 classSize, void* buffer, u32 bufferSize);
 
     void operator delete(void* ptr) {
         noOpDelete(ptr);
@@ -52,6 +55,7 @@ protected:
     /* 0x10 */ u32 mTimer;
 private:
     static void noOpDelete(void* ptr);
+    static EnemyStrategyInitFn* sInitFunctions[187];
 };
 
 class EnemyStrategyDecorator : public EnemyStrategy {

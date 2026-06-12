@@ -61,8 +61,8 @@ Koga/ToolData.cpp:
 	.sdata      start:0x804D2D30 end:0x804D2D40
 
 Sato/EnemyStrategy.cpp:
-	.text       start:0x800C2238 end:0x800C24A4
-	.data       start:0x8035A4F8 end:0x8035A598
+	.text       start:0x800C2224 end:0x800C24A4
+	.data       start:0x8035A4E0 end:0x8035A598
 	.sdata      start:0x804D2E60 end:0x804D2E78
 
 Koga/EnAttackBase.cpp:
@@ -84,6 +84,10 @@ Koga/JmpMessage.cpp:
 	.text       start:0x800EA820 end:0x800EBD50
 	.data       start:0x80364180 end:0x80364258
 	.sdata      start:0x804D3F90 end:0x804D3FD0
+
+Sato/EnemyStrategyInit.cpp:
+	.text       start:0x800EEBF0 end:0x800F140C
+	.data       start:0x80365A28 end:0x80365D4C
 
 JSystem/J2D/J2DGrafContext.cpp:
 	.text       start:0x801ADEE4 end:0x801AE564

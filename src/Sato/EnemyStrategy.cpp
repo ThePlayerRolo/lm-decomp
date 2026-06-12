@@ -1,5 +1,11 @@
 #include "Sato/EnemyStrategy.hpp"
 
+dummy_float_data()
+
+EnemyStrategyInitFn** EnemyStrategy::getInitFunction(u32 index) {
+    return &sInitFunctions[index];
+}
+
 EnemyStrategy::EnemyStrategy() {
     mpZako = nullptr;
     mpUserData = 0;
@@ -35,8 +41,8 @@ void EnemyStrategy::changeState() {
     doBehaviorInit();
 }
 
-u32 EnemyStrategy::fn_800C2370(u32 arg0, u32 arg1) {
-    return arg1;
+void* EnemyStrategy::fn_800C2370(u32 classSize, void* buffer, u32 bufferSize) {
+    return buffer;
 }
 
 void EnemyStrategy::noOpDelete(void* ptr) {
@@ -56,17 +62,12 @@ bool EnemyStrategyDecorator::setTsuriStrategy(EnemyStrategy* strategy) {
     return true;
 }
 
-// https://decomp.me/scratch/5NRr5
 void EnemyStrategyDecorator::update() {
+    // TODO: Figure out a way to match without this
+    u32 padding[2];
+
     if (mTsuriStrategy == nullptr) {
-        if (mNextState != 0xFFFF) {
-            mCurrentState = mNextState;
-            mNextState = 0xFFFF;
-            mTimer = 0;
-            doBehaviorInit();
-        }
-        doBehavior();
-        ++mTimer;
+        EnemyStrategy::update();
         return;
     }
 
