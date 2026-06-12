@@ -15,6 +15,14 @@ Sections:
 Unsorted/staticData.cpp:
 	.data       start:0x8021E000 end:0x802FB380
 
+Unsorted/80005EB8.cpp:
+	.text       start:0x80005EB8 end:0x80006258
+	.sdata      start:0x804CFF68 end:0x804CFF70
+	.sbss       start:0x804D8010 end:0x804D8028
+
+Unsorted/80006258.cpp:
+	.text       start:0x80006258 end:0x80006278
+
 Unsorted/8006385C.cpp:
 	.text       start:0x8006385C end:0x80065DA4
 
