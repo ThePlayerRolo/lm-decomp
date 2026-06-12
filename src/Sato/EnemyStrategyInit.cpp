@@ -1,7 +1,6 @@
 #include "Sato/EnemyStrategy.hpp"
 #include <new>
 
-// Not sure why, but objdiff refuses to let this be a local symbol even with scope:local
 static float lbl_80365A28[] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
     1.0f, 0.95f, 0.9f, 0.85f, 1.0f, 0.9f, 0.75f, 0.3f };
 
