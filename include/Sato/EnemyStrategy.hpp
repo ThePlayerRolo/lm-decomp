@@ -42,7 +42,7 @@ public:
     void changeState();
 
     static EnemyStrategyInitFn** getInitFunction(u32 index);
-    static void* fn_800C2370(u32 classSize, void* buffer, u32 bufferSize);
+    static void* allocStrategy(u32 classSize, void* buffer, u32 bufferSize);
 
     void operator delete(void* ptr) {
         noOpDelete(ptr);

@@ -8,7 +8,7 @@ static float lbl_80365A28[] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
 // defined and matched so it calls the right constructors.
 template <class StrategyClass>
 static void* enemyStrategyInit(void* buffer, u32 bufferSize) {
-    void* ptr = EnemyStrategy::fn_800C2370(sizeof(StrategyClass), buffer, bufferSize);
+    void* ptr = EnemyStrategy::allocStrategy(sizeof(StrategyClass), buffer, bufferSize);
     return new (ptr) StrategyClass();
 }
 

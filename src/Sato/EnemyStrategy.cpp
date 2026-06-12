@@ -41,7 +41,7 @@ void EnemyStrategy::changeState() {
     doBehaviorInit();
 }
 
-void* EnemyStrategy::fn_800C2370(u32 classSize, void* buffer, u32 bufferSize) {
+void* EnemyStrategy::allocStrategy(u32 classSize, void* buffer, u32 bufferSize) {
     return buffer;
 }
 
