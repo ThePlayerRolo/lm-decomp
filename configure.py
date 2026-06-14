@@ -670,7 +670,7 @@ config.libs = [
         Object(Matching, "Unsorted/staticData.cpp"),  # TODO Verify this is a seperate file
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/LMDvdFile.cpp"),
-
+        Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
     ]),
 ]
 
