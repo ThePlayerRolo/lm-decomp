@@ -137,6 +137,10 @@ jaudio/dspproc.c:
 	.sdata      start:0x804D7910 end:0x804D7918
 	.sdata2     start:0x804DD318 end:0x804DD320
 
+jaudio/ipldec.c:
+	.text       start:0x8019EDC0 end:0x8019EE40
+	.sbss       start:0x804D93E8 end:0x804D93F8
+
 jaudio/dsp_cardunlock.c:
 	.text       start:0x8019EE40 end:0x8019F660
 	.rodata     start:0x80217520 end:0x80217560
