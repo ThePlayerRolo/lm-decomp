@@ -7,7 +7,7 @@ struct LMDvdThread2 : public OSThread {
     /* 0x330 */ s32 _330;
     /* 0x334 */ OSMessageQueue _334;
     /* 0x354 */ s32 _354;
-    /* 0x358 */ _80007018Callback mCallback;
+    /* 0x358 */ DvdThread2Callback mCallback;
 };
 
 static void* sDvdThread2Stack[4096];
@@ -19,7 +19,7 @@ void fn_80007018() {
     fn_80007144(&sDvdThread2);
 }
 
-void fn_80007040(_80007018Callback cb) {
+void fn_80007040(DvdThread2Callback cb) {
     sDvdThread2.mCallback = cb;
     OSReceiveMessage(&sDvdThread2._334, nullptr, OS_MESSAGE_NOBLOCK);
     OSSendMessage(&sDvdThread2._310, nullptr, OS_MESSAGE_NOBLOCK);
