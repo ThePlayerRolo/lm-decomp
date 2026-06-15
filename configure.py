@@ -440,6 +440,7 @@ config.libs = [
 
     JAudio([
         Object(Matching, "jaudio/aictrl.c"),
+        Object(Matching, "jaudio/sample.c"),
         Object(Matching, "jaudio/dspbuf.c"),
         Object(NonMatching, "jaudio/dspboot.c"),
         Object(Matching, "jaudio/dspproc.c"),

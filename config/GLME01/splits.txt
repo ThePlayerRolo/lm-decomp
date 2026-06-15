@@ -127,6 +127,9 @@ jaudio/aictrl.c:
 	.sbss       start:0x804D9310 end:0x804D9340
 	.sdata2     start:0x804DD2E8 end:0x804DD2F8
 
+jaudio/sample.c:
+	.text       start:0x8019C620 end:0x8019C8C0
+
 jaudio/dspbuf.c:
 	.text       start:0x8019D260 end:0x8019D5A0
 	.rodata     start:0x802174E8 end:0x80217500

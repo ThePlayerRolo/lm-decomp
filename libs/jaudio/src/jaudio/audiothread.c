@@ -21,7 +21,7 @@
 #include "jaudio/stackchecker.h"
 #include <stddef.h>
 
-// this is purely for comm bullshit to match. pretty sure it's not the comm bug, just wacky.
+// this is purely for comm stuff to match. pretty sure it's not the comm bug, just wacky.
 typedef struct Jac_AudioThread {
 	OSThread thread; // _00
 	u8 pad[0x10];    // _310

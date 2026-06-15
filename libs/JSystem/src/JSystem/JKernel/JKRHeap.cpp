@@ -218,7 +218,7 @@ void* operator new[](u32 byteCount, JKRHeap* heap, int alignment)
 	return JKRHeap::alloc(byteCount, alignment, heap);
 }
 
-// this is not needed without the other pragma and asm bs
+// this is not needed without the other pragma and asm stuff
 void operator delete(void* memory) { JKRHeap::free(memory, nullptr); }
 void operator delete[](void* memory) { JKRHeap::free(memory, nullptr); }
 
