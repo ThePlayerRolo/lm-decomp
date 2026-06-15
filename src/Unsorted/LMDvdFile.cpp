@@ -112,7 +112,7 @@ bool LMDvdFile::open(const char* pFileName, LMDvdFileInfoBlock* param_2) {
     _8->_84 = 0;
     _8->_64 = param_2;
 
-    fn_80006E18(&_8);
+    _8->fn_80006E18();
     return true;
 }
 
@@ -135,7 +135,7 @@ void* LMDvdFile::open(const char* pFileName, LMDvdFileInfoCallback param_2, LMDv
     _8->_84 = 0;
     _8->_64 = param_3;
 
-    fn_80006E18(&_8);
+    _8->fn_80006E18();
     _0++;
 
     return _8->_64;

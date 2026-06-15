@@ -17,6 +17,7 @@ public:
     LMDvdFileInfoBlock* getUnk64();
     u32 getLength();
     JKRMemArchive* getArchive();
+    void fn_80006E18();
 
 public:
     /* 0x3C */ OSMessageQueue _3C;

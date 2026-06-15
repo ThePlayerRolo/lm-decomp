@@ -4,6 +4,5 @@
 #include <types.h>
 
 void initDvdThread();
-void fn_80006E18(void*);
 
 #endif

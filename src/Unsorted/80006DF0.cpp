@@ -18,8 +18,9 @@ void initDvdThread() {
     initDvdThreadInternal(&sDvdThread1);
 }
 
-void fn_80006E18(void* pPtr) {
-    OSSendMessage(&sDvdThread1._310, pPtr, 1);
+//Needs to be a member of LMDVDFileInfo for matching
+void LMDvdFileInfo::fn_80006E18() {
+    OSSendMessage(&sDvdThread1._310, this, 1);
 }
 
 static void* createThreadCallback(void* pPtr) {
