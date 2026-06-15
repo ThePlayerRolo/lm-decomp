@@ -26,6 +26,17 @@ Unsorted/LMDvdFile.cpp:
 Unsorted/staticData.cpp:
 	.data       start:0x8021E000 end:0x802FB380
 
+Unsorted/80006DF0.cpp:
+	.text       start:0x80006DF0 end:0x80007018
+	.bss        start:0x8039CE60 end:0x8039F2A0
+
+Unsorted/80007018.cpp:
+	.text       start:0x80007018 end:0x800071C0
+	.bss        start:0x8039F2A0 end:0x803A3600
+
+Unsorted/LMDvdFileBlock.cpp:
+	.text       start:0x800071C0 end:0x80007398
+
 Unsorted/8006385C.cpp:
 	.text       start:0x8006385C end:0x80065DA4
 

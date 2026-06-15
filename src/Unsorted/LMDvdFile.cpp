@@ -1,15 +1,12 @@
 #include "Unsorted/LMDvdFile.hpp"
 #include "Unsorted/80005EB8.hpp"
-#include "dolphin/dvd.h"
-#include "dolphin/macros.h"
-
+#include "Unsorted/80006DF0.hpp"
 #include <JSystem/JKernel/JKRHeap.hpp>
 #include <JSystem/JKernel/JKRMemArchive.hpp>
 #include <JSystem/JUtility/JUTGamePad.hpp>
 
 extern JUTGamePad* sGamePad;
 extern void fn_800473F8(s16);
-extern void fn_80006DF0();
 
 BOOL lbl_804D8028;
 
@@ -95,10 +92,10 @@ void LMDvdFile::init() {
     _8->_74 = nullptr;
     _8->_80 = getCurHeapGroupId();
 
-    OSReceiveMessage(&_8->_3C, nullptr, 0);
+    OSReceiveMessage(&_8->_3C, nullptr, OS_MESSAGE_NOBLOCK);
 }
 
-bool LMDvdFile::open(const char* pFileName, s32 param_2) {
+bool LMDvdFile::open(const char* pFileName, LMDvdFileInfoBlock* param_2) {
     //TODO: Remove this
     FORCE_DONT_INLINE
 
@@ -113,13 +110,13 @@ bool LMDvdFile::open(const char* pFileName, s32 param_2) {
 
     _8->_60 =  block->length + 0x1F & 0xFFFFFFE0;
     _8->_84 = 0;
-    _8->_64 = (LMDvdFileInfoBlock*)param_2;
+    _8->_64 = param_2;
 
-    _8->fn_80006E18();
+    fn_80006E18(&_8);
     return true;
 }
 
-s32 LMDvdFile::open(const char* pFileName, LMDvdFileInfoCallback param_2, LMDvdFileInfoBlock* param_3, s32 param_4) {
+void* LMDvdFile::open(const char* pFileName, LMDvdFileInfoCallback param_2, LMDvdFileInfoBlock* param_3, s32 param_4) {
     //TODO: Remove this
     FORCE_DONT_INLINE
     _8->_74 = param_2;
@@ -138,14 +135,14 @@ s32 LMDvdFile::open(const char* pFileName, LMDvdFileInfoCallback param_2, LMDvdF
     _8->_84 = 0;
     _8->_64 = param_3;
 
-    _8->fn_80006E18();
+    fn_80006E18(&_8);
     _0++;
 
-    return (s32)_8->_64;
+    return _8->_64;
 }
 
 void fn_800065A8() {
-    fn_80006DF0();
+    initDvdThread();
 
     LMDvdFileInfo* curIndex = LMDvdFile::getFileInfoArray();
 
@@ -162,7 +159,7 @@ void fn_800065A8() {
     LMDvdFile::sFileInfoArray[MAX_FILE_INFO_ARR - 1]._7C = LMDvdFile::getFileInfoArray();
 }
 
-s32 LMDvdFileOpen(const char* pFileName, s32 param_2) {
+void* LMDvdFileOpen(const char* pFileName, LMDvdFileInfoBlock* param_2) {
     LMDvdFile::sCurDvdFile.init();
     LMDvdFile::sCurDvdFile._8->_74 = nullptr;
     LMDvdFile::sCurDvdFile._8->_70 = 0;
@@ -173,13 +170,13 @@ s32 LMDvdFileOpen(const char* pFileName, s32 param_2) {
 
     u32 msg;
 
-    OSReceiveMessage(&LMDvdFile::sCurDvdFile._8->_3C, &msg, 1);
+    OSReceiveMessage(&LMDvdFile::sCurDvdFile._8->_3C, &msg, OS_MESSAGE_BLOCK);
 
-    return (s32)LMDvdFile::sCurDvdFile._8->_64;
+    return LMDvdFile::sCurDvdFile._8->_64;
 }
 
-s32 LMDvdFileOpen(const char* pFileName, LMDvdFileInfoCallback cb, s32 param_3, s32 param_4) {
-    s32 ret;
+void* LMDvdFileOpen(const char* pFileName, LMDvdFileInfoCallback cb, LMDvdFileInfoBlock* pBlock, s32 param_4) {
+    void* ret;
 
     // Seems like inlined init, though based on LMDvdFileOpen it could not be?
     LMDvdFileInfo* block = LMDvdFile::sCurDvdFile._8->_7C;
@@ -196,21 +193,21 @@ s32 LMDvdFileOpen(const char* pFileName, LMDvdFileInfoCallback cb, s32 param_3, 
     LMDvdFile::sCurDvdFile._8->_74 = nullptr;
     LMDvdFile::sCurDvdFile._8->_80 = getCurHeapGroupId();
 
-    OSReceiveMessage(&LMDvdFile::sCurDvdFile._8->_3C, nullptr, 0);
+    OSReceiveMessage(&LMDvdFile::sCurDvdFile._8->_3C, nullptr, OS_MESSAGE_NOBLOCK);
 
     LMDvdFile::sCurDvdFile._8->_74 = cb;
     LMDvdFile::sCurDvdFile._8->_70 = param_4;
 
-    if (LMDvdFile::sCurDvdFile.open(pFileName, param_3) == false) {
+    if (LMDvdFile::sCurDvdFile.open(pFileName, pBlock)) {
         LMDvdFile::sCurDvdFile._0++;
-        ret = (s32)LMDvdFile::sCurDvdFile._8->_64;
+        ret = LMDvdFile::sCurDvdFile._8->_64;
     }
 
     return ret;
 }
 
-static void fn_80006D80(void* param_1, LMDvdFileInfo* param_2);
 static void fn_80006D28(void* param_1, LMDvdFileInfo* param_2);
+static void fn_80006D80(void* param_1, LMDvdFileInfo* param_2);
 
 void* fn_800067D0(const char* pFileName, LMDvdFileInfoCallback param_2, LMDvdFileInfoBlock* param_3, s32 param_4) {
     LMDvdFile::sCurDvdFile._4 = -1;
@@ -310,7 +307,7 @@ void* fn_80006A34(const char* pFileName, LMDvdFileInfoCallback param_2, LMDvdFil
     LMDvdFile::sCurDvdFile._8->_74 = param_2;
     LMDvdFile::sCurDvdFile._8->_70 = param_4;
 
-    if (LMDvdFile::sCurDvdFile.open(pFileName, (s32)param_3)) {
+    if (LMDvdFile::sCurDvdFile.open(pFileName, param_3)) {
         LMDvdFile::sCurDvdFile._0++;
     }
 
@@ -391,6 +388,16 @@ static void fn_80006C84(void* param_1, LMDvdFileInfo* pInfo) {
     JKRFreeToHeap(nullptr, header);
 }
 
+static void fn_80006D28(void* param_1, LMDvdFileInfo* pInfo) {
+    if (pInfo->_68->_0 != 'RARC') {
+        lbl_804D8028 = TRUE;
+    } else {
+        if (pInfo->mArchive != nullptr) {
+            pInfo->mArchive = &JKRMemArchive(&pInfo->_68, 0, (JKRMemBreakFlag)pInfo->_84);
+        }
+    }
+}
+
 static void fn_80006D80(void* param_1, LMDvdFileInfo* pInfo) {
     fn_80006C84(param_1, pInfo);
 
@@ -401,16 +408,6 @@ static void fn_80006D80(void* param_1, LMDvdFileInfo* pInfo) {
             if (pInfo->mArchive != nullptr) {
                 pInfo->mArchive = &JKRMemArchive(&pInfo->_68, 0, (JKRMemBreakFlag)pInfo->_84);
             }
-        }
-    }
-}
-
-static void fn_80006D28(void* param_1, LMDvdFileInfo* pInfo) {
-    if (pInfo->_68->_0 != 'RARC') {
-        lbl_804D8028 = TRUE;
-    } else {
-        if (pInfo->mArchive != nullptr) {
-            pInfo->mArchive = &JKRMemArchive(&pInfo->_68, 0, (JKRMemBreakFlag)pInfo->_84);
         }
     }
 }
