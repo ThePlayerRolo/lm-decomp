@@ -6,8 +6,8 @@
 
 struct unkStruct {
     u8 _0[0x9];
-    u8 unk1[0x12];
-    u32 unk2;
+    u8 _9[0x12];
+    u32 _1C;
     u8 _30[0x639]; // TODO figure out what this is
 
     // Every flag is a single bit
@@ -29,7 +29,7 @@ struct unkStruct {
     u8 _1659[0x20];
 };
 
-unkStruct sUnkStruct;
+unkStruct lbl_803D2D40;
 
 BOOL getFlagValue(u8);
 void setFlagOn(u8);
