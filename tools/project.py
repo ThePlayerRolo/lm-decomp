@@ -2069,14 +2069,41 @@ def calculate_progress(config: ProjectConfig) -> None:
         code_frac = measures.get("complete_code", 0) / total_code
         data_frac = measures.get("complete_data", 0) / total_data
 
+        gold_amount = math.floor(data_frac * config.progress_data_fancy_frac)
+
+        cur_rank = ""
+
+        # Is there a better way of handling this?
+        if gold_amount == config.progress_data_fancy_frac:
+            cur_rank = "S"
+        elif gold_amount >= 100000000:
+            cur_rank = "A"
+        elif gold_amount >= 70000000:
+            cur_rank = "B"
+        elif gold_amount >= 60000000:
+            cur_rank = "C"
+        elif gold_amount >= 50000000:
+            cur_rank = "D"
+        elif gold_amount >= 40000000:
+            cur_rank = "E"
+        elif gold_amount >= 20000000:
+            cur_rank = "F"
+        elif gold_amount >= 5000000:
+            cur_rank = "G"
+        elif gold_amount >= 5000:
+            cur_rank = "H"
+        else:
+            cur_rank = "K"
+
         progress_print(
-            "\nYou have {} out of {} {} and {} out of {} {}.".format(
+            "\nYou captured {} out of {} {} and obtained {} out of {} {} (Rank {}).".format(
                 math.floor(code_frac * config.progress_code_fancy_frac),
                 config.progress_code_fancy_frac,
                 config.progress_code_fancy_item,
-                math.floor(data_frac * config.progress_data_fancy_frac),
-                config.progress_data_fancy_frac,
+                format(gold_amount, ","),
+                format(config.progress_data_fancy_frac, ","),
                 config.progress_data_fancy_item,
+                cur_rank
             )
         )
 
