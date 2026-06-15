@@ -31,7 +31,7 @@ char* getActorNameByIndex(int actorIndex); //8006a3a4
 u32 getActorField0ByIndex(int actorIndex); //8006a354
 u16 getActorField4ByIndex(int actorIndex); //8006a36c
 
-extern "C" ActorData* lbl_8038E118[]; //Some Pointer to some ActorData, possibly pointers to what slot the Actor is loaded into?
-extern "C" ActorData* lbl_8038DD00[]; //Some array pointer to some actor part or something similar?
+ActorData* lbl_8038E118; //Some Pointer to some ActorData, possibly pointers to what slot the Actor is loaded into?
+ActorData* lbl_8038DD00; //Some array pointer to some actor part or something similar?
 
 #endif
