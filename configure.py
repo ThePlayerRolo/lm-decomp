@@ -616,6 +616,9 @@ config.libs = [
         Object(Matching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__init_cpp_exceptions.cpp"),
         Object(Matching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__va_arg.c"),
         Object(Matching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__mem.c"),
+        Object(NonMatching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
+        Object(NonMatching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/MWRTTI.cpp", extra_cflags=["-Cpp_exceptions on"]),
+        Object(NonMatching, "PowerPC_EABI_Support/Runtime.PPCEABI.H/src/Gecko_ExceptionPPC.cpp", extra_cflags=["-Cpp_exceptions on"]),
     ]),
 
     Trk_Minnow_Dolphin([
@@ -646,6 +649,14 @@ config.libs = [
         Object(Matching, "amcstubs/AmcExi2Stubs.c")
     ]),
 
+    DolphinLib("OdemuExi2", [
+        Object(Matching, "OdemuExi2/DebuggerDriver.c")
+    ]),
+
+    DolphinLib("odenotstub", [
+        Object(Matching, "odenotstub/odenotstub.c")
+    ]),
+
     Game([
         # Sato
         Object(Matching, "Sato/EnemyStrategy.cpp"),
@@ -668,9 +679,12 @@ config.libs = [
 
         # Unsorted
         Object(Matching, "Unsorted/staticData.cpp"),  # TODO Verify this is a seperate file
-        Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/LMDvdFile.cpp"),
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
+        Object(NonMatching, "Unsorted/80006DF0.cpp"),
+        Object(NonMatching, "Unsorted/80007018.cpp"),
+        Object(NonMatching, "Unsorted/LMDvdFileBlock.cpp"),
+        Object(NonMatching, "Unsorted/80005EB8.cpp"),
     ]),
 ]
 

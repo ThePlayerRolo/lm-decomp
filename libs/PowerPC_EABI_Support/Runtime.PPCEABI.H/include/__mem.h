@@ -7,8 +7,13 @@
 extern "C" {
 #endif
 
+#ifdef __MWERKS__
 __declspec(section ".init") void* memcpy(void* dest, const void* src, size_t n);
 __declspec(section ".init") void* memset(void* dest, int val, size_t count);
+#else
+void* memcpy(void* dest, const void* src, size_t n);
+void* memset(void* dest, int val, size_t count);
+#endif
 
 #ifdef __cplusplus
 }

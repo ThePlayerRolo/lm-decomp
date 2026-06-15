@@ -175,6 +175,43 @@ void *OSUncachedToCached(void *ucaddr);
 #define OSUncachedToCached(ucaddr)   ((void*) ((u8*)(ucaddr) - (OS_BASE_UNCACHED - OS_BASE_CACHED)))
 #endif
 
+/////// FAST CAST DEFINES ////////
+// GQR formats.
+#define OS_GQR_U8  (0x0004) // GQR 1
+#define OS_GQR_U16 (0x0005) // GQR 2
+#define OS_GQR_S8  (0x0006) // GQR 3
+#define OS_GQR_S16 (0x0007) // GQR 4
+
+// GQRs for fast casting.
+#define OS_FASTCAST_U8  (2)
+#define OS_FASTCAST_U16 (3)
+#define OS_FASTCAST_S8  (4)
+#define OS_FASTCAST_S16 (5)
+
+//////////////////////////////////
+
+/////// FAST CAST INLINES ////////
+// Initialise fast casting.
+static inline void OSInitFastCast()
+{
+#ifdef __MWERKS__ // clang-format off
+	asm {
+		li r3, OS_GQR_U8
+		oris r3, r3, OS_GQR_U8
+		mtspr 0x392, r3
+		li r3, OS_GQR_U16
+		oris r3, r3, OS_GQR_U16
+		mtspr 0x393, r3
+		li r3, OS_GQR_S8
+		oris r3, r3, OS_GQR_S8
+		mtspr 0x394, r3
+		li r3, OS_GQR_S16
+		oris r3, r3, OS_GQR_S16
+		mtspr 0x395, r3
+	}
+#endif // clang-format on
+}
+
 #ifdef __cplusplus
 }
 #endif
