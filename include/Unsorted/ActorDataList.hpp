@@ -14,23 +14,13 @@ struct unkActorData1 { //Might be a class, would need to dig further.
     u32 _10;
 };
 
-struct unkActorData2 { //Might be a class, would need to dig further. May actually end up the same as the above.
-    u32 _0; //Potentially fabricated, but based on lwz instructions
-    u32 _4;
-    u32 _8;
-    u32 _C;
-    u32 _10;
-    u32 _14;
-};
-
 class ActorData {
     public:
         /* 0x0 */ int _0;
-        /* 0x4 */ u16 _4;
-        /* 0x6 */ u16 _6;
+        /* 0x4 */ u32 _4;
         /* 0x8 */ u32 _8;
         /* 0xC */ unkActorData1* _C;
-        /* 0x10 */ unkActorData2* _10; // Could be the same as the above.
+        /* 0x10 */ unkActorData1* _10; // Could be the same as the above.
         /* 0x14 */ u16 _14;
         /* 0x16 */ u16 _16;
         /* 0x18 */ char* mActorName;
@@ -41,7 +31,7 @@ char* getActorNameByIndex(int actorIndex); //8006a3a4
 u32 getActorField0ByIndex(int actorIndex); //8006a354
 u16 getActorField4ByIndex(int actorIndex); //8006a36c
 
-extern "C" void* lbl_8038E118; //Some Pointer to some ActorData, possibly pointers to what slot the Actor is loaded into?
-extern "C" void* lbl_8038DD00[]; //Some array pointer to some actor part or something similar?
+extern "C" ActorData* lbl_8038E118[]; //Some Pointer to some ActorData, possibly pointers to what slot the Actor is loaded into?
+extern "C" ActorData* lbl_8038DD00[]; //Some array pointer to some actor part or something similar?
 
 #endif
