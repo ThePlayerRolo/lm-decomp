@@ -19,12 +19,12 @@ static s16* dac[3];
 static ALHeap audio_hp;
 
 static BOOL audio_hp_exist           = FALSE;
-static s16* last_rsp_madep           = NULL;
-static s16* use_rsp_madep            = NULL;
+static s16* last_rsp_madep           = nullptr;
+static s16* use_rsp_madep            = nullptr;
 static BOOL vframe_work_running      = FALSE;
-static DACCallback DAC_CALLBACK_FUNC = NULL;
+static DACCallback DAC_CALLBACK_FUNC = nullptr;
 u32 JAC_VFRAME_COUNTER               = 0;
-static MixCallback ext_mixcallback   = NULL;
+static MixCallback ext_mixcallback   = nullptr;
 static u8 ext_mixmode                = MixMode_Mono;
 
 /**
@@ -101,7 +101,7 @@ void Jac_Init()
 		DCStoreRange(*thisDac, DAC_SIZE * 2);
 	}
 
-	AIInit(NULL);
+	AIInit(nullptr);
 	AIInitDMA((u32)dac[2], DAC_SIZE * 2);
 	STACK_PAD_VAR(4);
 }
@@ -395,12 +395,12 @@ void Jac_UpdateDAC()
 {
 	if (use_rsp_madep == NULL) {
 		use_rsp_madep  = last_rsp_madep;
-		last_rsp_madep = NULL;
+		last_rsp_madep = nullptr;
 	}
 
 	if (use_rsp_madep != NULL) {
 		AIInitDMA((u32)use_rsp_madep, DAC_SIZE * 2);
-		use_rsp_madep = NULL;
+		use_rsp_madep = nullptr;
 	} else {
 		UNIVERSAL_DACCOUNTER++;
 	}
