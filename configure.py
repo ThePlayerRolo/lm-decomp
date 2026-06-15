@@ -665,12 +665,12 @@ config.libs = [
         Object(NonMatching, "Koga/JmpMessage.cpp"),
         Object(NonMatching, "Koga/EnAttackBase.cpp"),
         Object(NonMatching, "Koga/SimpleModeler.cpp"),
+        Object(NonMatching, "Koga/CharacterColManager.cpp"),
 
         # Unsorted
         Object(Matching, "Unsorted/staticData.cpp"),  # TODO Verify this is a seperate file
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/LMDvdFile.cpp"),
-
     ]),
 ]
 
