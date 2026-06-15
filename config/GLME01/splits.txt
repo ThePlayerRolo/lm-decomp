@@ -26,6 +26,17 @@ Unsorted/LMDvdFile.cpp:
 Unsorted/staticData.cpp:
 	.data       start:0x8021E000 end:0x802FB380
 
+Unsorted/80006DF0.cpp:
+	.text       start:0x80006DF0 end:0x80007018
+	.bss        start:0x8039CE60 end:0x8039F2A0
+
+Unsorted/80007018.cpp:
+	.text       start:0x80007018 end:0x800071C0
+	.bss        start:0x8039F2A0 end:0x803A3600
+
+Unsorted/LMDvdFileBlock.cpp:
+	.text       start:0x800071C0 end:0x80007398
+
 Unsorted/8006385C.cpp:
 	.text       start:0x8006385C end:0x80065DA4
 
@@ -705,6 +716,23 @@ PowerPC_EABI_Support/Runtime.PPCEABI.H/src/global_destructor_chain.c:
 	.dtors      start:0x8020BDE8 end:0x8020BDEC
 	.sbss       start:0x804D9828 end:0x804D982C
 
+PowerPC_EABI_Support/Runtime.PPCEABI.H/src/NMWException.cpp:
+	extab       start:0x800054C0 end:0x80005550
+	extabindex  start:0x80005640 end:0x800056B8
+	.text       start:0x802001E8 end:0x802008D8
+	.sdata      start:0x804D7F80 end:0x804D7F88
+
+PowerPC_EABI_Support/Runtime.PPCEABI.H/src/MWRTTI.cpp:
+	extab       start:0x80005550 end:0x800055A8
+	extabindex  start:0x800056B8 end:0x800056DC
+	.text       start:0x80200900 end:0x80200C74
+
+PowerPC_EABI_Support/Runtime.PPCEABI.H/src/Gecko_ExceptionPPC.cpp:
+	extab       start:0x800055A8 end:0x8000563C
+	extabindex  start:0x800056DC end:0x80005730
+	.text       start:0x80200C74 end:0x802020E4
+	.bss        start:0x804CDB48 end:0x804CDB58
+
 PowerPC_EABI_Support/Runtime.PPCEABI.H/src/__init_cpp_exceptions.cpp:
 	.text       start:0x8020265C end:0x802026D8
 	.ctors      start:0x8020BAC0 end:0x8020BAC4
@@ -881,3 +909,11 @@ TRK_MINNOW_DOLPHIN/src/debugger/embedded/MetroTRK/Os/dolphin/targcont.c:
 
 amcstubs/AmcExi2Stubs.c:
 	.text       start:0x8020AFFC end:0x8020B02C
+
+OdemuExi2/DebuggerDriver.c:
+	.text       start:0x8020B02C end:0x8020BAAC
+	.sdata      start:0x804D7FD0 end:0x804D7FD1
+	.sbss       start:0x804D9858 end:0x804D986D
+
+odenotstub/odenotstub.c:
+	.text       start:0x8020BAAC end:0x8020BAB4

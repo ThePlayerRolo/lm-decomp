@@ -1,32 +1,23 @@
 #ifndef _LM_DVD_FILE_H_
 #define _LM_DVD_FILE_H_
 
+#include "Unsorted/LMDvdFileBlock.hpp"
 #include <dolphin.h>
 
 class JKRMemArchive;
-
-#define MAX_FILE_INFO_ARR 64
-
 class LMDvdFileInfo;
 
 typedef void (*LMDvdFileInfoCallback)(void* param_1, LMDvdFileInfo* param_2);
 
-class LMDvdFileInfoBlock {
-public:
-    void fn_800071D0(u32);
-    s32 fn_800071C0();
-public:
-    /* 0x0 */ u32 _0;
-};
+#define MAX_FILE_INFO_ARR 64
 
 class LMDvdFileInfo : public DVDFileInfo {
 public:
-    void fn_80006E18();
-
     s32 getUnk70();
     LMDvdFileInfoBlock* getUnk64();
     u32 getLength();
     JKRMemArchive* getArchive();
+    void fn_80006E18();
 
 public:
     /* 0x3C */ OSMessageQueue _3C;
@@ -46,8 +37,8 @@ public:
 class LMDvdFile {
 public:
     void init();
-    bool open(const char* pFileName, s32);
-    s32 open(const char* pFileName, LMDvdFileInfoCallback, LMDvdFileInfoBlock*, s32);
+    bool open(const char* pFileName, LMDvdFileInfoBlock*);
+    void* open(const char* pFileName, LMDvdFileInfoCallback, LMDvdFileInfoBlock*, s32);
     void checkDVDStatus();
 
     static LMDvdFileInfo* getFileInfoArray();
@@ -65,11 +56,12 @@ public:
     /* 0x10 */ u8 _10[0x2C - 0x10];
 };
 
-s32 LMDvdFileOpen(const char* pFIleName, s32);
-s32 LMDvdFileOpen(const char *pFileName, LMDvdFileInfoCallback param_2, s32 param_3, s32 param_4);
+void* LMDvdFileOpen(const char* pFIleName, LMDvdFileInfoBlock*);
+void* LMDvdFileOpen(const char *pFileName, LMDvdFileInfoCallback param_2, LMDvdFileInfoBlock* param_3, s32 param_4);
 void* fn_80006930(const char*, LMDvdFileInfoBlock*);
 JKRMemArchive* LMOpenMemArchive(const char* pFileName, void*);
-
 void* fn_80006258(u32 size, int align);
+
+extern BOOL lbl_804D8028;
 
 #endif
