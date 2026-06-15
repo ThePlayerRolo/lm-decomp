@@ -43,9 +43,10 @@ static void* createThreadCallback(void*) {
     }
 }
 
+//https://decomp.me/scratch/IRDSH
 static void fn_80007144(LMDvdThread2* thread) {
     OSInitMessageQueue(&thread->_310, &thread->_330, 1);
     OSInitMessageQueue(&thread->_334, &thread->_354, 1);
-    OSCreateThread(thread, createThreadCallback, nullptr, &sDvdThread2Stack, sizeof(sDvdThread2Stack), 0x11, OS_THREAD_ATTR_DETACH);
+    OSCreateThread(thread, createThreadCallback, nullptr, &sDvdThread2Stack, sizeof(sDvdThread2Stack), 17, OS_THREAD_ATTR_DETACH);
     OSResumeThread(thread);
 }

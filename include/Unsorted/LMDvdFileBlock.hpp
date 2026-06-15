@@ -5,7 +5,7 @@
 
 class LMDvdFileInfoBlock {
 public:
-    void fn_800071D0(u32);
+    void fn_800071D0(LMDvdFileInfoBlock*);
     s32 fn_800071C0();
 public:
     /* 0x0 */ u32 _0;

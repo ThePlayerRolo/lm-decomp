@@ -20,9 +20,10 @@ void initDvdThread() {
 
 //Needs to be a member of LMDVDFileInfo for matching
 void LMDvdFileInfo::fn_80006E18() {
-    OSSendMessage(&sDvdThread1._310, this, 1);
+    OSSendMessage(&sDvdThread1._310, this, OS_MESSAGE_BLOCK);
 }
 
+//https://decomp.me/scratch/iEJfp
 static void* createThreadCallback(void* pPtr) {
     OSInitFastCast();
 
@@ -70,9 +71,10 @@ static void* createThreadCallback(void* pPtr) {
     }
 }
 
+//https://decomp.me/scratch/heDFD
 static void initDvdThreadInternal(LMDvdThread* thread) {
-    OSInitMessageQueue(&thread->_310, thread->_330, 64);
+    OSInitMessageQueue(&thread->_310, thread->_330, ARRAY_COUNT(thread->_330));
     thread->_430 = LMDvdFile::getFileInfoArray();
-    OSCreateThread(thread, createThreadCallback, nullptr, sDvdThreadStack, 0x2000, 10, OS_THREAD_ATTR_DETACH);
+    OSCreateThread(thread, createThreadCallback, nullptr, sDvdThreadStack, sizeof(sDvdThreadStack), 10, OS_THREAD_ATTR_DETACH);
     OSResumeThread(thread);
 }
