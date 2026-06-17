@@ -84,14 +84,8 @@ void DSP_SetMixerInitDelayMax(u8 idx, u8 initDelayMax)
  */
 void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 level)
 {
-	u8* REF_idx;
-	u8* REF_mixer;
-
 	DSPchannel_* buf;
 	DSPMixerChannel* mixChan;
-
-	REF_idx   = &idx;
-	REF_mixer = &mixer;
 
 	buf     = &CH_BUF[idx];
 	mixChan = &buf->mixChannels[mixer];
@@ -201,7 +195,6 @@ void DSP_AllocInit(u8 idx)
 	buf->done              = DSP_FALSE;
 	buf->endRequested      = DSP_FALSE;
 	buf->enabled           = DSP_FALSE;
-	DSP_InitFilter(idx);
 	DSP_FlushChannel(idx);
 }
 
@@ -433,7 +426,7 @@ void DSP_InitBuffer()
 {
 	STACK_PAD_VAR(1);
 	for (int i = 0; i < 4; ++i)
-		DFX_SetFxLine(i, NULL, NULL);
+		DFX_SetFxLine(i, nullptr, nullptr);
 	DSP_ClearBuffer();
 	DSP_SetupBuffer();
 	InitDSPchannel();
