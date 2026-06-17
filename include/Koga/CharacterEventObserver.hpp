@@ -2,7 +2,7 @@
 #define CHARACTER_EVENT_OBSERVER_H_
 
 #include "Koga/Observer.hpp"
-#include "types.h"
+#include <types.h>
 
 namespace Koga {
     class CharacterEvent {

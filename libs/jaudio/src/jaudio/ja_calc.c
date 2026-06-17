@@ -16,32 +16,6 @@ f32 sqrtf2(f32 x)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000020
- */
-void cosf2(f32)
-{
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- */
-f32 atanf2(f32 x, f32 y)
-{
-	return atan2(x, y);
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000020
- */
-void sinf2(f32)
-{
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
  */
 void Jac_InitSinTable()
 {

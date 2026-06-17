@@ -37,7 +37,7 @@ BOOL DFX_SetFxLine(u8 idx, s16* circularBufferBase, FxlineConfig* config)
 		buf->circularBufferBase = circularBufferBase;
 		Jac_bzero(circularBufferBase, size);
 		DCFlushRange(circularBufferBase, size);
-	} else if (!config || circularBufferBase) {
+	} else {
 		buf->circularBufferBase = circularBufferBase;
 	}
 	if (buf->circularBufferBase) {

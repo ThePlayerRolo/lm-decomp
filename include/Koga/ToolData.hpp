@@ -1,7 +1,7 @@
 #ifndef TOOL_DATA_H_
 #define TOOL_DATA_H_
 
-#include "types.h"
+#include <types.h>
 #include <JSystem/JORReflexible.hpp>
 
 // Very similar to https://github.com/doldecomp/sms/blob/main/include/MarioUtil/ToolData.hpp
@@ -57,7 +57,7 @@ namespace Koga {
         template<typename T>
         inline T getUnsignedValue(int entryIndex, int fieldIndex) const {
             const JMapItem* pField = &mData->mItems[fieldIndex];
-            const void* ptr = reinterpret_cast<const u32*>(reinterpret_cast<const u8*>(mData) + mData->mDataOffset + 
+            const void* ptr = reinterpret_cast<const u32*>(reinterpret_cast<const u8*>(mData) + mData->mDataOffset +
                 (entryIndex * mData->mEntrySize) + pField->mOffsData);
             return (*reinterpret_cast<const T*>(ptr) & pField->mMask) >> pField->mShift;
         }
@@ -95,14 +95,14 @@ namespace Koga {
         }
 
         inline const void* getDataPointer(const JMapData* pData, const JMapItem* pField, int entryIndex, int fieldIndex) const {
-            return reinterpret_cast<const u32*>(reinterpret_cast<const u8*>(pData) + pData->mDataOffset + 
+            return reinterpret_cast<const u32*>(reinterpret_cast<const u8*>(pData) + pData->mDataOffset +
                 (entryIndex * pData->mEntrySize) + pField->mOffsData);
         }
 
         inline const bool getBoolValue(int entryIndex, int fieldIndex) const {
             const JMapItem* pField = &mData->mItems[fieldIndex];
             u32 entryOffset = entryIndex * mData->mEntrySize;
-            const void* ptr = reinterpret_cast<const u32*>(reinterpret_cast<const u8*>(mData) + mData->mDataOffset + 
+            const void* ptr = reinterpret_cast<const u32*>(reinterpret_cast<const u8*>(mData) + mData->mDataOffset +
                 entryOffset + pField->mOffsData);
             return *reinterpret_cast<const u32*>(ptr) & pField->mMask;
         }

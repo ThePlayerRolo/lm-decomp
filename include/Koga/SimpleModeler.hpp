@@ -1,10 +1,10 @@
 #ifndef SIMPLE_MODELER_H_
 #define SIMPLE_MODELER_H_
 
-#include "types.h"
+#include <types.h>
 
 class unkSimpleModeler1 {
-public: 
+public:
     unkSimpleModeler1();
     ~unkSimpleModeler1();
 
@@ -14,7 +14,7 @@ public:
 };
 
 class unkSimpleModeler2 {
-public: 
+public:
     unkSimpleModeler2();
     ~unkSimpleModeler2();
     void fn_800BB9E4(void*); // TODO validate void* argument
@@ -25,7 +25,7 @@ public:
 };
 
 class unkSimpleModeler3 {
-public: 
+public:
     unkSimpleModeler3();
     ~unkSimpleModeler3();
     // Some sort constructor or copy elements?
@@ -59,8 +59,8 @@ namespace Koga {
         SimpleModeler* fn_800BB88C();
         void fn_800BB8BC();
     public:
-        /* 0x4 */ unkSimpleModeler1 mUnk1; 
-        /* 0x288 */ unkSimpleModeler2 mUnk2; 
+        /* 0x4 */ unkSimpleModeler1 mUnk1;
+        /* 0x288 */ unkSimpleModeler2 mUnk2;
         /* 0x58C */ unkSimpleModeler3 mUnk3;
 
         static SimpleModeler* sCurSimpleModeler;

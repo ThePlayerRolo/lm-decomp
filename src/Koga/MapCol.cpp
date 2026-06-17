@@ -25,8 +25,8 @@ namespace Koga {
 
     void MapCol::load(void* param_1, void* param_2) {
         _4 = (unkSubStruct*)param_1;
-        if (GameModeUtil::getMapSection("SoundPolygonInfo") != nullptr) {
-            Koga::ToolData* soundPolygonInfo = GameModeUtil::getMapSection("SoundPolygonInfo");
+        if (GameModeUtil::getJmpResource("SoundPolygonInfo") != nullptr) {
+            Koga::ToolData* soundPolygonInfo = GameModeUtil::getJmpResource("SoundPolygonInfo");
 
             _C = soundPolygonInfo->searchItemInfo("sound_material");
             _10 = soundPolygonInfo->searchItemInfo("sound_echo_switch");
@@ -94,7 +94,7 @@ namespace Koga {
         if (_C < 0)
             return 0;
 
-        Koga::ToolData* soundPolygonInfo = GameModeUtil::getMapSection("SoundPolygonInfo");
+        Koga::ToolData* soundPolygonInfo = GameModeUtil::getJmpResource("SoundPolygonInfo");
         u32 p1 = param_1;
         u32 firstVal = soundPolygonInfo->getUnsignedValue< u32 >(_C, param_1);
         u32 secondVal = soundPolygonInfo->getUnsignedValue< u32 >(_10, param_1);
@@ -103,6 +103,6 @@ namespace Koga {
     }
 
     ToolData* MapCol::getPolygonInfo() {
-        return GameModeUtil::getMapSection("PolygonInfo");
+        return GameModeUtil::getJmpResource("PolygonInfo");
     }
 };  // namespace Koga

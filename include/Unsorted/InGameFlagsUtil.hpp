@@ -2,7 +2,7 @@
 #define INGAME_FLAGS_UTIL_HPP
 
 #include "dolphin/types.h"
-#include "types.h"
+#include <types.h>
 
 struct unkStruct {
     u8 _0[0x9];

@@ -29,7 +29,7 @@ u32 LoadAram( char* filepath, u32* status, u32 dst)
 	 char** REF_filepath = &filepath;
 	u32* REF_dst              = &dst;
 
-	if (DVDT_LoadtoARAM(0, filepath, dst, 0, 0, status, NULL) == -1) {
+	if (DVDT_LoadtoARAM(0, filepath, dst, 0, 0, status, nullptr) == -1) {
 		return 0;
 	}
 	return dst;
@@ -45,7 +45,7 @@ u32 LoadAramSingle( char* filepath, u32 src, u32 length, u32* status, u32 dst)
 	u32* REF_src              = &src;
 	u32* REF_length           = &length;
 
-	if (DVDT_LoadtoARAM(0, filepath, dst, src, length, status, NULL) == -1) {
+	if (DVDT_LoadtoARAM(0, filepath, dst, src, length, status, nullptr) == -1) {
 		return 0;
 	}
 	return dst;
@@ -89,33 +89,17 @@ void Collect_AramMotherHeap(void)
 /**
  * @TODO: Documentation
  */
-void Init_AramMotherHeap(void)
-{
-	void* alloc;
-	u32 outSize;
-
-	static BOOL inited = FALSE;
-	if (!inited) {
-		inited = TRUE;
-
-		void* alloc = ARAllocFull(&outSize);
-		Jac_InitMotherHeap(&aram_mother, (u32)alloc, outSize, 0);
-	}
-}
-
-// Used only by `LoadAram_Default`.
-static BOOL first = TRUE;
-
-/**
- * @TODO: Documentation
- */
 u32 LoadAram_Default( char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
 {
-	char filepath[140];
+	char filepath[130];
 
-	if (first) {
-		Init_AramMotherHeap();
-		first = FALSE;
+	u32 outSize;
+
+	static BOOL inited = TRUE;
+	if (inited) {
+		inited = FALSE;
+
+		Jac_InitMotherHeap(&aram_mother, (u32)ARAllocFull(&outSize), outSize, 0);
 	}
 
 	strcpy(filepath, extdir);

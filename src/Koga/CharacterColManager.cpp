@@ -1,5 +1,5 @@
 #include "Koga/CharacterColManager.hpp"
-#include "types.h"
+#include <types.h>
 #include "Unsorted/ActorDataList.hpp"
 
 static const unkCharactColStruct lbl_8020C7B8 = {};
@@ -15,9 +15,9 @@ CharacterColElement::CharacterColElement() : mGlobalActorField0(0), _18(0) {
     _1C._B8 = lbl_8020C7B8._28;
 }
 
-void CharacterColElement::init(int actorIndex) { 
+void CharacterColElement::init(int actorIndex) {
     u32 someOffset;
-    
+
     _1C._9C = 0;
     mGlobalActorField0 = getActorField0ByIndex(actorIndex);
     ActorData* actData = &lbl_8038E118[actorIndex];

@@ -1,4 +1,4 @@
-#include "types.h"
+#include <types.h>
 #include <JSystem/JKernel/JKRMemArchive.hpp>
 #include <JSystem/JKernel/JKRDecomp.hpp>
 #include <JSystem/JKernel/JKRDvdRipper.hpp>

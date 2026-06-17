@@ -1,7 +1,7 @@
 #ifndef GAME_MODE_H_
 #define GAME_MODE_H_
 
-#include "types.h"
+#include <types.h>
 
 namespace Koga {
     class GameMode;

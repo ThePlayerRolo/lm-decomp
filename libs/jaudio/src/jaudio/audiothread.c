@@ -27,11 +27,11 @@ typedef struct Jac_AudioThread {
 	u8 pad[0x10];    // _310
 } Jac_AudioThread;
 
-Jac_AudioThread jac_audioThread ATTRIBUTE_ALIGN(32);
-u8 jac_audioStack[AUDIO_STACK_SIZE];
-OSThread jac_neosThread;
-OSThread jac_dvdThread;
-u8 jac_dvdStack[AUDIO_STACK_SIZE] ATTRIBUTE_ALIGN(32);
+static Jac_AudioThread jac_audioThread ATTRIBUTE_ALIGN(32);
+static u8 jac_audioStack[AUDIO_STACK_SIZE];
+static OSThread jac_neosThread;
+static OSThread jac_dvdThread;
+static u8 jac_dvdStack[AUDIO_STACK_SIZE] ATTRIBUTE_ALIGN(32);
 
 static OSMessageQueue audioproc_mq;
 static OSMessage msgbuf[AUDIOPROC_MQ_BUF_COUNT];
@@ -240,13 +240,12 @@ static volatile OSPriority pri  = 0;
 static volatile OSPriority pri2 = 0;
 static volatile OSPriority pri3 = 0;
 
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000024
- */
-void SetAudioThreadPriority(void)
+void SetAudioThreadPriority(u8 pri_1, u8 pri_2, u8 pri_3)
 {
-	// UNUSED FUNCTION
+	priority_set = TRUE;
+	pri = pri_1;
+	pri2 = pri_2;
+	pri3 = pri_3;
 }
 
 /**
@@ -260,8 +259,8 @@ void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 		pri = base_prio;
 
 		OSPriority p = pri;
-		pri3         = p + 1;
-		pri2         = p + 2;
+		pri2         = p + 1;
+		pri3         = p + 2;
 	}
 
 	u32 neos_flag;
@@ -272,21 +271,19 @@ void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 	neos_flag = flags & AUDIO_THREAD_FLAG_NEOS;
 	Jac_InitARAM(neos_flag);
 
-	Jac_StackInit(jac_audioStack, 0x200);
-	if ((flags & AUDIO_THREAD_FLAG_AUDIO)) {
-		// point to top of audioStack
-		u8* stack_p = jac_audioStack;
-		OSCreateThread(&jac_audioThread.thread, &audioproc, NULL, stack_p + AUDIO_STACK_SIZE, AUDIO_STACK_SIZE, pri, OS_THREAD_ATTR_DETACH);
-		OSResumeThread(&jac_audioThread.thread);
-	}
-
-	Jac_StackInit(jac_dvdStack, 0x200);
 	if ((flags & AUDIO_THREAD_FLAG_DVD)) {
 		jac_dvdproc_init();
 		// point to top of dvdStack
 		u8* stack_p = jac_dvdStack;
 		OSCreateThread(&jac_dvdThread, &jac_dvdproc, NULL, stack_p + AUDIO_STACK_SIZE, AUDIO_STACK_SIZE, pri3, OS_THREAD_ATTR_DETACH);
 		OSResumeThread(&jac_dvdThread);
+	}
+
+	if ((flags & AUDIO_THREAD_FLAG_AUDIO)) {
+		// point to top of audioStack
+		u8* stack_p = jac_audioStack;
+		OSCreateThread(&jac_audioThread.thread, &audioproc, NULL, stack_p + AUDIO_STACK_SIZE, AUDIO_STACK_SIZE, pri, OS_THREAD_ATTR_DETACH);
+		OSResumeThread(&jac_audioThread.thread);
 	}
 
 	STACK_PAD_VAR(2);

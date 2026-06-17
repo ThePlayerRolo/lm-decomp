@@ -12,7 +12,7 @@ static Bank_* bankp[BANKP_SIZE];
  */
 static void PTconvert(void** pointer, u32 base_address)
 {
-	if (*pointer >= (void*)base_address || *pointer == NULL) {
+	if (*pointer >= (void*)base_address || *pointer == nullptr) {
 		return;
 	}
 	*pointer = *(char**)pointer + base_address;
@@ -27,7 +27,7 @@ Bank_* Bank_Test(u8* ibnk_address)
 	u32 base_addr    = (u32)ibnk_address;
 	Bank_* startBank = (Bank_*)(ibnk_address + 0x20);
 	if (startBank->mMagic != 'BANK') {
-		return NULL;
+		return nullptr;
 	}
 
 	for (i = 0; i < BANK_TEST_INST_COUNT; ++i) {
@@ -138,7 +138,7 @@ BOOL Bank_Regist_Direct(void* ibnk, u32 param_2, u32 param_3)
 void Bank_Init()
 {
 	for (int i = 0; i < BANKP_SIZE; ++i) {
-		bankp[i] = NULL;
+		bankp[i] = nullptr;
 	}
 }
 
@@ -148,7 +148,7 @@ void Bank_Init()
 Bank_* Bank_Get(u32 index)
 {
 	if (index >= BANKP_SIZE) {
-		return NULL;
+		return nullptr;
 	}
 	return bankp[index];
 }

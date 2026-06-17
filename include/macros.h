@@ -21,18 +21,28 @@
 #define IS_ALIGNED(X, N)     (((X) & ((N) - 1)) == 0)
 #define IS_NOT_ALIGNED(X, N) (((X) & ((N) - 1)) != 0)
 
+// From https://github.com/projectPiki/pikmin/blob/main/include/types.h
 #ifdef __cplusplus
 #define BEGIN_SCOPE_EXTERN_C extern "C" {
 #else
 #define BEGIN_SCOPE_EXTERN_C
 #endif
 
+// From https://github.com/projectPiki/pikmin/blob/main/include/types.h
 #ifdef __cplusplus
 #define END_SCOPE_EXTERN_C }
 #else
 #define END_SCOPE_EXTERN_C
 #endif
 
+// From https://github.com/projectPiki/pikmin/blob/main/include/types.h
 #define STACK_PAD_VAR(n) do { int pad[n]; } while (0); (void)0;
+
+// Here we check if the decomp build system is configured for a non-matching build, and define `BUILD_MATCHING` if it is not.
+// Please do not use the `DTK_CONFIG_NONMATCHING` macro for any other purpose, and instead check if the the `BUILD_MATCHING`
+// macro is defined.  This is to ensure the codebase doesn't require any preprocessor macros to be defined by the build system.
+#if defined(DTK_CONFIG_NONMATCHING) && !DTK_CONFIG_NONMATCHING
+#define BUILD_MATCHING
+#endif
 
 #endif

@@ -18,11 +18,11 @@ CtrlGroup_* CGRP_ARRAY[16];
 
 static void PTconvert(void** pointer, u32 base_address)
 {
-	if (*pointer == NULL) {
-		*pointer = NULL;
+	if (*pointer == nullptr) {
+		*pointer = nullptr;
 		return;
 	}
-	if (*pointer >= (void*)base_address || *pointer == NULL) {
+	if (*pointer >= (void*)base_address || *pointer == nullptr) {
 		return;
 	}
 	*pointer = *(char**)pointer + base_address;
@@ -53,10 +53,10 @@ CtrlGroup_* Wave_Test(u8* data)
 	CGRP_ARRAY[0] = group;
 
 	if (arcBank->magic != 'WINF') {
-		return NULL;
+		return nullptr;
 	}
 	if (group->magic != 'WBCT') {
-		return NULL;
+		return nullptr;
 	}
 
 	for (i = 0; i < arcBank->count; i++) {
@@ -127,7 +127,7 @@ BOOL Wavegroup_Regist(void* wsysData, u32 id)
 	wavegroup[id] = Wave_Test((u8*)wsys);
 	wavearc[id]   = wsys->waveArcBank;
 
-	if (wavegroup[id] == NULL) {
+	if (wavegroup[id] == nullptr) {
 		return FALSE;
 	}
 	wavegroup[id]->_04 = 0;
@@ -140,7 +140,7 @@ BOOL Wavegroup_Regist(void* wsysData, u32 id)
 void Wavegroup_Init()
 {
 	for (int i = 0; i < WAVEGROUP_SIZE; ++i) {
-		wavegroup[i] = NULL;
+		wavegroup[i] = nullptr;
 	}
 }
 
@@ -161,7 +161,7 @@ CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
 		index = Jac_WsVirtualToPhysical(virtID);
 	}
 
-	return index >= WAVEGROUP_SIZE ? NULL : wavegroup[index];
+	return index >= WAVEGROUP_SIZE ? nullptr : wavegroup[index];
 }
 
 /**
@@ -223,7 +223,7 @@ static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL param_3)
 	if (group = wavegroup[waveIndex]) {
 		REF_param_2 = &ctrlIndex;
 		if (ctrlIndex < group->count) {
-			Jac_SceneClose(wavearc[waveIndex], group, ctrlIndex, param_3);
+			Jac_SceneClose(wavearc[waveIndex], group, ctrlIndex);
 		}
 	}
 }
@@ -233,7 +233,22 @@ static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL param_3)
  */
 void WaveScene_Close(u32 waveIndex, u32 ctrlIndex)
 {
-	__WaveScene_Close(waveIndex, ctrlIndex, TRUE);
+	STACK_PAD_VAR(4);
+	u32* REF_param_1;
+	u32* REF_param_2;
+
+	CtrlGroup_* group;
+
+	REF_param_1 = &waveIndex;
+	if (waveIndex >= WAVEGROUP_SIZE) {
+		return;
+	}
+	if (group = wavegroup[waveIndex]) {
+		REF_param_2 = &ctrlIndex;
+		if (ctrlIndex < group->count) {
+			Jac_SceneClose(wavearc[waveIndex], group, ctrlIndex);
+		}
+	}
 }
 
 /**

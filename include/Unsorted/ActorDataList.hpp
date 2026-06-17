@@ -1,10 +1,10 @@
 #ifndef ACTORLIST_HPP
 #define ACTORLIST_HPP
 
-// Starting at 0x8033B590 is an Actor Object List. The list contains elements up to 24 bytes long, 
+// Starting at 0x8033B590 is an Actor Object List. The list contains elements up to 24 bytes long,
 // broken down by the ActorData class. Actor Data global list ends at 0x8033DF40
 
-#include "types.h"
+#include <types.h>
 
 struct unkActorData1 { //Might be a class, would need to dig further.
     u32 _0; //Potentially fabricated, but based on lwz instructions

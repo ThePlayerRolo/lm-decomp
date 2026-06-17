@@ -3,12 +3,11 @@
 #define J3D_LOAD_HPP
 
 #include <JSystem/J3D/J3DGraphBase/Components/J3DGXColor.hpp>
-#include "JSystem/J3D/J3DGraphBase/Components/J3DGXColorS10.hpp"
+#include <JSystem/J3D/J3DGraphBase/Components/J3DGXColorS10.hpp>
 #include <JSystem/J3D/J3DGraphBase/Components/J3DIndTexMtx.hpp>
 #include <JSystem/J3D/J3DGraphBase/Components/J3DTexCoord.hpp>
 #include <JSystem/J3D/J3DGraphBase/Components/J3DTevSwapModeTable.hpp>
 #include <dolphin/gx.h>
-#include <types.h>
 
 void loadCullMode(u8);
 void loadTexNo(u8, const u16&);
