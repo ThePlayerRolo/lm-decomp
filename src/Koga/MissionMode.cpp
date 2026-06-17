@@ -94,12 +94,12 @@ namespace Koga {
             }
             delete jmpFile;
         }
-        mJmpMsgSender->fn_800EA900(getMapSectionData("ObjInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("CharacterInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("KeyInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("GeneratorInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("EnemyInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("ObserverInfo"));
+        mJmpMsgSender->add(getMapSectionData("ObjInfo"));
+        mJmpMsgSender->add(getMapSectionData("CharacterInfo"));
+        mJmpMsgSender->add(getMapSectionData("KeyInfo"));
+        mJmpMsgSender->add(getMapSectionData("GeneratorInfo"));
+        mJmpMsgSender->add(getMapSectionData("EnemyInfo"));
+        mJmpMsgSender->add(getMapSectionData("ObserverInfo"));
 
         mJmpMsgSender->addReceiver(mEnMgr);
     }
@@ -120,26 +120,26 @@ namespace Koga {
     void MissionMode::toggleBlackoutTables(Mission mission) {
         switch (mission) {
         case MISSION_BLACKOUT:
-            mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenEnemyInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenCharacterInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenObserverInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenKeyInfo"));
+            mJmpMsgSender->remove(getMapSectionData("TeidenEnemyInfo"));
+            mJmpMsgSender->remove(getMapSectionData("TeidenCharacterInfo"));
+            mJmpMsgSender->remove(getMapSectionData("TeidenObserverInfo"));
+            mJmpMsgSender->remove(getMapSectionData("TeidenKeyInfo"));
 
-            mJmpMsgSender->fn_800EA900(getMapSectionData("EnemyInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("CharacterInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("ObserverInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("KeyInfo"));
+            mJmpMsgSender->add(getMapSectionData("EnemyInfo"));
+            mJmpMsgSender->add(getMapSectionData("CharacterInfo"));
+            mJmpMsgSender->add(getMapSectionData("ObserverInfo"));
+            mJmpMsgSender->add(getMapSectionData("KeyInfo"));
             break;
         case MISSION_DEFAULT:
-            mJmpMsgSender->fn_800EA958(getMapSectionData("EnemyInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("CharacterInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("ObserverInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("KeyInfo"));
+            mJmpMsgSender->remove(getMapSectionData("EnemyInfo"));
+            mJmpMsgSender->remove(getMapSectionData("CharacterInfo"));
+            mJmpMsgSender->remove(getMapSectionData("ObserverInfo"));
+            mJmpMsgSender->remove(getMapSectionData("KeyInfo"));
 
-            mJmpMsgSender->fn_800EA900(getMapSectionData("TeidenEnemyInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("TeidenCharacterInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("TeidenObserverInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("TeidenKeyInfo"));
+            mJmpMsgSender->add(getMapSectionData("TeidenEnemyInfo"));
+            mJmpMsgSender->add(getMapSectionData("TeidenCharacterInfo"));
+            mJmpMsgSender->add(getMapSectionData("TeidenObserverInfo"));
+            mJmpMsgSender->add(getMapSectionData("TeidenKeyInfo"));
             break;
         }
         mJmpMsgSender->vt_10();
