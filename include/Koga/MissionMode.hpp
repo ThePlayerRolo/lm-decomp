@@ -1,7 +1,7 @@
 #ifndef MISSION_MODE_H_
 #define MISSION_MODE_H_
 
-#include "JSystem/JORReflexible.hpp"
+#include <JSystem/JORReflexible.hpp>
 #include "Koga/GameMode.hpp"
 
 class CharacterColManager;

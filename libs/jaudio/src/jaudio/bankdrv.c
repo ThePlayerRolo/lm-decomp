@@ -18,25 +18,9 @@ Inst_* Bank_InstChange(Bank_* bank, volatile u32 VOLATILE_index)
 
 	index = VOLATILE_index;
 	if (!bank) {
-		return NULL;
+		return nullptr;
 	}
 	return bank->mInstruments[index];
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000030
- */
-Voice_* Bank_VoiceChange(Bank_* bank, volatile u32 VOLATILE_index)
-{
-	STACK_PAD_VAR(1);
-	u32 index;
-
-	index = VOLATILE_index;
-	if (!bank) {
-		return NULL;
-	}
-	return bank->mVoices[index];
 }
 
 /**
@@ -49,7 +33,7 @@ Perc_* Bank_PercChange(Bank_* bank, volatile u32 VOLATILE_index)
 
 	index = VOLATILE_index;
 	if (!bank) {
-		return NULL;
+		return nullptr;
 	}
 	return bank->mPercs[index];
 }
@@ -124,15 +108,6 @@ Vmap_* Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000010
- */
-int Bank_GetVoiceMap(Voice_* voice, u16 id)
-{
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
  */
 f32 Bank_SenseToOfs(Sense_* sensor, u8 p2)
 {
@@ -181,7 +156,7 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 	f32 calc;
 	s16* table;
 
-	if (osc == NULL) {
+	if (osc == nullptr) {
 		buf->value = 1.0f;
 		return 1.0f;
 	}
@@ -192,11 +167,8 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 			buf->timeCounter = 0.0f;
 			buf->targetValue = buf->value;
 		}
-		if (osc->releaseVecOffset == 0 && buf->releaseParam == 0) {
-			buf->releaseParam = 0x10;
-		}
 
-		if (buf->releaseParam) {
+		if (osc->releaseVecOffset == nullptr) {
 			buf->state     = 8;
 			buf->curveType = buf->releaseParam >> 14 & 3;
 			f32 x          = buf->releaseParam & 0x3fff;
@@ -226,7 +198,7 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 		table = osc->attackVecOffset;
 	}
 
-	if (table == NULL && buf->state != 8) {
+	if (table == nullptr && buf->state != 8) {
 		buf->value = 1.0f;
 		return 1.0f;
 	}
@@ -242,7 +214,6 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 		buf->tableIndex   = 0;
 		buf->timeCounter  = 0.0f;
 		buf->targetValue  = 0.0f;
-		buf->releaseParam = 0;
 		sub               = osc->rate;
 	} else {
 		sub = osc->rate;

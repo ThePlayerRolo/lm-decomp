@@ -1,7 +1,7 @@
 #ifndef ENEMY_GEN_MANAGER_H_
 #define ENEMY_GEN_MANAGER_H_
 
-#include "types.h"
+#include <types.h>
 #include <JSystem/JORReflexible.hpp>
 
 namespace Koga {

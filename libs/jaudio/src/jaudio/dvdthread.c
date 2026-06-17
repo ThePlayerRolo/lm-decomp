@@ -1,6 +1,6 @@
 #include "jaudio/dvdthread.h"
-#include "Dolphin/ar.h"
-#include "Dolphin/os.h"
+#include <dolphin/ar.h>
+#include <dolphin/os.h>
 #include "jaudio/aictrl.h"
 #include "jaudio/sample.h"
 #include <stddef.h>
@@ -18,38 +18,24 @@ static u32 buffers;
 static size_t next_buffersize;
 static u8* next_buffertop;
 static u32 next_buffers;
-static u32 cur_q;
+
 static OSThreadQueue dvdt_sleep;
 static BOOL DVDT_PAUSE_FLAG;
 
 static ErrorCallback error_callback;
+
+static u32 cur_q;
+static s8 lbl_804D93C4;
+
 static u8* ADVD_BUFFER[2];
 static u32 buffer_load;
 
-static vu32 buffer_full;
+static volatile u32 buffer_full;
 
 static void __Alloc_DVDBuffer();
 static void __UpdateBuffer();
 static void __WriteBufferSize(u8*, u32, u32);
 
-/**
- * @TODO: Documentation
- */
-static void* GetCallStack()
-{
-	void* ret;
-	BOOL enable = OSDisableInterrupts();
-
-	ret = &CALLSTACK[cur_q++ * 0x100];
-
-	if (cur_q == 0x80) {
-		cur_q = 0;
-	}
-
-	OSRestoreInterrupts(enable);
-
-	return ret;
-}
 
 /**
  * @TODO: Documentation
@@ -74,18 +60,6 @@ static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs,  c
 /**
  * @TODO: Documentation
  */
-void DVDT_SetRootPath( char* path)
-{
-	// don't ask.
-	 char** REF_path = &path;
-	if (strlen(path) < 31) {
-		strcpy(audio_root_path, path);
-	}
-}
-
-/**
- * @TODO: Documentation
- */
 void DVDT_ExtendPath(char* dst,  char* ext)
 {
 	if (*audio_root_path != '\0') {
@@ -102,23 +76,29 @@ void DVDT_ExtendPath(char* dst,  char* ext)
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 00007C
- */
-s32 DVDT_AddTaskHigh(TaskCallback, void*, size_t)
-{
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
  */
 s32 DVDT_AddTask(TaskCallback callback, void* stack, size_t len)
 {
+
+	if (lbl_804D93C4 == false) {
+		cur_q = 0;
+		lbl_804D93C4 = 1;
+	}
+
 	if (mq_init == FALSE) {
 		return 0;
 	}
 
-	TaskCallback* cstack = (TaskCallback*)GetCallStack();
+	TaskCallback* cstack;
+	BOOL enable = OSDisableInterrupts();
+
+	cstack =  (TaskCallback*)&CALLSTACK[cur_q++ * 0x100];
+
+	if (cur_q == 0x80) {
+		cur_q = 0;
+	}
+
+	OSRestoreInterrupts(enable);
 
 	Jac_bcopy(stack, cstack + 1, len);
 
@@ -158,7 +138,7 @@ void* jac_dvdproc(void*)
 			if (buffersize == 0) {
 				__WriteBufferSize(buf, 2, 0x8000);
 			}
-			if (callback != NULL) {
+			if (callback != nullptr) {
 				break;
 			};
 		}
@@ -171,11 +151,11 @@ void* jac_dvdproc(void*)
  */
 static void __DoError(DVDCall* call, u32)
 {
-	if (call->callbackStatus != NULL) {
+	if (call->callbackStatus != nullptr) {
 		*call->callbackStatus = -1;
 	}
 
-	if (call->callback != NULL) {
+	if (call->callback != nullptr) {
 		call->callback(-1);
 	}
 }
@@ -185,11 +165,11 @@ static void __DoError(DVDCall* call, u32)
  */
 static void __DoFinish(DVDCall* call, u32 status)
 {
-	if (call->callbackStatus != NULL) {
+	if (call->callbackStatus != nullptr) {
 		*call->callbackStatus = status;
 	}
 
-	if (call->callback != NULL) {
+	if (call->callback != nullptr) {
 		call->callback(call->owner);
 	}
 }
@@ -212,12 +192,9 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 	s32 readStatus = 0;
 	DVDCall* call  = (DVDCall*)dvdCall;
 
-#if defined(VERSION_GPIP01)
-	static DVDFileInfo finfo;
-#else
 	DVDFileInfo finfo;
-#endif
-	if (Jac_DVDOpen(call->fileName, &finfo) == FALSE) {
+
+	if (DVDOpen(call->fileName, &finfo) == FALSE) {
 		__DoError(call, 0);
 		return -1;
 	}
@@ -229,10 +206,6 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
 
 	if (call->length == 0) {
 		call->length = infoLength;
-#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
-#else
-		call->length -= call->src;
-#endif
 	}
 
 	DCInvalidateRange((void*)call->dst, call->length);
@@ -305,64 +278,10 @@ static void __UpdateBuffer()
 	if (next_buffers != 0) {
 		__WriteBufferSize(next_buffertop, next_buffers, next_buffersize);
 		next_buffers   = 0;
-		next_buffertop = NULL;
+		next_buffertop = nullptr;
 	}
 }
 
-/**
- * @TODO: Documentation
- */
-void DVDT_SetBuffer(u8* buf, u32 numBuffers, u32 size)
-{
-	if (mq_init == 0) {
-		__WriteBufferSize(buf, numBuffers, size);
-		return;
-	}
-
-	next_buffertop  = buf;
-	next_buffersize = size;
-	next_buffers    = numBuffers;
-
-	OSSendMessage(&mq, 0, OS_MESSAGE_NOBLOCK);
-}
-
-/**
- * @TODO: Documentation
- */
-s32 DVDT_CloseBuffer(u8* buf)
-{
-	if (mq_init == 0) {
-		__WriteBufferSize(NULL, 0, 0);
-		return 1;
-	}
-
-	if (next_buffertop == buf) {
-		next_buffers = 0;
-		OSSendMessage(&mq, 0, OS_MESSAGE_NOBLOCK);
-		return 1;
-	}
-
-	if (ADVD_BUFFER[0] == buf) {
-		if (next_buffers == 0) {
-			next_buffertop  = NULL;
-			next_buffersize = 0;
-			next_buffers    = 1;
-			OSSendMessage(&mq, 0, OS_MESSAGE_NOBLOCK);
-		}
-		return 0;
-	}
-
-	return 1;
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000010
- */
-void DVDT_GetCurrentBuffer(u8**)
-{
-	// UNUSED FUNCTION
-}
 
 /**
  * @TODO: Documentation
@@ -377,14 +296,12 @@ static void ARAM_DMAfinish(u32)
  */
 s32 DVDT_LoadtoARAM_Main(void* dvdCall)
 {
-	STACK_PAD_VAR(2);
-
 	DVDCall* call        = (DVDCall*)dvdCall;
 	static int arq_index = 0;
 	static DVDFileInfo finfo;
 	static ARQRequest req[4];
 
-	if (!Jac_DVDOpen(call->fileName, &finfo)) {
+	if (!DVDOpen(call->fileName, &finfo)) {
 		__DoError(call, 0);
 		return -1;
 	}
@@ -397,14 +314,7 @@ s32 DVDT_LoadtoARAM_Main(void* dvdCall)
 
 	if (call->length == 0) {
 		call->length = len;
-
-#if defined(VERSION_GPIJ01_01) || defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
-#else
-		call->length -= call->src;
-#endif
 	}
-
-	OSGetTick();
 
 	while (call->length != 0) {
 		u32 readSize;
@@ -439,12 +349,15 @@ s32 DVDT_LoadtoARAM_Main(void* dvdCall)
 	while (buffer_full != 0)
 		;
 
-	OSGetTick();
-
 	__DoFinish(call, len);
 
 	return 0;
 }
+
+#ifdef BUILD_MATCHING
+//this was probably some local bss that was stripped out of the final build so we do this instead!
+static u8 lbl_8043D14C[0x5C];
+#endif
 
 /**
  * @TODO: Documentation
@@ -474,68 +387,16 @@ s32 DVDT_LoadtoARAM(u32 owner,  char* path, u32 dst, u32 src, u32 length, u32* s
 
 /**
  * @TODO: Documentation
- * @note UNUSED Size: 000010
  */
-void ARAM_DMAfinish2(u32)
-{
-	static DVDFileInfo finfo;
-	static ARQRequest req;
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 00007C
- */
-void DVDT_ARAMtoDRAM_Main(void*)
-{
-	static DVDFileInfo finfo;
-	static ARQRequest req;
-
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 00007C
- */
-void DVDT_DRAMtoARAM_Main(void*)
-{
-	// static DVDFileInfo finfo;
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000060
- */
-void DVDT_ARAMtoDRAM(u32, u32, u32, u32, u32*, void (*)(u32))
-{
-	// static DVDFileInfo finfo;
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000060
- */
-void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
-{
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- */
-s32 DVDT_CheckFile( char* file)
+s32 DVDT_CheckFile(char* file)
 {
 	char path[64];
-	 char** REF_file = &file;
+	char** REF_file = &file;
 	static DVDFileInfo finfo;
 
 	DVDT_ExtendPath(path, file);
 
-	if (!Jac_DVDOpen(path, &finfo)) {
+	if (!DVDOpen(path, &finfo)) {
 		return 0;
 	}
 	u32 len = finfo.length;
@@ -549,10 +410,10 @@ s32 DVDT_CheckFile( char* file)
  */
 s32 DVDT_LoadFile( char* file, u8* p2)
 {
-	vu32 status           = 0;
-	 char** REF_file = &file;
+	volatile u32 status           = 0;
+	char** REF_file = &file;
 	STACK_PAD_VAR(2);
-	DVDT_LoadtoDRAM(0, file, (u32)p2, 0, 0, (u32*)&status, NULL);
+	DVDT_LoadtoDRAM(0, file, (u32)p2, 0, 0, (u32*)&status, nullptr);
 
 	while (status == 0) { }
 
@@ -582,105 +443,56 @@ void DVDT_CheckPass(u32 owner, u32* status, Jac_DVDCallback callback)
  * @TODO: Documentation
  * @note UNUSED Size: 000064
  */
-void Jac_CheckFile( char*)
+BOOL Jac_CheckFile(char* file)
 {
 	static DVDFileInfo finfo;
-	// UNUSED FUNCTION
+	char** REF_file = &file;
+
+	if (!DVDOpen(file, &finfo)) {
+		return FALSE;
+	}
+
+	u32 len = finfo.length;
+	DVDClose(&finfo);
+
+	return len;
 }
 
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 0000B4
- */
-void Jac_LoadFile( char*, u8*)
+s32 Jac_LoadFile( char* file, u8* p2)
 {
 	static DVDFileInfo finfo;
-	// UNUSED FUNCTION
+	char** REF_file = &file;
+
+	if (!DVDOpen(file, &finfo)) {
+		return 0;
+	}
+
+	s32 length = finfo.length;
+
+	while (TRUE) {
+		s32 readPrioStatus = DVDReadPrio(&finfo, p2, length, 0, 2);
+		if (readPrioStatus == -1 && error_callback) {
+			error_callback(file, (u8*)p2);
+			continue;
+		}
+		break;
+	}
+
+	DVDClose(&finfo);
+	return length;
+
 }
 
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 00000C
- */
 void DVDT_Pause()
 {
-	// UNUSED FUNCTION
+	DVDT_PAUSE_FLAG = TRUE;
 }
 
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000038
- */
 void DVDT_UnPause()
 {
-	// UNUSED FUNCTION
-}
+	if (DVDT_PAUSE_FLAG == TRUE) {
+		OSWakeupThread(&dvdt_sleep);
 
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000008
- */
-void Jac_RegisterDVDErrorCallback(void (*)( char*, u8*))
-{
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- */
-s32 Jac_RegisterExtFastOpen( char* ext)
-{
-	char file[64];
-	DVDT_ExtendPath(file, ext);
-	Jac_RegisterFastOpen(file);
-}
-
-static u32 dvdfile_dics;
-static char dvd_file[32][64];
-static u32 dvd_entrynum[32];
-
-/**
- * @TODO: Documentation
- */
-s32 Jac_RegisterFastOpen( char* file)
-{
-	volatile int num;
-	 char** REF_file = &file;
-	STACK_PAD_VAR(3);
-	if (strlen(file) > 63) {
-		return -1;
 	}
-
-	int i;
-	for (i = 0; i < dvdfile_dics; i++) {
-		if (!strcmp(dvd_file[i], file)) {
-			return dvd_entrynum[i];
-		}
-	}
-	if (dvdfile_dics == 32) {
-		return -1;
-	}
-
-	num = DVDConvertPathToEntrynum(file);
-
-	if (num != -1) {
-		strcpy(dvd_file[dvdfile_dics], file);
-		dvd_entrynum[dvdfile_dics] = num;
-		dvdfile_dics++;
-	}
-	return num;
-}
-
-/**
- * @TODO: Documentation
- */
-BOOL Jac_DVDOpen( char* name, DVDFileInfo* info)
-{
-	int entry = Jac_RegisterFastOpen(name);
-
-	if (entry == -1) {
-		return DVDOpen(name, info);
-	} else {
-		return DVDFastOpen(entry, info);
-	}
+	DVDT_PAUSE_FLAG = FALSE;
 }

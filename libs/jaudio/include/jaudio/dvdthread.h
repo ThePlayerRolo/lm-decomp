@@ -46,6 +46,7 @@ void DVDT_CheckPass(u32 owner, u32* status, Jac_DVDCallback callback);
 s32 Jac_RegisterExtFastOpen(char* ext);
 s32 Jac_RegisterFastOpen(char* file);
 BOOL Jac_DVDOpen(char* name, DVDFileInfo* info);
+BOOL Jac_CheckFile(char* name);
 
 /////////////////////////////////////////////////////
 

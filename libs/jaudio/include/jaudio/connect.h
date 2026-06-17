@@ -8,7 +8,7 @@ typedef struct WaveArchiveBank_ WaveArchiveBank_;
 typedef struct Ctrl_ Ctrl_;
 typedef struct CtrlGroup_ CtrlGroup_;
 
-void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL);
+void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32);
 BOOL Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL);
 struct WaveID_* GetSoundHandle(CtrlGroup_*, u32);
 u16 Jac_WsVirtualToPhysical(u16);

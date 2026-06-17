@@ -1,7 +1,7 @@
 #ifndef _800B9F7C_H_
 #define _800B9F7C_H_
 
-#include "JSystem/JGeometry/JGVec3.hpp"
+#include <JSystem/JGeometry/JGVec3.hpp>
 
 class MoveObj;
 

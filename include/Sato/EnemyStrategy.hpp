@@ -1,7 +1,7 @@
 #ifndef ENEMY_STRATEGY_H_
 #define ENEMY_STRATEGY_H_
 
-#include "types.h"
+#include <types.h>
 #include <JSystem/JORReflexible.hpp>
 
 class EnemyStrategy;

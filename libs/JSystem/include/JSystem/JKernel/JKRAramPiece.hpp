@@ -1,7 +1,6 @@
 #ifndef JKR_ARAM_PIECE_HPP
 #define JKR_ARAM_PIECE_HPP
 
-#include "JSystem/JKernel/JKREnum.hpp"
 #include <JSystem/JSupport/JSUList.hpp>
 #include <dolphin/ar.h>
 #include <dolphin/os/OSMessage.h>

@@ -70,7 +70,7 @@ static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* 
 /**
  * @TODO: Documentation
  */
-void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
+void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id)
 {
 	WaveArchive_* arc;
 	SCNE_* scene;
@@ -80,9 +80,9 @@ void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	Jac_DeleteHeap(&arc->heap);
 	arc->fileLoadStatus = 0;
 
-	if (set && scene->dependencyCount) {
+	if (scene->dependencyCount) {
 		for (u32 i = 0; i < scene->dependencyCount; i++) {
-			Jac_SceneClose(bank, group, scene->dependencyIds[i], TRUE);
+			Jac_SceneClose(bank, group, scene->dependencyIds[i]);
 		}
 	}
 
@@ -152,7 +152,7 @@ static WaveID_* SearchWave(Ctrl_* ctrl, u32 flag)
 			return wave;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -186,7 +186,7 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 			return wave;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -196,20 +196,20 @@ WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 {
 	u32* flagptr  = &flag;
 	WaveID_* wave = __GetSoundHandle(group, flag, group->_04);
-	if (wave == NULL) {
-		return NULL;
+	if (wave == nullptr) {
+		return nullptr;
 	}
-	if (wave->data == NULL) {
-		return NULL;
+	if (wave->data == nullptr) {
+		return nullptr;
 	}
 
 	u32* ptr = wave->data->fileLoadStatus;
-	if (ptr == NULL) {
-		return NULL;
+	if (ptr == nullptr) {
+		return nullptr;
 	}
 
 	if (*ptr == 0) {
-		return NULL;
+		return nullptr;
 	}
 
 	return wave;

@@ -136,6 +136,7 @@ jaudio/sample.c:
 
 jaudio/dummyrom.c:
 	.text       start:0x8019C8C0 end:0x8019CA40
+	.bss        start:0x804CFCFC end:0x804CFD10 align:4 common
 	.sbss       start:0x804D9340 end:0x804D9360
 
 jaudio/audiothread.c:
@@ -143,6 +144,7 @@ jaudio/audiothread.c:
 	.rodata     start:0x802174D8 end:0x802174E8
 	.bss        start:0x80431360 end:0x80434D20
 	.sbss       start:0x804D9360 end:0x804D9380
+	.sdata2     start:0x804DD2F8 end:0x804DD300
 
 jaudio/streamctrl.c:
 	.text       start:0x8019CEC0 end:0x8019D260
@@ -155,6 +157,21 @@ jaudio/dspbuf.c:
 	.rodata     start:0x802174E8 end:0x80217500
 	.bss        start:0x80434D90 end:0x80434DA0
 	.sbss       start:0x804D9380 end:0x804D9390
+
+jaudio/cpubuf.c:
+	.text       start:0x8019D5A0 end:0x8019D7E0
+	.bss        start:0x80434DA0 end:0x80434DB0
+	.sbss       start:0x804D9390 end:0x804D9398
+
+jaudio/playercall.c:
+	.text       start:0x8019D7E0 end:0x8019DAA0
+	.bss        start:0x80434DB0 end:0x80434E70
+
+jaudio/dvdthread.c:
+	.text       start:0x8019DAA0 end:0x8019E660
+	.data       start:0x8038F320 end:0x8038F340
+	.bss        start:0x80434E70 end:0x8043D260
+	.sbss       start:0x804D9398 end:0x804D93E0
 
 jaudio/dspboot.c:
 	.text       start:0x8019E740 end:0x8019EB00
@@ -192,6 +209,48 @@ jaudio/dspinterface.c:
 	.data       start:0x80390BC0 end:0x80391020
 	.bss        start:0x80451820 end:0x804578A0
 	.sdata      start:0x804D7920 end:0x804D7930
+
+jaudio/fxinterface.c:
+	.text       start:0x801A1D80 end:0x801A1EC0
+	.data       start:0x80391220 end:0x80391238
+
+jaudio/bankread.c:
+	.text       start:0x801A1EC0 end:0x801A22C0
+	.bss        start:0x804578A0 end:0x80457CA0
+
+jaudio/waveread.c:
+	.text       start:0x801A22C0 end:0x801A2780
+	.bss        start:0x80457CA0 end:0x804584A0
+	.bss        start:0x804CFD10 end:0x804CFD50 align:4 common
+
+jaudio/connect.c:
+	.text       start:0x801A2780 end:0x801A2E80
+	.bss        start:0x804584A0 end:0x804588A0
+
+jaudio/bankdrv.c:
+	.text       start:0x801A2E80 end:0x801A35E0
+	.data       start:0x80391238 end:0x80391248
+	.sdata2     start:0x804DD350 end:0x804DD378
+
+jaudio/random.c:
+	.text       start:0x801A35E0 end:0x801A3840
+	.sdata      start:0x804D7930 end:0x804D7938
+	.sdata2     start:0x804DD378 end:0x804DD388
+
+jaudio/aramcall.c:
+	.text       start:0x801A3840 end:0x801A3B40
+	.data       start:0x80391248 end:0x80391288
+	.bss        start:0x804CFD50 end:0x804CFD7C align:4 common
+	.sdata      start:0x804D7938 end:0x804D7940
+	.sbss       start:0x804D9410 end:0x804D9418
+
+jaudio/hvqm_play.c:
+	.bss        start:0x804CFD7C end:0x804CFF5C align:4 common
+
+jaudio/ja_calc.c:
+	.text       start:0x801A3B40 end:0x801A3C40
+	.bss        start:0x804588A0 end:0x80458CA8
+	.sdata2     start:0x804DD388 end:0x804DD3A0
 
 JSystem/J2D/J2DGrafContext.cpp:
 	.text       start:0x801ADEE4 end:0x801AE564

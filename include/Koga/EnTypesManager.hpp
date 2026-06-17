@@ -1,7 +1,7 @@
 #ifndef EN_TYPES_MANAGER_H_
 #define EN_TYPES_MANAGER_H_
 
-#include "types.h"
+#include <types.h>
 #include <JSystem/JORReflexible.hpp>
 
 namespace Koga {

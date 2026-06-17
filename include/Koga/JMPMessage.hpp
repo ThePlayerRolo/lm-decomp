@@ -1,7 +1,7 @@
 #ifndef JMP_MESSAGE_H_
 #define JMP_MESSAGE_H_
 
-#include "JSystem/JORReflexible.hpp"
+#include <JSystem/JORReflexible.hpp>
 #include "Koga/Message.hpp"
 
 namespace Koga {

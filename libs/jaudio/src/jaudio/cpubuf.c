@@ -83,7 +83,7 @@ s16* CpubufProcess(DSPBUF_EVENTS event)
 	}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**

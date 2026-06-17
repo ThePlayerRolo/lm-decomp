@@ -2,7 +2,7 @@
 #define MESSAGE_H_
 
 #include "Koga/Array.hpp"
-#include "types.h"
+#include <types.h>
 
 class MessageReceiver;
 typedef bool (MessageReceiver::*MessageCallback1)(int arg0);

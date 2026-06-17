@@ -1,8 +1,8 @@
 #ifndef CHARACTER_COLLISION_MANAGER_H_
 #define CHARACTER_COLLISION_MANAGER_H_
 
-#include "types.h"
-#include "JSystem/JORReflexible.hpp"
+#include <types.h>
+#include <JSystem/JORReflexible.hpp>
 #include "Unsorted/ActorDataList.hpp"
 
 struct unkCharactColStruct {

@@ -1,7 +1,7 @@
 #ifndef JKR_ARAM_HPP
 #define JKR_ARAM_HPP
 
-#include "JSystem/JKernel/JKRAramPiece.hpp"
+#include <JSystem/JKernel/JKRAramPiece.hpp>
 #include <JSystem/JKernel/JKRAramHeap.hpp>
 #include <JSystem/JKernel/JKRThread.hpp>
 #include <JSystem/JKernel/JKREnum.hpp>

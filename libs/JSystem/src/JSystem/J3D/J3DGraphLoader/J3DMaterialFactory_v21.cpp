@@ -3,7 +3,7 @@
 #include <JSystem/J3D/J3DGraphBase/Blocks/J3DPEBlocks.hpp>
 #include <JSystem/J3D/J3DGraphBase/J3DMaterial.hpp>
 #include <JSystem/JSupport.hpp>
-#include "types.h"
+#include <types.h>
 
 J3DMaterialFactory_v21::J3DMaterialFactory_v21(
     const J3DMaterialBlock_v21& block)
