@@ -2,7 +2,7 @@
 #include "Koga/JmpMessage.hpp"
 #include "Koga/ToolData.hpp"
 
-#include <Unsorted/InGameFlagsUtil.hpp>
+#include "Unsorted/InGameFlagsUtil.hpp"
 
 #include <JSystem/JGeometry/JGVec3.hpp>
 
