@@ -1,6 +1,6 @@
 #include "jaudio/dspdriver.h"
 
-#include "Dolphin/PPCArch.h"
+#include <dolphin/base/PPCArch.h>
 #include "jaudio/audiothread.h"
 #include "jaudio/driverinterface.h"
 #include "jaudio/dspinterface.h"
@@ -39,7 +39,7 @@ void InitDSPchannel()
 		chan->allocState    = DSPCHAN_Free;
 		chan->logicalChan   = 0;
 		chan->callbackTimer = 0;
-		chan->logicalChanCb = NULL;
+		chan->logicalChanCb = nullptr;
 		chan->prio          = 0;
 		chan->releaseTime   = 0;
 	}
@@ -66,7 +66,7 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 				return &DSPCH[i];
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	for (i = 1; i < DSPCH_LENGTH; i += 2) {
@@ -82,7 +82,7 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 		DSP_AllocInit(i - 1);
 		return &DSPCH[i - 1];
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -90,7 +90,7 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
  */
 int DeAllocDSPchannel(dspch_* chan, u32 id)
 {
-	if (chan == NULL) {
+	if (chan == nullptr) {
 		return -1;
 	}
 	if (chan->logicalChan != (jc_*)id) {
@@ -118,8 +118,8 @@ int DeAllocDSPchannel(dspch_* chan, u32 id)
 	}
 	}
 	chan->prio          = 0;
-	chan->logicalChanCb = NULL;
-	chan->logicalChan   = NULL;
+	chan->logicalChanCb = nullptr;
+	chan->logicalChan   = nullptr;
 	return 0;
 
 	STACK_PAD_VAR(2);
@@ -245,7 +245,6 @@ BOOL BreakLowerDSPchannel(u8 param_1)
 	if (chan->allocState != DSPCHAN_Free) {
 		if (chan->logicalChanCb) {
 			chan->callbackTimer = chan->logicalChanCb(chan, DSPCHCB_StateChange);
-			ForceStopDSPchannel(chan);
 			chan->allocState = DSPCHAN_Stopping;
 		}
 		ForceStopDSPchannel(chan);
@@ -274,7 +273,6 @@ BOOL BreakLowerActiveDSPchannel(u8 id)
 	if (chan->allocState != DSPCHAN_Free) {
 		if (chan->logicalChanCb) {
 			chan->callbackTimer = chan->logicalChanCb(chan, DSPCHCB_StateChange);
-			ForceStopDSPchannel(chan);
 			chan->allocState = DSPCHAN_Stopping;
 		}
 		ForceStopDSPchannel(chan);

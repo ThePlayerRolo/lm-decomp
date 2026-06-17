@@ -144,7 +144,14 @@ jaudio/dummyrom.c:
 jaudio/audiothread.c:
 	.text       start:0x8019CA40 end:0x8019CEC0
 	.rodata     start:0x802174D8 end:0x802174E8
+	.bss        start:0x80431360 end:0x80434D20
 	.sbss       start:0x804D9360 end:0x804D9380
+
+jaudio/streamctrl.c:
+	.text       start:0x8019CEC0 end:0x8019D260
+	.data       start:0x8038F250 end:0x8038F320
+	.bss        start:0x80434D20 end:0x80434D90
+	.sdata2     start:0x804DD300 end:0x804DD310
 
 jaudio/dspbuf.c:
 	.text       start:0x8019D260 end:0x8019D5A0
@@ -170,6 +177,24 @@ jaudio/ipldec.c:
 jaudio/dsp_cardunlock.c:
 	.text       start:0x8019EE40 end:0x8019F660
 	.rodata     start:0x80217520 end:0x80217560
+
+jaudio/driverinterface.c:
+	.text       start:0x8019F660 end:0x801A0E40
+	.data       start:0x80390B20 end:0x80390BC0
+	.bss        start:0x8043D260 end:0x804513E0
+	.sdata      start:0x804D7918 end:0x804D7920
+	.sbss       start:0x804D93F8 end:0x804D9408
+	.sdata2     start:0x804DD320 end:0x804DD340
+
+jaudio/dspdriver.c:
+	.text       start:0x801A0E40 end:0x801A16C0
+	.bss        start:0x804513E0 end:0x80451820
+
+jaudio/dspinterface.c:
+	.text       start:0x801A16C0 end:0x801A1D80
+	.data       start:0x80390BC0 end:0x80391020
+	.bss        start:0x80451820 end:0x804578A0
+	.sdata      start:0x804D7920 end:0x804D7930
 
 JSystem/J2D/J2DGrafContext.cpp:
 	.text       start:0x801ADEE4 end:0x801AE564
