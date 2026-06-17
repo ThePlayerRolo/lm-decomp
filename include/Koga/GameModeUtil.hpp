@@ -23,7 +23,7 @@ namespace Koga {
         void* getPathResource(const char* pName);
         void addJmpReceiver(void* pReceiver);
         JKRArchive* getMapArchive();
-        ToolData* getMapSection(const char* pName);
+        ToolData* getJmpResource(const char* pName);
     };
 }
 

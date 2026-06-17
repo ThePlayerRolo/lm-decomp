@@ -84,10 +84,10 @@ namespace Koga { namespace GameModeUtil {
         return MissionMode::getMissionMode()->getMapArchive();
     }
 
-    ToolData* getMapSection(const char* pName) {
+    ToolData* getJmpResource(const char* pName) {
         MissionMode* missionMode = MissionMode::getMissionMode();
 
-        return missionMode->getMapSectionData(pName);
+        return missionMode->getJmpResource(pName);
     }
 }
 }
