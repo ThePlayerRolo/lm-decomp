@@ -119,7 +119,7 @@ namespace Koga {
     // Toggles the loaded JMP tables between their blackout mode variants
     void MissionMode::toggleBlackoutTables(Mission mission) {
         switch (mission) {
-        case MISSION_BLACKOUT:
+        case MISSION_DEFAULT:
             mJmpMsgSender->remove(getMapSectionData("TeidenEnemyInfo"));
             mJmpMsgSender->remove(getMapSectionData("TeidenCharacterInfo"));
             mJmpMsgSender->remove(getMapSectionData("TeidenObserverInfo"));
@@ -130,7 +130,7 @@ namespace Koga {
             mJmpMsgSender->add(getMapSectionData("ObserverInfo"));
             mJmpMsgSender->add(getMapSectionData("KeyInfo"));
             break;
-        case MISSION_DEFAULT:
+        case MISSION_BLACKOUT:
             mJmpMsgSender->remove(getMapSectionData("EnemyInfo"));
             mJmpMsgSender->remove(getMapSectionData("CharacterInfo"));
             mJmpMsgSender->remove(getMapSectionData("ObserverInfo"));

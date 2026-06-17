@@ -18,8 +18,8 @@ namespace Koga {
     public:
         /* TODO: Maybe change the name? */
         enum Mission {
-            MISSION_BLACKOUT,
             MISSION_DEFAULT,
+            MISSION_BLACKOUT,
         };
 
         MissionMode();
