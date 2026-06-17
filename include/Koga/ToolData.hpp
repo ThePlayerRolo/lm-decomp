@@ -105,10 +105,6 @@ namespace Koga {
             return (*reinterpret_cast<const u32*>(ptr) & pField->mMask) >> pField->mShift;
         }
 
-        inline const f32 getFloatValue(int entryIndex, int fieldIndex) const {
-            return *reinterpret_cast<const f32*>(getDataPointer(mData, &mData->mItems[fieldIndex], entryIndex, fieldIndex));
-        }
-
         inline const bool getBoolValue(int entryIndex, int fieldIndex) const {
             const JMapItem* pField = &mData->mItems[fieldIndex];
             u32 entryOffset = entryIndex * mData->mEntrySize;
@@ -121,6 +117,10 @@ public:
         inline const char* getStringValue(int entryIndex, int fieldIndex) const {
             return reinterpret_cast<const char*>(getDataPointer(mData, &mData->mItems[fieldIndex], entryIndex, fieldIndex));
         };
+
+        inline const f32 getFloatValue(int entryIndex, int fieldIndex) const {
+            return *reinterpret_cast<const f32*>(getDataPointer(mData, &mData->mItems[fieldIndex], entryIndex, fieldIndex));
+        }
     };
 }
 
