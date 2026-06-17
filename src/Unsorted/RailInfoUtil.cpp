@@ -2,12 +2,9 @@
 #include "Koga/GameModeUtil.hpp"
 #include "Koga/ToolData.hpp"
 
-#include "JSystem/JGeometry/JGVec3.hpp"
-#include "types.h"
-
 //Mostly matches minus stack size
 int getLadderCount() {
-    Koga::ToolData* railInfo = Koga::GameModeUtil::getMapSection("RailInfo");
+    Koga::ToolData* railInfo = Koga::GameModeUtil::getJmpResource("RailInfo");
 
     int ladderCount = 0;
     if (railInfo != nullptr) {
@@ -25,7 +22,7 @@ int getLadderCount() {
 }
 
 const char* getLadderName(int ladderIndex) {
-    Koga::ToolData* railInfo = Koga::GameModeUtil::getMapSection("RailInfo");
+    Koga::ToolData* railInfo = Koga::GameModeUtil::getJmpResource("RailInfo");
     const char* ladderName = nullptr;
 
     for (int i = 0, entryIndex = 0; i < railInfo->getDataEntryNum(); i++, entryIndex++) {
@@ -45,7 +42,7 @@ const char* getLadderName(int ladderIndex) {
 
 // Some mismatches due to the operator new for Koga::ToolData vs just calling the constructor, not sure why/how here
 int getLadderPathEntryCount(int ladderIndex) {
-    Koga::ToolData* railInfo = Koga::GameModeUtil::getMapSection("RailInfo");
+    Koga::ToolData* railInfo = Koga::GameModeUtil::getJmpResource("RailInfo");
     const char* ladderName = nullptr;
     u32 ladderCount = 0;
 
@@ -84,7 +81,7 @@ bool getLadderPositionByIndex(JGeometry::TVec3f* out, int ladderIndex, u32 entry
 
     bool ladderPosFound = false;
     if (entryIndex < maxIndex) {
-        Koga::ToolData* railInfo = Koga::GameModeUtil::getMapSection("RailInfo");
+        Koga::ToolData* railInfo = Koga::GameModeUtil::getJmpResource("RailInfo");
         const char* ladderName = nullptr;
         for (int i = 0, entryIndex = 0; i < railInfo->getDataEntryNum(); i++, entryIndex++) {
             u32 useVal = -1;

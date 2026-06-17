@@ -1,7 +1,7 @@
 #ifndef RAILINFOUTIL_H_
 #define RAILINFOUTIL_H_
 
-#include "types.h"
+#include <types.h>
 #include <JSystem/JGeometry/JGVec3.hpp>
 
 int getLadderCount();
