@@ -8,6 +8,7 @@
 // Global functions (all C++, so no extern C wrap).
 void Channel_SetMixerLevel(f32);
 jcs_* Get_GlobalHandle();
+void List_GlobalChannel();
 int List_CountChannel(jc_**);
 int List_CutChannel(jc_*);
 jc_* List_GetChannel(jc_**);

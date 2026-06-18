@@ -24,7 +24,7 @@ void Jac_RegisterARAMCallback(ARAMCallback callback)
 /**
  * @TODO: Documentation
  */
-u32 LoadAram( char* filepath, u32* status, u32 dst)
+u32 LoadAram(char* filepath, u32* status, u32 dst)
 {
 	 char** REF_filepath = &filepath;
 	u32* REF_dst              = &dst;
@@ -38,7 +38,7 @@ u32 LoadAram( char* filepath, u32* status, u32 dst)
 /**
  * @TODO: Documentation
  */
-u32 LoadAramSingle( char* filepath, u32 src, u32 length, u32* status, u32 dst)
+u32 LoadAramSingle(char* filepath, u32 src, u32 length, u32* status, u32 dst)
 {
 	STACK_PAD_VAR(1);
 	 char** REF_filepath = &filepath;
@@ -55,7 +55,7 @@ u32 LoadAramSingle( char* filepath, u32 src, u32 length, u32* status, u32 dst)
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-void Jac_WaveDirectorySet( char* directory)
+void Jac_WaveDirectorySet(char* directory)
 {
 	strcpy(extdir, directory);
 }
@@ -89,7 +89,7 @@ void Collect_AramMotherHeap(void)
 /**
  * @TODO: Documentation
  */
-u32 LoadAram_Default( char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
+u32 LoadAram_Default(char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
 {
 	char filepath[130];
 
@@ -121,7 +121,7 @@ u32 LoadAram_Default( char* filename, u32 src, u32 length, u32* status, jaheap_*
 /**
  * @TODO: Documentation
  */
-u32 LoadAram_All( char* filename, u32* status, jaheap_* heap)
+u32 LoadAram_All(char* filename, u32* status, jaheap_* heap)
 {
 	return ARCALL(filename, 0, 0, status, heap);
 }
@@ -129,7 +129,7 @@ u32 LoadAram_All( char* filename, u32* status, jaheap_* heap)
 /**
  * @TODO: Documentation
  */
-u32 LoadAram_One( char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
+u32 LoadAram_One(char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
 {
 	return ARCALL(filename, src, length, status, heap);
 }

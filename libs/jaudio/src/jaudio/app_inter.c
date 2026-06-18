@@ -18,7 +18,7 @@ void Jac_Pause(void)
 /**
  * @TODO: Documentation
  */
-void Jac_StreamMovieInit( char* filepath, u8* param_2, int param_3)
+void Jac_StreamMovieInit(char* filepath, u8* param_2, int param_3)
 {
 	if (Jac_GetCurrentScene() == SCENE_Title && !demo_fade_flag) {
 		Jac_EasyCrossFade(1, 50);

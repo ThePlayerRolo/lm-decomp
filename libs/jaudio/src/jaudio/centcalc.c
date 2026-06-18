@@ -24,7 +24,7 @@ f32 Jam_PitchToCent(f32 basePitch, f32 scaleFactor)
 	f32 fractionalPart;
 	s16 tableIndex;
 
-	scaledPitch    = 4.0f * basePitch * scaleFactor;
+	scaledPitch    = 32768.0f * basePitch / 8192.0f * scaleFactor;
 	tableIndex     = scaledPitch;
 	fractionalPart = scaledPitch - tableIndex;
 

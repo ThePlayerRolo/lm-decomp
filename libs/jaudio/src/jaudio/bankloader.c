@@ -33,7 +33,7 @@ struct AddrSize {
 /**
  * @TODO: Documentation
  */
-void Bank_Setup( char* filename)
+void Bank_Setup(char* filename)
 {
 	u32 i;
 

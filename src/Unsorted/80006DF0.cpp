@@ -1,6 +1,7 @@
 #include "Unsorted/80006DF0.hpp"
 #include "Unsorted/80005EB8.hpp"
 #include "Unsorted/LMDvdFile.hpp"
+#include <dolphin/os/OSFastCast.h>
 
 //TODO: Better name for this
 struct LMDvdThread : public OSThread {

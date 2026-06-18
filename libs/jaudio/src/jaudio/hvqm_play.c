@@ -9,6 +9,8 @@
 #include "jaudio/syncstream.h"
 #include <stddef.h>
 #include <string.h>
+#include <dolphin/os/OSFastCast.h>
+
 
 static volatile BOOL dvd_loadfinish;
 static u32 dvdcount;
@@ -27,7 +29,7 @@ static struct RecHeader {
 } rec_header;
 
 static int v_header;
-static int gop_baseframe;
+static u32 gop_baseframe;
 static u32 gop_frame;
 static int vh_state;
 static SeqObj* hvqm_obj;
@@ -58,8 +60,6 @@ struct DVDControl {
 static char filename[64] ATTRIBUTE_ALIGN(32);
 static u8* dvd_buf[3];
 static int gop_subframe         = -1;
-static BOOL playback_first_wait = TRUE;
-static BOOL hvqm_first          = TRUE;
 
 typedef struct HVQM_FileHeader {
 	int _00;             // _00, unused
@@ -79,8 +79,6 @@ typedef struct HVQM_FileHeader {
 
 static HVQM_FileHeader file_header;
 static u32 gop_header[5]; // TODO: struct?
-static OSThread jac_hvqmThread;
-static u8 hvqmStack[0x1000] ATTRIBUTE_ALIGN(32);
 
 /**
  * @TODO: Documentation
@@ -108,7 +106,7 @@ static void __ReLoad()
 		dvd_active += 1;
 
 		int num_bufs = 3;
-		DVDT_LoadtoDRAM(dvdcount, filename, (u32)dvd_buf[dvdcount % num_bufs], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
+		DVDT_LoadtoDRAM(dvdcount, filename, (u32)dvd_buf[dvdcount % num_bufs], dvdcount << 0x13, dvdload_size, nullptr, __LoadFin);
 		OSRestoreInterrupts(inter);
 	}
 }
@@ -165,8 +163,11 @@ static int __VirtualLoad(u32 currentOffs, u32 bytesToRead, u8* data)
 
 	if (bufIdx == 3) {
 		for (int i = 0; i < 3; i++) { }
+		StreamSetDVDPause(0, 1);
 		return 0;
 	}
+
+	StreamSetDVDPause(0, 0);
 
 	return bytesToRead;
 }
@@ -177,17 +178,16 @@ static int __VirtualLoad(u32 currentOffs, u32 bytesToRead, u8* data)
 static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
 {
 	Jac_InitStreamData(data, size);
-	StreamAudio_Start(0, 0, NULL, TRUE, FALSE, header);
+	StreamAudio_Start(0, 0, nullptr, TRUE, FALSE, header);
 }
 
 /**
  * @TODO: Documentation
  */
-void Jac_HVQM_Init( char* movieFilePath, u8* data, u32 bufferSize)
+void Jac_HVQM_Init(char* movieFilePath, u8* data, u32 bufferSize)
 {
 	// TODO: Use this in more places below instead of hardcoding 0x40000
 	u32 audioBufferSize = 0x40000;
-	playback_first_wait = TRUE;
 	for (u32 i = 0; i < bufferSize; i++) {
 		(void)&i;
 		data[i] = 0;
@@ -284,10 +284,6 @@ void Jac_HVQM_Init( char* movieFilePath, u8* data, u32 bufferSize)
 		// 1 byte per sample
 		sampleCount = fileSize;
 		break;
-	case AUDIOFRMT_ADPCM4X:
-		// 16 samples in 36 bytes
-		sampleCount = fileSize * 16 / 36;
-		break;
 	}
 	file_header.mFileSize = 0;
 
@@ -353,16 +349,6 @@ static void* hvqm_proc(void* data)
 	// appears next in the linker map.  Other context clues tell us that this is an `OSThreadStartFunction`
 	// type of function.  Beyond that, it's anyone's guess what this function actually did.
 	OSInitFastCast();
-}
-
-/**
- * @TODO: Documentation
- */
-static void hvqm_forcestop()
-{
-	if (hvqm_first == 0 && OSIsThreadTerminated(&jac_hvqmThread) == FALSE) {
-		OSCancelThread(&jac_hvqmThread);
-	}
 }
 
 /**
@@ -435,10 +421,9 @@ BOOL Jac_HVQM_Update(void)
 		}
 		case 1:
 		{
-			if (playback_first_wait && PIC_FRAME == PIC_BUFFERS) {
+			if (gop_baseframe == 0 && gop_subframe == PIC_BUFFERS) {
 				if (StreamSyncCheckReady(0)) {
 					StreamSyncPlayAudio(1.0f, 0, 0x3fff, 0x3fff);
-					playback_first_wait = 0;
 				} else {
 					record_ok = 0;
 					return FALSE;
@@ -482,12 +467,12 @@ BOOL Jac_HVQM_Update(void)
 			time_delta     = OSGetTime() - start_time;
 			if (dec <= 1) {
 				PIC_FRAME++;
-				gop_subframe++;
-				if (gop_subframe == gop_header[2]) {
-					gop_baseframe += gop_subframe;
-					gop_subframe = -1;
-					gop_frame++;
-				}
+			}
+			gop_subframe++;
+			if (gop_subframe == gop_header[2]) {
+				gop_baseframe += gop_subframe;
+				gop_subframe = -1;
+				gop_frame++;
 			}
 			break;
 		}
@@ -533,7 +518,6 @@ void Jac_HVQM_ForceStop(void)
 	} else {
 		OSRestoreInterrupts(inter);
 	}
-	hvqm_forcestop();
 }
 
 /**
@@ -552,22 +536,16 @@ int Jac_GetPicture(void* data, int* x, int* y)
 {
 	int offset = 0;
 	int index  = -1;
-	*x         = file_header.mInfo.width;
-	*y         = file_header.mInfo.height;
-
-	if (playback_first_wait) {
-		*(int*)data = 0;
-		return 1;
-	}
 
 	int frame = StreamGetCurrentFrame(0, 2);
 	if (frame == -1) {
-		hvqm_forcestop();
 		*(int*)data = 0;
 		return -1;
 	}
 
 	AUDIO_FRAME = frame;
+	*x         = file_header.mInfo.width;
+	*y         = file_header.mInfo.height;
 
 	for (u32 i = 0; i < PIC_BUFFERS; i++) {
 		if (pic_ctrl[i].mBufferState) {
@@ -597,9 +575,6 @@ int Jac_GetPicture(void* data, int* x, int* y)
 			if (index != -1 && index != i) {
 				pic_ctrl[index].mBufferState = 0;
 			}
-			if (frame < 3) {
-				*(int*)data = 0;
-			}
 			return frame + 1;
 		}
 	}
@@ -608,9 +583,6 @@ int Jac_GetPicture(void* data, int* x, int* y)
 
 	if (index != -1) {
 		*(void**)data = pic_ctrl[index].mPicBuffer;
-		if (frame < 3) {
-			*(int*)data = 0;
-		}
 		return offset + 1;
 	}
 
@@ -626,8 +598,8 @@ int Jac_GetPicture(void* data, int* x, int* y)
  */
 static void InitPic()
 {
-	ref1 = NULL;
-	ref2 = NULL;
+	ref1 = nullptr;
+	ref2 = nullptr;
 	for (u32 i = 0; i < PIC_BUFFERS; i++) {
 		pic_ctrl[i].mFrameNumber = 0;
 		pic_ctrl[i].mBufferState = 0;
@@ -656,47 +628,29 @@ static int Decode1(u8* data, u32 frameId, u8 frameType)
 		return -1;
 	}
 
+	pic_ctrl[id].mFrameNumber = frameId;
+	pic_ctrl[id].mBufferState = 1;
 	switch (frameType) {
 	case 0x10: // IPIC chunk
 	{
-#if defined(VERSION_GPIP01)
-		Probe_Start(12, "HVQM-I-PIC");
-#endif
 		HVQM4DecodeIpic(hvqm_obj, data, (u8*)ref);
-#if defined(VERSION_GPIP01)
-		Probe_Finish(12);
-#endif
 		ref2 = ref1;
 		ref1 = ref;
 		break;
 	}
 	case 0x20: // PPIC chunk
 	{
-#if defined(VERSION_GPIP01)
-		Probe_Start(11, "HVQM-P-PIC");
-#endif
 		HVQM4DecodePpic(hvqm_obj, data, (u8*)ref, (u8*)ref1);
-#if defined(VERSION_GPIP01)
-		Probe_Finish(11);
-#endif
 		ref2 = ref1;
 		ref1 = ref;
 		break;
 	}
 	case 0x30: // BPIC chunk
 	{
-#if defined(VERSION_GPIP01)
-		Probe_Start(13, "HVQM-B-PIC");
-#endif
 		HVQM4DecodeBpic(hvqm_obj, data, (u8*)ref, (u8*)ref2, (u8*)ref1);
-#if defined(VERSION_GPIP01)
-		Probe_Finish(13);
-#endif
 		break;
 	}
 	}
 
-	pic_ctrl[id].mFrameNumber = frameId;
-	pic_ctrl[id].mBufferState = 1;
 	return 0;
 }

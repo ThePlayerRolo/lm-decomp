@@ -44,7 +44,7 @@ struct ArgListPair {
 	u16 argTypes; // This is a bitfield array of eight 2-bit values
 };
 
-static TrackCallback JAM_CALLBACK_FUNC = NULL;
+static TrackCallback JAM_CALLBACK_FUNC = nullptr;
 
 static size_t T_LISTS;
 static TrackListPair TRACK_LIST[TRACK_LIST_SIZE];
@@ -777,17 +777,12 @@ void Jam_WriteRegXY(seqp_* track, u32 param_2)
 u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
 {
 	u32 res;
-#if defined(VERSION_GPIJ01_01) || defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
-	u8* REF_reg = &reg;
-#endif
 	if (reg < 64) {
 		res = Jam_ReadReg32(track, reg);
 	} else {
 		res = track->trackPort[reg - 64].value;
 	}
-#if defined(VERSION_GPIJ01_01) || defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
-	u32* REF_res = &res;
-#endif
+
 	return res;
 }
 
@@ -797,7 +792,7 @@ u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
  */
 void Jam_WritePortApp(void)
 {
-	// UNUSED FUNCTION
+
 }
 
 /**
@@ -806,7 +801,6 @@ void Jam_WritePortApp(void)
  */
 void Jam_ReadPortApp(void)
 {
-	// UNUSED FUNCTION
 }
 
 /**
@@ -815,7 +809,6 @@ void Jam_ReadPortApp(void)
  */
 void Jam_CheckExportApp(void)
 {
-	// UNUSED FUNCTION
 }
 
 /**
@@ -824,7 +817,6 @@ void Jam_CheckExportApp(void)
  */
 void Jam_CheckImportApp(void)
 {
-	// UNUSED FUNCTION
 }
 
 /**
@@ -833,7 +825,6 @@ void Jam_CheckImportApp(void)
  */
 void Jam_WritePortIndirect(void)
 {
-	// UNUSED FUNCTION
 }
 
 /**
@@ -842,7 +833,6 @@ void Jam_WritePortIndirect(void)
  */
 void Jam_ReadPortIndirect(void)
 {
-	// UNUSED FUNCTION
 }
 
 /**
@@ -987,7 +977,7 @@ void Jam_InitRegistTrack(void)
 
 	T_LISTS = 0;
 	for (i = 0; i < TRACK_LIST_SIZE; ++i) {
-		TRACK_LIST[i].track = NULL;
+		TRACK_LIST[i].track = nullptr;
 	}
 }
 
@@ -1035,7 +1025,7 @@ void Jam_UnRegistTrack(seqp_* track)
 	}
 	for (i = 0; i < T_LISTS; ++i) {
 		if (track == TRACK_LIST[i].track) {
-			TRACK_LIST[i].track = NULL;
+			TRACK_LIST[i].track = nullptr;
 		}
 	}
 	track->isRegistered = FALSE;
@@ -1058,7 +1048,7 @@ seqp_* Jam_GetTrackHandle(u32 param_1)
 			return TRACK_LIST[i].track;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -1389,7 +1379,7 @@ void Jam_UpdateTrackAll(seqp_* track)
 		panDelayLeft = 0;
 		panScaled    = track->timedParam.inner.panDelay.currentValue * 128.0f;
 
-		OSf32tos8(&panScaled, &pan8bit);
+		pan8bit = panScaled;
 		if (pan8bit < 0) {
 			panDelayLeft = -pan8bit;
 			pan8bit      = 0;
@@ -1511,7 +1501,8 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 		if (updateFlags & SEQTRACK_FLAG_MASTER_LEVEL) {
 			masterLeft     = 0;
 			masterLevelF32 = track->timedParam.inner.panDelay.currentValue * 128.0f;
-			OSf32tos8(&masterLevelF32, &masterRight);
+			masterRight = masterLevelF32;
+
 			if (masterRight < 0) {
 				masterLeft  = -masterRight;
 				masterRight = 0;
@@ -1596,38 +1587,6 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 			track->parentController.distFilter = track->timedParam.inner.distFilter.currentValue * 32767.0f;
 		}
 
-		for (i = 0; i < 2; ++i) {
-			if (track->oscillatorRouting[i] == 0x0E) {
-				offset = Bank_OscToOfs(&track->oscillators[i], &track->oscillatorParams[i]);
-				switch (track->oscillators[i].mode) {
-				case 1:
-				{
-					unaff_f30 = unaff_f30 * offset;
-					break;
-				}
-				case 0:
-				{
-					computedVolume = computedVolume * offset;
-					break;
-				}
-				case 2:
-				{
-					unaff_f29 = unaff_f29 * offset;
-					break;
-				}
-				case 3:
-				{
-					unaff_f28 = unaff_f28 * offset;
-					break;
-				}
-				case 4:
-				{
-					unaff_f27 = unaff_f27 * offset;
-					break;
-				}
-				}
-			}
-		}
 		if (!track->parent || ((track->flags & 1) != 0)) {
 			if (updateVolumeFlag) {
 				track->parentController.volume = computedVolume;
@@ -2126,7 +2085,7 @@ static u32 Cmd_CloseTrack()
 		return 0x80;
 	}
 	Jaq_CloseTrack(SEQ_P->children[index]);
-	SEQ_P->children[index] = NULL;
+	SEQ_P->children[index] = nullptr;
 	return 0;
 }
 
@@ -2306,7 +2265,11 @@ static u32 Cmd_TimeBase()
 	SEQ_P->timeBase = SEQ_ARG[0];
 	if (!SEQ_P->parent) {
 		Jam_UpdateTempo(SEQ_P);
+	} else {
+		SEQ_P->needsTempoSync = true;
 	}
+
+
 	return 0;
 }
 
@@ -2452,9 +2415,6 @@ static u32 Cmd_OscRoute()
 	uVar2    = SEQ_ARG[0] >> 4 & 0xf;
 
 	SEQ_P->oscillatorRouting[uVar2] = oscRoute;
-	if (oscRoute == 14) {
-		SEQ_P->oscillatorParams[uVar2].state = 1;
-	}
 
 	return 0;
 }
@@ -2486,20 +2446,6 @@ static u32 Cmd_IIRCutOff()
 static u32 Cmd_OscFull()
 {
 	Osc_Setup_Full(SEQ_P, SEQ_ARG[0], SEQ_ARG[1], SEQ_ARG[2]);
-	return 0;
-}
-
-/**
- * @TODO: Documentation
- */
-static u32 Cmd_CheckWave()
-{
-	SOUNDID_ soundID;
-	u32 uVar2;
-
-	soundID.value = SEQ_ARG[0] | (Jam_ReadRegDirect(SEQ_P, 6) << 16);
-	uVar2         = One_CheckInstWave(soundID);
-	Jam_WriteRegDirect(SEQ_P, 3, (u8)uVar2);
 	return 0;
 }
 
@@ -2577,12 +2523,6 @@ static u32 Cmd_Printf()
 				fmtStr[i]          = 'x';
 				break;
 			}
-			case 't': // ?
-			{
-				fmtFlags[fmtCount] = 5;
-				fmtStr[i]          = 'x';
-				break;
-			}
 			}
 			++fmtCount;
 			continue;
@@ -2592,9 +2532,8 @@ static u32 Cmd_Printf()
 		fmtParms[i] = __ByteRead(SEQ_P);
 		if (fmtFlags[i] == 2) {
 			fmtParms[i] = (u32)Jam_OfsToAddr(SEQ_P, fmtParms[i]);
-		} else if (fmtFlags[i] == 5) {
-			fmtParms[i] = SEQ_P->trackId;
-		} else if (fmtFlags[i] >= 3) {
+		}
+		if (fmtFlags[i] >= 3) {
 			fmtParms[i] = __ExchangeRegisterValue(SEQ_P, fmtParms[i]);
 		}
 	}
@@ -2664,7 +2603,7 @@ static ArgListPair Arglist[CMD_COUNT] = {
 	{ 0, 0x0000 }, //
 	{ 0, 0x0000 }, //
 	{ 0, 0x0000 }, //
-	{ 1, 0x0001 }, // CheckWave
+	{ 0, 0x0000 }, // CheckWave
 	{ 0, 0x0000 }, // Printf
 	{ 0, 0x0000 }, // Nop
 	{ 1, 0x0001 }, // Tempo
@@ -2674,7 +2613,7 @@ static ArgListPair Arglist[CMD_COUNT] = {
 };
 
 static CmdFunction CMDP_LIST[CMD_COUNT] = {
-	NULL,
+	nullptr,
 	Cmd_OpenTrack,
 	Cmd_OpenTrackBros,
 	Cmd_Call,
@@ -2693,7 +2632,7 @@ static CmdFunction CMDP_LIST[CMD_COUNT] = {
 	Cmd_ConnectName,
 	Cmd_ParentWritePort,
 	Cmd_ChildWritePort,
-	NULL,
+	nullptr,
 	Cmd_SetLastNote,
 	Cmd_TimeRelate,
 	Cmd_SimpleOsc,
@@ -2725,14 +2664,14 @@ static CmdFunction CMDP_LIST[CMD_COUNT] = {
 	Cmd_OscRoute,
 	Cmd_IIRCutOff,
 	Cmd_OscFull,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	Cmd_CheckWave,
+	nullptr,
+	nullptr,
+	nullptr,
+	nullptr,
+	nullptr,
+	nullptr,
+	nullptr,
+	nullptr,
 	Cmd_Printf,
 	Cmd_Nop,
 	Cmd_Tempo,
@@ -2964,7 +2903,7 @@ try_interrupt:
 		if (track->noteDuration != -1 && track->noteFlags == 0) {
 			for (chanIdx = 0; chanIdx < (int)track->wasNotePlayed; chanIdx++) {
 				track->activeNotes[chanIdx] = -1;
-				track->channels[chanIdx]    = NULL;
+				track->channels[chanIdx]    = nullptr;
 			}
 		}
 	}
@@ -3024,7 +2963,7 @@ try_interrupt:
 				reg = lowBits;
 
 				// NOTE: Fake volatile
-				if (*(vu8*)&noteOpcodeFlags >> 3 & 3) {
+				if (*(volatile u8*)&noteOpcodeFlags >> 3 & 3) {
 					reg = __ExchangeRegisterValue(track, reg - 1);
 					if (reg >= 8) {
 						break;
@@ -3124,27 +3063,9 @@ try_interrupt:
 			}
 		}
 		// Process note-off events (0x80-0x8F, 0xF9)
-		else if ((opcode & 0xf0) == 0x80 || opcode == 0xf9) {
+		else if ((opcode & 0xf0) == 0x80) {
 			waitTimerBytes     = 1;
 			noteOffReleaseTime = 0;
-
-			// Handle extended note-off format
-			if (opcode == 0xf9) {
-				noteOffCommandByte = __ByteRead(track);
-				voiceIndex         = __ExchangeRegisterValue(track, noteOffCommandByte & 7);
-				if (voiceIndex > 7 || voiceIndex == 0) {
-					if ((noteOffCommandByte & 0x80) != 0) {
-						__ByteRead(track);
-					}
-
-					continue;
-				}
-
-				opcode = voiceIndex + 0x80;
-				if (noteOffCommandByte & 0x80) {
-					opcode += 8;
-				}
-			}
 
 			// Parse voice number and release parameters
 			voiceIndex = opcode & 0x0f;
@@ -3167,9 +3088,7 @@ try_interrupt:
 					track->waitTimer = track->waitTimer << 8 | __ByteRead(track);
 				}
 
-				if (track->waitTimer == 0) {
-					continue;
-				}
+
 
 				break;
 			}
@@ -3233,15 +3152,6 @@ timed:
 		}
 	}
 
-	// Update oscillator flags
-	if (track->oscillatorRouting[0] == 0x0E) {
-		updateFlags |= osc_table[track->oscillators[0].mode];
-	}
-
-	if (track->oscillatorRouting[1] == 0x0E) {
-		updateFlags |= osc_table[track->oscillators[1].mode];
-	}
-
 PROCESS_CHILD_TRACKS:
 	track->updateFlags |= updateFlags;
 
@@ -3254,7 +3164,7 @@ PROCESS_CHILD_TRACKS:
 			// Recursively process child track
 			if (Jam_SeqmainNote(track->children[i], childIsMuted) == -1) {
 				Jaq_CloseTrack(track->children[i]);
-				track->children[i] = NULL;
+				track->children[i] = nullptr;
 			}
 		}
 	}

@@ -26,7 +26,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 
 	seqp_* temp = parent;
 	while (jcs->chanCount == 0 || jcs->freeChannels == 0) {
-		if (temp == NULL) {
+		if (temp == nullptr) {
 			jcs = &track->parentController;
 			break;
 		}
@@ -35,7 +35,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 	}
 
 	if (track->flags == 4) {
-		if (parent == NULL) {
+		if (parent == nullptr) {
 			return -1;
 		}
 
@@ -65,7 +65,6 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 	u32 b    = (phys & 0xff) << 8 | reg & 0xff;
 	u32 a    = b << 16 | flag1 << 8 | flag2;
 
-	STACK_PAD_TERNARY(reg, 4);
 	jc_* sound;
 	SOUNDID_ id;
 	id.value = a;
@@ -78,7 +77,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 		sound = Play_1shot(jcs, id, playFlag);
 	}
 	track->channels[channel] = sound;
-	if (sound == NULL) {
+	if (sound == nullptr) {
 		return -1;
 	}
 	track->activeSoundIds[channel] = sound->channelId;
@@ -87,7 +86,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 
 	for (u32 i = 0; i < 2; i++) {
 		u32 flag = track->oscillatorRouting[i];
-		if (flag == 15 || flag == 14) {
+		if (flag == 15) {
 			continue;
 		}
 
@@ -108,7 +107,6 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 		Effecter_Overwrite_1ShotD(sound, &track->oscillators[i], flag);
 	}
 
-	Jam_UpdateTrack(track, 3);
 	ResetInitialVolume(sound);
 	return 0;
 
@@ -132,7 +130,7 @@ s32 NoteOFF_R(seqp_* track, u8 param_2, u16 param_3)
 				Stop_1Shot_R(jc, param_3);
 			}
 		}
-		track->channels[param_2]       = NULL;
+		track->channels[param_2]       = nullptr;
 		track->activeSoundIds[param_2] = 0;
 		return 1;
 	}
@@ -180,7 +178,7 @@ BOOL CheckNoteStop(seqp_* track, s32 param_2)
 
 	if (jc = track->channels[param_2]) {
 		if (jc->channelId != track->activeSoundIds[param_2]) {
-			track->channels[param_2]       = NULL;
+			track->channels[param_2]       = nullptr;
 			track->activeSoundIds[param_2] = 0;
 			return TRUE;
 		}

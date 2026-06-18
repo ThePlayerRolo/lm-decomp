@@ -23,10 +23,7 @@ static struct FAT_info2 {
 } FH_TO_FAT[FAT_SIZE];
 
 static FATEntry FAT[FAT_SIZE];
-#if defined(VERSION_GPIJ01_01) || defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
-#else
-static FATEntry fattmp[FAT_SIZE];
-#endif
+
 
 /**
  * @TODO: Documentation
@@ -127,9 +124,7 @@ int FAT_FreeMemory(u16 size)
 	u16 size2;
 	u32 count;
 	u16 tail;
-#if defined(VERSION_GPIJ01_01) || defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
 	FATEntry fattmp[FAT_SIZE];
-#endif
 
 	count                      = FH_TO_FAT[size].blockCount;
 	start                      = FH_TO_FAT[size].startBlock;
@@ -191,52 +186,6 @@ u8 FAT_ReadByte(u16 a, u32 b)
 		return 0;
 	}
 	return *ptr;
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000034
- */
-u16 FAT_ReadWord(u16 a, u32 b)
-{
-	// Guessing based on name/size
-
-	u16* ptr = (u16*)FAT_GetPointer(a, b);
-	if (ptr == NULL) {
-		return 0;
-	}
-	return *ptr;
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000050
- */
-void FAT_ReadWordD(u16 a, u32 b)
-{
-	// UNUSED FUNCTION
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000024
- */
-u32 FAT_ReadLong(u16 a, u32 b)
-{
-	// UNUSED FUNCTION
-
-	// Guessing based on name/size
-	return *(u32*)FAT_GetPointer(a, b);
-}
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000080
- */
-void FAT_ReadLongD(u16 a1, u32 a2)
-{
-	// UNUSED FUNCTION
 }
 
 /**

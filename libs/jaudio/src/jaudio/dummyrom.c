@@ -66,9 +66,8 @@ void Jac_SetAudioARAMSize(u32 size)
 void* ARAlloc2(u32 param_1)
 {
 	void* alloc = Nas_HeapAlloc(&aram_hp, param_1);
-	void* alloc2 = alloc;
 
-	return alloc2;
+	return alloc;
 
 }
 

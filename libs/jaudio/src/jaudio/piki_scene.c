@@ -398,7 +398,6 @@ void Jac_UpdateStreamLevel()
 {
 	if (StreamCheckAudioFormat(0) == AUDIOFRMT_ADPCM4X) {
 		StreamChgVolume(0, 0x7fff, 0x7fff);
-		StreamChgMixLevel(0, stream_level, stream_se_level);
 	} else {
 		StreamChgVolume(0, stream_level, stream_level);
 	}

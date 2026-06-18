@@ -182,6 +182,7 @@ public:
 	/* 0x228 */ JAIDummyVec* unk228;
 	/* 0x22C */ JAIDummyVec* unk22C;
 	/* 0x230 */ JAIDummyVec* unk230;
+	/* 0x234 */ u8 pad[0x40];
 };
 
 #endif // JAIDATA_HPP

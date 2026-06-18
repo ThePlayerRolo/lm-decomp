@@ -82,7 +82,7 @@ typedef struct PanMatrix_ {
 /**
  * @brief TODO
  *
- * @note Size: 0x74.
+ * @note Size: 0x70.
  */
 struct jcs_ {
 	u32 chanCount;          // _00, Number of channels in this system
@@ -109,7 +109,6 @@ struct jcs_ {
 	u8 panCalcTypes[3];    // _62, Pan calculation types (default [26,1,1])
 	u32 channelPriority;   // _68
 	u16 releaseTime;       // _6C, Release/fade time in samples (default 600)
-	int voiceStealingMode; // _70, Voice stealing enabled (0=off, 1=on)
 };
 
 // needed to match UpdateEffecterParam

@@ -8,11 +8,11 @@ s16 REL_TABLE[] = { 0, 10, 0, 15, 1, 0 };
 
 Osc_ VIBRATO_DEF  = { 1, 0.8f, VIB_TABLE, VIB_TABLE, 0.0f, 1.0f };
 Osc_ TREMOLO_DEF  = { 0, 1.0f, TRE_TABLE, TRE_TABLE, 0.0f, 1.0f };
-Osc_ ENVELOPE_DEF = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
+Osc_ ENVELOPE_DEF = { 0, 1.0f, nullptr, REL_TABLE, 1.0f, 0.0f };
 
 s16 ADS_TABLE[] = { 0, 0, 0x7fff, 0, 0, 0x7fff, 0, 0, 0, 14, 0, 0 };
-Osc_ ADSR_DEF   = { 0, 1.0f, NULL, NULL, 1.0f, 0.0f };
-Osc_ OSC_DEF    = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
+Osc_ ADSR_DEF   = { 0, 1.0f, nullptr, nullptr, 1.0f, 0.0f };
+Osc_ OSC_DEF    = { 0, 1.0f, nullptr, REL_TABLE, 1.0f, 0.0f };
 
 /*
  * Note: Equivalent to `JASTrack::updateOscParam` in later JAudio.
@@ -83,12 +83,8 @@ void Osc_Setup_Simple(seqp_* track, u8 id)
 		Osc_Setup_Vibrato(track, 1);
 		break;
 	}
+
 	case 1:
-	{
-		Osc_Setup_Tremolo(track, 0);
-		break;
-	}
-	case 2:
 	{
 		Osc_Setup_Tremolo(track, 1);
 		break;
@@ -186,7 +182,7 @@ void Osc_Setup_Full(seqp_* track, u8 flag, u32 offs1, u32 offs2)
 
 	if (b) {
 		if (offs1 == 0) {
-			track->oscillators[idx].attackVecOffset = NULL;
+			track->oscillators[idx].attackVecOffset = nullptr;
 		}
 		track->oscillators[idx].attackVecOffset = (s16*)Jam_OfsToAddr(track, offs1);
 	}

@@ -408,7 +408,7 @@ s32 DVDT_CheckFile(char* file)
 /**
  * @TODO: Documentation
  */
-s32 DVDT_LoadFile( char* file, u8* p2)
+s32 DVDT_LoadFile(char* file, u8* p2)
 {
 	volatile u32 status           = 0;
 	char** REF_file = &file;
@@ -458,7 +458,7 @@ BOOL Jac_CheckFile(char* file)
 	return len;
 }
 
-s32 Jac_LoadFile( char* file, u8* p2)
+s32 Jac_LoadFile(char* file, u8* p2)
 {
 	static DVDFileInfo finfo;
 	char** REF_file = &file;

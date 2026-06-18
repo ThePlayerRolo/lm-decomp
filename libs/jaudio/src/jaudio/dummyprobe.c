@@ -18,7 +18,7 @@ void Probe_Finish(s32 id)
  * @TODO: Documentation
  * @note UNUSED Size: 000050
  */
-void Console_printf( char*, ...)
+void Console_printf(char*, ...)
 {
 	// UNUSED FUNCTION
 }

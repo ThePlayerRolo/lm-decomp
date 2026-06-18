@@ -72,7 +72,7 @@ void Jac_DebugCall(void)
  * @TODO: Documentation
  * @note UNUSED Size: 000048
  */
-void __print_thread( char*, OSThread*)
+void __print_thread(char*, OSThread*)
 {
 	// UNUSED FUNCTION
 }

@@ -7,6 +7,8 @@
 #include <JSystem/JAudio/JAInterface/JAISound.hpp>
 #include <JSystem/JAudio/JASystem/JASTrack.hpp>
 
+class seqp_;
+
 class JAICamera {
 public:
 	JAICamera()
@@ -44,7 +46,8 @@ class JAISoundTable;
 class JAIBasic {
 public:
 	/* 0x0 */ JAIData* unk0;
-	/* 0x4 */ // vt
+	/* 0x4 */ s32 val;
+	/* 0x8 */ // vt
 public:
 	JAIBasic();
 	~JAIBasic();
@@ -156,7 +159,7 @@ public:
 	u32 getInfoFormat(JAISoundTable* table, u32 id);
 	void setSeCancelSwitch(u8 param1, u8 param2);
 	void setSeCategoryVolume(u8 category, u8 volume);
-	static u16 setParameterSeqSync(JASystem::TTrack* track, u16 param);
+	static u16 setParameterSeqSync(seqp_* track, u16 param);
 	JAISoundInfo* getSoundInfoFromID(u32 id);
 	u8 getSeqTrackNumber(void* param);
 	u8 getSoundPrioity(void* param);

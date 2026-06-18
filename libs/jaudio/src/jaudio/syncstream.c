@@ -22,12 +22,9 @@ struct UNK_STRUCT {
 
 typedef struct UNK_STRUCT UNK_STRUCT;
 
-static StreamCtrl_ SC[1] ATTRIBUTE_ALIGN(32);
-static UNK_STRUCT copyinfo;
+static StreamCtrl_ SC[2] ATTRIBUTE_ALIGN(32);
 
 static StreamCallback default_streamsync_call;
-
-static UNK_STRUCT* copy = &copyinfo;
 
 static s16 filter_table[16][2] = {
 	{ +0x0000, +0x0000 }, { +0x0800, +0x0000 }, { +0x0000, +0x0800 }, { +0x0400, +0x0400 }, { +0x1000, -0x0800 }, { +0x0E00, -0x0600 },
@@ -110,7 +107,6 @@ u32 Get_DirectPCM_Remain(DSPchannel_* channel)
  */
 static BOOL __DVDReadAsyncRetry()
 {
-	return DVDReadAsyncPrio(copy->fileinfo, copy->addr, copy->length, copy->offset, copy->callback, 1);
 }
 
 /**
@@ -118,12 +114,6 @@ static BOOL __DVDReadAsyncRetry()
  */
 static BOOL DVDReadAsyncPrio2(DVDFileInfo* info, void* addr, s32 length, s32 offs, DVDCallback callback, s32 prio)
 {
-	copy->fileinfo = info;
-	copy->addr     = addr;
-	copy->length   = length;
-	copy->offset   = offs;
-	copy->callback = callback;
-	return __DVDReadAsyncRetry();
 }
 
 static void LoadADPCM(StreamCtrl_*, int);
@@ -256,9 +246,6 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 		ctrl->isLoadInProgress = TRUE;
 
 		if (DVDReadAsyncPrio2(&ctrl->fileinfo, (void*)buff->mLength, size, oldSize, __LoadFin, 1) == FALSE) {
-#if defined(VERSION_G98P01_PIKIDEMO) || defined(VERSION_DPIJ01_PIKIDEMO)
-			Console_printf("Error:: DVDREAD Async is missed\n");
-#endif
 		}
 		break;
 	}
@@ -317,7 +304,7 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId,  char* name, BOOL r6, BOOL r7, S
 	ctrl->isPaused      = FALSE;
 
 	if (name) {
-		Jac_DVDOpen(name, &ctrl->fileinfo);
+		DVDOpen(name, &ctrl->fileinfo);
 		ctrl->isFromFile = 1;
 	} else {
 		ctrl->isFromFile = 0;
@@ -328,7 +315,7 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId,  char* name, BOOL r6, BOOL r7, S
 			return FALSE;
 		}
 
-		DVDReadPrio(&ctrl->fileinfo, &ctrl->data[0].header, 0x20, 0, 1);
+		DVDReadPrio(&ctrl->fileinfo, &ctrl->data[0].header, 0x20, 0, 2);
 		ctrl->header    = ctrl->data[0].header;
 		ctrl->bytesRead = 0x20;
 	} else {
@@ -355,8 +342,8 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId,  char* name, BOOL r6, BOOL r7, S
 
 	ctrl->loopSize = 0x1000;
 
-	BufContInit(&ctrl->buffCtrlMain, 1, 6, 0, 0, 0x2400, 0, 0);
-	BufContInit(&ctrl->buffCtrlMain2, 2, 2, 0, 0, 0x2000, 0, 0);
+	BufContInit(&ctrl->buffCtrlMain, 1, 8, 0, 0, 0x1200, 0, 0);
+	BufContInit(&ctrl->buffCtrlMain2, 2, 2, 0, 0, 0x1000, 0, 0);
 	BufContInit(&ctrl->buffCtrlMain3, 2, 4, 0, 3, 0x400, 0, 0);
 
 	switch (ctrl->header.audioFormat) {
@@ -396,9 +383,6 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId,  char* name, BOOL r6, BOOL r7, S
 
 	ctrl->volume[0] = 0x3fff;
 	ctrl->volume[1] = 0x3fff;
-
-	ctrl->mixLevel[0] = 0x5fff;
-	ctrl->mixLevel[1] = 0x5fff;
 
 	ctrl->syncCallback = default_streamsync_call;
 
@@ -448,7 +432,7 @@ static s32 StreamAudio_Callback(void* data)
 			for (channelIdx = 0; channelIdx < 2; channelIdx++) {
 				Stop_DirectPCM(ctrl->dspch[channelIdx]);
 				DeAllocDSPchannel(ctrl->dspch[channelIdx], (u32)&ctrl->dspch[channelIdx]);
-				ctrl->dspch[channelIdx] = NULL;
+				ctrl->dspch[channelIdx] = nullptr;
 			}
 
 			if (ctrl->syncCallback) {
@@ -598,7 +582,7 @@ static s32 StreamAudio_Callback(void* data)
 			}
 		} else if (ctrl->frameCounter == 0) {
 			if (ctrl->autoStart == TRUE) {
-				if (ctrl->syncCallback != NULL) {
+				if (ctrl->syncCallback != nullptr) {
 					int callbackResult = ctrl->syncCallback(ctrl->controllerId, 0);
 					if (callbackResult == -1) {
 						ctrl->stopRequested = TRUE;
@@ -659,7 +643,7 @@ static s32 StreamAudio_Callback(void* data)
 				return 0;
 			}
 			ctrl->stopRequested = FALSE;
-			if (ctrl->syncCallback != NULL) {
+			if (ctrl->syncCallback != nullptr) {
 				ctrl->syncCallback(ctrl->controllerId, -1);
 			}
 			ctrl->playbackState = 4;
@@ -685,33 +669,6 @@ void RegisterStreamCallback(StreamCallback callback)
 	default_streamsync_call = callback;
 }
 
-/**
- * @TODO: Documentation
- */
-static u32 __DecodePCM(StreamCtrl_* ctrl)
-{
-	u32 usedSize;
-	s16* psVar9;
-	s16* pasVar4;
-	u32 sampleCount;
-	s16* pasVar6;
-	size_t i;
-
-	usedSize    = ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].usedSize;
-	sampleCount = ((ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].pos - usedSize) / 4);
-
-	pasVar6 = ctrl->leftChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
-	pasVar4 = ctrl->rightChanBufs[ctrl->buffCtrlMain2.currentBufIdx];
-	psVar9  = (s16*)&ctrl->data[ctrl->buffCtrlMain.activeBufIdx].data[usedSize];
-	for (i = 0; i < sampleCount; i++) {
-		// This FEELS like it's all optimized array subscripting, but I can't figure it out.
-		*pasVar6++ = psVar9[0];
-		*pasVar4++ = psVar9[1];
-		psVar9 += 2;
-	}
-	ctrl->samplesDecoded += sampleCount;
-	return sampleCount;
-}
 
 /**
  * @TODO: Documentation
@@ -815,60 +772,7 @@ static s16 Clamp16(s32 a)
 	return a;
 }
 
-/**
- * @TODO: Documentation
- */
 
-static u32 __DecodeADPCM4X(StreamCtrl_* ctrl)
-{
-	STACK_PAD_VAR(6);
-	u32 a = ctrl->buffCtrlMain2.currentBufIdx;
-	u32 b = ctrl->buffCtrlMain.activeBufIdx;
-	u32 count;
-	u32 i;
-	u32 outpos = 0;
-
-	if (ctrl->frameCounter == 0 && b == 0) {
-		for (u32 i = 0; i < 4; i++) {
-			ctrl->leftAdpcmState[i] = 0;
-		}
-		// Not clearing ctrl->_21A20 too?
-	}
-
-	s16* dst1 = ctrl->leftChanBufs[a];
-	s16* dst2 = ctrl->rightChanBufs[a];
-
-	u8* src = ctrl->data[b].data;
-	src += ctrl->buffCtrl[b].usedSize;
-
-	u32 j;
-
-	u16 mixLevel0 = ctrl->mixLevel[0];
-	u16 mixLevel1 = ctrl->mixLevel[1];
-
-	count = (ctrl->buffCtrl[b].pos - ctrl->buffCtrl[b].usedSize) / 36;
-
-	s16 sp6C[16];
-	s16 sp4C[16];
-	s16 sp2C[16];
-	s16 sp0C[16];
-
-	for (i = 0; i < count; i++) {
-		Jac_Decode_ADPCM(src, sp6C, sp4C, 1, 1, ctrl->leftAdpcmState);
-		src += 18;
-		Jac_Decode_ADPCM(src, sp2C, sp0C, 1, 1, ctrl->rightAdpcmState);
-		src += 18;
-		for (j = 0; j < 16; j++) {
-			dst1[outpos] = Clamp16((sp6C[j] * mixLevel0 >> 15) + (sp2C[j] * mixLevel1 >> 15));
-			dst2[outpos] = Clamp16((sp4C[j] * mixLevel0 >> 15) + (sp0C[j] * mixLevel1 >> 15));
-			outpos++;
-		}
-	}
-
-	u32 size = (count << 4) & 0x7FFFFFFF;
-	ctrl->samplesDecoded += size;
-	return size;
-}
 
 /**
  * @TODO: Documentation
@@ -877,21 +781,9 @@ static u32 __Decode(StreamCtrl_* ctrl)
 {
 	u32 size;
 	switch (ctrl->header.audioFormat) {
-#if defined(VERSION_GPIP01)
-	case AUDIOFRMT_16BIT_PCM:
-	{
-		size = __DecodePCM(ctrl);
-		break;
-	}
-#endif
 	case AUDIOFRMT_ADPCM:
 	{
 		size = __DecodeADPCM(ctrl);
-		break;
-	}
-	case AUDIOFRMT_ADPCM4X:
-	{
-		size = __DecodeADPCM4X(ctrl);
 		break;
 	}
 	}
@@ -1102,24 +994,12 @@ void StreamChgVolume(u32 ctrlID, int volumeL, int volumeR)
 /**
  * @TODO: Documentation
  */
-void StreamChgMixLevel(u32 ctrlID, int mixLevelL, int mixLevelR)
-{
-	StreamCtrl_* ctrl = &SC[ctrlID];
-	if (ctrl->dspch[0]) {
-		ctrl->mixLevel[0] = mixLevelL;
-		ctrl->mixLevel[1] = mixLevelR;
-	}
-}
-
-/**
- * @TODO: Documentation
- */
 int StreamGetCurrentFrame(u32 streamId, u32 id2)
 {
 	StreamCtrl_* ctrl = &SC[streamId];
 	dspch_* dspCh     = ctrl->dspch[0];
 
-	if (dspCh == NULL) {
+	if (dspCh == nullptr) {
 		return -1;
 	}
 
@@ -1158,10 +1038,6 @@ BOOL StreamSetDVDPause(u32 ctrlID, BOOL isPaused)
 	}
 
 	BOOL tmp = ctrl->isPaused;
-
-#if defined(VERSION_GPIP01)
-	BOOL* REF_isPaused = &isPaused;
-#endif
 
 	ctrl->isPaused = isPaused;
 

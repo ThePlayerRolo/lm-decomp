@@ -17,19 +17,15 @@ static Barc* JV_ARC[16]; // Pointers to BARC metadata (*.hed). In practice, just
 
 static u32 JV_CURRENT_ARCS = 0; // TODO: type unknown, init unclear
 
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000028
- */
-void JV_InitHeader( char*)
+BOOL JV_InitHeader(char* fileName)
 {
-	// UNUSED FUNCTION
+	return JV_InitHeader_M(fileName, nullptr, nullptr);
 }
 
 /**
  * @TODO: Documentation
  */
-BOOL JV_InitHeader_M( char* fileName, u8* barcData, u8* p3)
+BOOL JV_InitHeader_M(char* fileName, u8* barcData, u8* p3)
 {
 	STACK_PAD_VAR(1);
 	 char** REF_p1 = &fileName;
@@ -77,7 +73,7 @@ BOOL JV_InitHeader_M( char* fileName, u8* barcData, u8* p3)
 /**
  * @TODO: Documentation
  */
-u32 JV_GetArchiveHandle( char* name)
+u32 JV_GetArchiveHandle(char* name)
 {
 	u32 i;
 
@@ -96,7 +92,7 @@ u32 JV_GetArchiveHandle( char* name)
  * @TODO: Documentation
  * @note UNUSED Size: 0000E8
  */
-void JV_GetLogicalHandleS( char*,  char*)
+void JV_GetLogicalHandleS(char*,  char*)
 {
 	// UNUSED FUNCTION
 }
@@ -105,7 +101,7 @@ void JV_GetLogicalHandleS( char*,  char*)
  * @TODO: Documentation
  * @note UNUSED Size: 000154
  */
-void JV_GetLogicalHandle( char*)
+void JV_GetLogicalHandle(char*)
 {
 	// idk what this is or where it's meant to be, but it's static, size 0x3C, and in a function.
 	static struct {
@@ -141,10 +137,10 @@ BarcEntry* JV_GetRealHandle(u32 handle)
 	}
 	hed = JV_ARC[arcIdx];
 	if (!hed) {
-		return NULL;
+		return nullptr;
 	}
 	if (seqIdx >= hed->meta.seqCount) {
-		return NULL;
+		return nullptr;
 	}
 
 	BarcEntry* entry = (&hed[seqIdx].entry) + 1; // skip header i guess?
@@ -202,7 +198,7 @@ u32 JV_LoadFile(u32 handle, u8* dst, u32 param_3, u32 length)
 	strcpy(name, JV_DIR_NAME[idx]);
 	strcat(name, "/");
 	strcat(name, JV_ARC[idx]->meta.arcName);
-	DVDT_LoadtoDRAM(0, name, (u32)dst, src, length, (u32*)&status, NULL);
+	DVDT_LoadtoDRAM(0, name, (u32)dst, src, length, (u32*)&status, nullptr);
 
 	while (status == 0) {
 		;
@@ -236,7 +232,7 @@ u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)
 	strcat(name, "/");
 	strcat(name, JV_ARC[idx]->meta.arcName);
 
-	DVDT_LoadtoDRAM(owner, name, (u32)dst, src, length, NULL, callback);
+	DVDT_LoadtoDRAM(owner, name, (u32)dst, src, length, nullptr, callback);
 	return length;
 }
 

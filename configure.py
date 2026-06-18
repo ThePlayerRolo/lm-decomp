@@ -441,6 +441,7 @@ config.libs = [
 
 
     JAudio([
+        Object(Matching, "jaudio/dummyprobe.c"),
         Object(Matching, "jaudio/aictrl.c"),
         Object(Matching, "jaudio/sample.c"),
         Object(NonMatching, "jaudio/dummyrom.c"),
@@ -448,7 +449,7 @@ config.libs = [
         Object(Matching, "jaudio/streamctrl.c"),
         Object(Matching, "jaudio/dspbuf.c"),
         Object(Matching, "jaudio/cpubuf.c"),
-        Object(NonMatching, "jaudio/playercall.c"),
+        Object(Matching, "jaudio/playercall.c"),
         Object(Matching, "jaudio/dvdthread.c"),
         Object(Matching, "jaudio/dspboot.c"),
         Object(Matching, "jaudio/dspproc.c"),
@@ -463,13 +464,27 @@ config.libs = [
         Object(NonMatching, "jaudio/connect.c"),
         Object(Matching, "jaudio/bankdrv.c"),
         Object(NonMatching, "jaudio/random.c"),
-        Object(NonMatching, "jaudio/aramcall.c"),
+        Object(Matching, "jaudio/aramcall.c"),
         Object(Matching, "jaudio/ja_calc.c"),
+        Object(Matching, "jaudio/fat.c"),
+        Object(Matching, "jaudio/cmdstack.c"),
+        Object(Matching, "jaudio/virload.c"),
+        Object(Matching, "jaudio/heapctrl.c"),
+        Object(NonMatching, "jaudio/jammain_2.c"),
+        Object(NonMatching, "jaudio/noteon.c"),
+        Object(NonMatching, "jaudio/seqsetup.c"),
+        Object(Matching, "jaudio/centcalc.c"),
+        Object(NonMatching, "jaudio/jamosc.c"),
+        Object(NonMatching, "jaudio/oneshot.c"),
+        Object(NonMatching, "jaudio/syncstream.c"),
+        Object(Matching, "jaudio/interleave.c"),
+        Object(NonMatching, "jaudio/hvqm_play.c"),
     ]),
 
     JSystem([
 
         Object(NonMatching, "JSystem/JAudio/JAInterface/JAIBasic.cpp"),
+        Object(NonMatching, "JSystem/JAudio/JAInterface/JAIAnimation.cpp"),
 
         # 2D
         Object(Matching, "JSystem/J2D/J2DGrafContext.cpp"),

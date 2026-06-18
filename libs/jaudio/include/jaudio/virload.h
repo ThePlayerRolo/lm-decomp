@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-void JV_InitHeader(char*);
+BOOL JV_InitHeader(char*);
 BOOL JV_InitHeader_M(char*, u8*, u8*);
 u32 JV_GetArchiveHandle(char*);
 void JV_GetLogicalHandleS(char*, char*);

@@ -1,3 +1,9 @@
+#include "jaudio/connect.h"
+#include "jaudio/virload.h"
+#include <jaudio/aictrl.h>
+#include <jaudio/jammain_2.h>
+#include <jaudio/seqsetup.h>
+#include <jaudio/dvdthread.h>
 #include <JSystem/JAudio/JAInterface/JAIBasic.hpp>
 #include <JSystem/JAudio/JAInterface/JAISound.hpp>
 #include <JSystem/JAudio/JAInterface/JAIData.hpp>
@@ -27,7 +33,6 @@ JAICamera JAInullCamera(&JAIConst::camTrans, &JAIConst::camPreTrans,
 JAIBasic::JAIBasic()
 {
 	basic                  = this;
-	JAISound::interPointer = this;
 
 	unk1C.flag3 = 0;
 	unk1C.flag1 = 0;
@@ -65,61 +70,45 @@ JAIBasic::JAIBasic()
 
 void JAIBasic::startSeSequence() { }
 
+const char* unkArray[] = {
+	"One"
+};
+
 void JAIBasic::initInterfaceMain()
 {
-	unk0 = (JAIData*)JASystem::Kernel::allocFromSysDram(sizeof(JAIData));
+	unk0 = (JAIData*)OSAlloc2(sizeof(JAIData));
 	unk0->init();
 	unk0->unk1F4      = this;
 	unk0->unk204.unk0 = this;
 	unk0->unk1FC.unk0 = this;
 	unk0->unk200.unk0 = this;
 	setRegisterTrackCallback();
-	JASystem::Driver::setMixerLevel(JAIGlobalParameter::inputGainDown,
+	Jac_SetMixerLevel(JAIGlobalParameter::inputGainDown,
 	                                JAIGlobalParameter::outputGainUp);
-	initHeap();
+
 
 	char archivesPath[100];
 	archivesPath[0] = 0;
-	if (JAIGlobalParameter::audioResPath) {
-		strcat(archivesPath, JAIGlobalParameter::audioResPath);
 
-		{
-			char* str = (char*)JASDram->alloc(
-			    strlen(JAIGlobalParameter::audioResPath)
-			        + strlen(JAIGlobalParameter::wavePath) + 1,
-			    0);
-			sprintf(str, "%s%s%c", JAIGlobalParameter::audioResPath,
-			        JAIGlobalParameter::wavePath, 0);
-			JAIGlobalParameter::wavePath = str;
-		}
-
-		{
-			char* str2 = (char*)JASDram->alloc(
-			    strlen(JAIGlobalParameter::audioResPath)
-			        + strlen(JAIGlobalParameter::streamPath) + 1,
-			    0);
-			sprintf(str2, "%s%s%c", JAIGlobalParameter::audioResPath,
-			        JAIGlobalParameter::streamPath, 0);
-			JAIGlobalParameter::streamPath = str2;
-		}
-	}
 
 	initReadFile();
 	setWaveScene();
 	initAllocParameter();
 	initNullData();
 	initSeqsLoadArea();
-	if (!unk1C.flag6)
-		initStream();
+
+
 	strcat(archivesPath, JAIGlobalParameter::sequenceArchivesPath);
 	strcat(archivesPath, JAIGlobalParameter::sequenceArchivesFileName);
+
 	if (!unk58) {
-		JASystem::Vload::initHeader(archivesPath);
+		JV_InitHeader(archivesPath);
 	} else {
-		JASystem::Vload::initHeaderM(archivesPath, *unk58, nullptr);
+		JV_InitHeader_M(archivesPath, *unk58, nullptr);
 	}
-	JASystem::TrackMgr::initRegistTrack();
-	unk2C = JASystem::Vload::getArchiveHandle(
+	Jac_ConnectTableInit();
+	Jam_InitRegistTrack();
+	unk2C = JV_GetArchiveHandle(
 	    JAIGlobalParameter::sequenceArchivesFileName);
 	unk38 = 0;
 	startSoundDirectID(0x80000800, &unk38, nullptr, 1, 4);
@@ -141,7 +130,7 @@ void JAIBasic::initStream() { JAInter::StreamLib::init(unk1C.flag7); }
 
 void JAIBasic::setRegisterTrackCallback()
 {
-	JASystem::TrackMgr::registerTrackCallback(&JAIBasic::setParameterSeqSync);
+	Jam_RegisterTrackCallback(&JAIBasic::setParameterSeqSync);
 }
 
 void JAIBasic::initAudioThread(JKRSolidHeap* heap, u32 param1, u8 param2) { }
@@ -193,19 +182,19 @@ BOOL JAIBasic::checkInitListFile()
 
 	if (file) {
 
-		strcpy(JAIGlobalParameter::sequenceArchivesFileName,
+		strcpy("JaiArcS.hed",
 		       (char*)((u8*)file + header->unk0));
 
 		unk3C = (FabricatedUnk3CStruct*)((u8*)file + header->unk2);
 		unk40 = (FabricatedUnk40Struct*)((u8*)file + header->unk4);
 
-		strcpy(JAIGlobalParameter::seInfoFileName,
+		strcpy("Seqs/JaiSeInf.bst",
 		       (char*)((u8*)file + header->unk6));
 
 		if (header->unk8) {
-			strcpy(JAIGlobalParameter::seqInfoFileName,
+			strcpy("Seqs/JaiSqInf.bst",
 			       (char*)((u8*)file + header->unk8));
-			strcpy(JAIGlobalParameter::streamInfoFileName,
+			strcpy("Seqs/JaiStInf.bst",
 			       (char*)((u8*)file + header->unkA));
 			unk0->unk1B0 = 1;
 		} else {
@@ -424,10 +413,7 @@ void JAIBasic::initNullData()
 	up.y       = 1.0f;
 	up.z       = 0.0f;
 	Vec target = JAIConst::dummyZeroVec;
-	C_MTXLookAt(JAIConst::camMtx, JAInullCamera.unk0, &up, &target);
-	for (int i = 0; i < JAIGlobalParameter::audioCameraMax; ++i)
-		setCameraInfo(JAInullCamera.unk0, JAInullCamera.unk4, JAIConst::camMtx,
-		              i);
+	MTXLookAt(JAIConst::camMtx, JAInullCamera.unk0, &up, &target);
 }
 
 void JAIBasic::initDriver(JKRSolidHeap* heap, u32 param_2, u8 param_3)
@@ -621,7 +607,7 @@ void JAIBasic::stopSoundHandle(JAISound* sound, u32 param)
 		case -0x80000000:
 			if (sound->unk1 < 4 || param == 0) {
 				if (sound->unk1 >= 3)
-					JAISystemInterface::stopSeq(sound->getSeqParameter()->unk0);
+					Jaq_StopSeq(sound->getSeqParameter()->unk0);
 				else if (sound->unk1 >= 1)
 					unk0->releaseAutoHeapPointer(
 					    sound->getSeqParameter()->unk1754);
@@ -654,7 +640,8 @@ void JAIBasic::stopSoundHandle(JAISound* sound, u32 param)
 				releaseStreamParameterPointer(
 				    (JAIStreamParameter*)sound->unk38);
 				releaseControllerHandle(&unk0->unk21C, sound);
-				JASystem::Dvd::unpauseDvdT();
+				DVDT_UnPause();
+
 			} else {
 				if (sound->getStreamParameter()->unk3D4 != nullptr) {
 					sound->getStreamParameter()->unk3D4->unk10 |= 0x2;
@@ -991,7 +978,7 @@ void JAIBasic::setSeCategoryVolume(u8 category, u8 volume)
 	unk28[category] = volume / 127.0f;
 }
 
-u16 JAIBasic::setParameterSeqSync(JASystem::TTrack* param_1, u16 param_2)
+u16 JAIBasic::setParameterSeqSync(seqp_* param_1, u16 param_2)
 {
 	u16 result = 0;
 
@@ -1001,12 +988,12 @@ u16 JAIBasic::setParameterSeqSync(JASystem::TTrack* param_1, u16 param_2)
 			if (basic->unk0->unk180[i].unk48 == nullptr)
 				continue;
 
-			JASystem::TTrack* track = JASystem::TrackMgr::handleToSeq(
-			    basic->unk0->unk180[i].unk48->getSeqParameter()->unk0);
-			if (track != param_1->unk2C0)
+			seqp_* track = Jaq_HandleToSeq(basic->unk0->unk180[i].unk48->getSeqParameter()->unk0);
+
+			if (track != param_1->parent)
 				continue;
 
-			u32 route = basic->routeToTrack(param_1->unk308);
+			u32 route = basic->routeToTrack(param_1->trackId);
 			JAISoundInfo* info
 			    = basic->getSoundInfoFromID(basic->unk0->unk180[i].unk48->unk8);
 
@@ -1018,26 +1005,28 @@ u16 JAIBasic::setParameterSeqSync(JASystem::TTrack* param_1, u16 param_2)
 		}
 		break;
 	case 1: {
-		u32 uVar8                            = param_1->unk308;
-		JASystem::TTrack::TOuterParam* outer = param_1->mOuterParam;
+		u32 uVar8                            = param_1->trackId;
+		OuterParam_* outer = param_1->outerParams;
 		JAIData::FabricatedUnk0Struct* params
 		    = &basic->unk0->unk0[uVar8 & 0xff];
 
-		outer->setParam(1, params->unk4);
-		outer->setParam(8, params->unk10);
-		outer->setParam(2, params->unk8);
-		outer->setParam(4, params->unkC);
+		Jam_SetExtParam(params->unk4, param_1, 1);
+		Jam_SetExtParam(params->unk10, param_1, 8);
+		Jam_SetExtParam(params->unk8, param_1, 2);
+		Jam_SetExtParam(params->unkC, param_1, 4);
+
 		f32 thing;
 		if (basic->unk14 != 2)
 			thing = 0.0f;
 		else
 			thing = params->unk14;
-		outer->setParam(16, thing);
+		Jam_SetExtParam(thing, param_1, 16);
+		break;
+	case 0x7F:
+	{
 		break;
 	}
-	case 0x7F:
-		param_1->writePortApp(0, basic->unk10);
-		break;
+	}
 	}
 	return result;
 }

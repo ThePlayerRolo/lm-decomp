@@ -126,7 +126,7 @@ static void EffecterInit(jc_* jc, Inst_* inst)
 			f32 ofs                  = Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]);
 			DoEffectOsc(jc, jc->mOscillators[i]->mode, ofs);
 		} else {
-			jc->mOscillators[i] = NULL;
+			jc->mOscillators[i] = nullptr;
 		}
 	}
 
@@ -154,7 +154,7 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 			__DoEffect(jc, map->randomEffect->id, r);
 		}
 
-		jc->mOscillators[i] = NULL;
+		jc->mOscillators[i] = nullptr;
 	}
 	jc->mOscillators[0]      = &PERC_ENV;
 	jc->mOscBuffers[0].state = TRUE;
@@ -175,7 +175,7 @@ static void EffecterInit_Osc(jc_* jc)
 	jc->panMatrices[3].values[1] = 0.0f;
 
 	for (u32 i = 0; i < 2; i++) {
-		jc->mOscillators[i] = NULL;
+		jc->mOscillators[i] = nullptr;
 	}
 
 	jc->mOscillators[0]      = &OSC_ENV;
@@ -219,25 +219,25 @@ static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 p3)
 	jc->updateCallback = Jesus1Shot_Update;
 	jc->dspChannel     = AllocDSPchannel(0, (u32)jc);
 
-	if (jc->dspChannel == NULL) {
+	if (jc->dspChannel == nullptr) {
 		play = CheckLogicalChannel(jc);
 	} else {
 		play = PlayLogicalChannel(jc);
 	}
 
-	if (jc->dspChannel == NULL && play == TRUE) {
+	if (jc->dspChannel == nullptr && play == TRUE) {
 		if (Add_WaitDSPChannel(jc) == TRUE) {
 			List_AddChannelTail(&jcs->waitingChannels, jc);
 			return jc;
 		} else {
 			List_AddChannelTail(&jcs->freeChannels, jc);
-			return NULL;
+			return nullptr;
 		}
 	} else if (play == FALSE) {
 		DeAllocDSPchannel(jc->dspChannel, (u32)jc);
-		jc->dspChannel = NULL;
+		jc->dspChannel = nullptr;
 		List_AddChannelTail(&jcs->freeChannels, jc);
-		return NULL;
+		return nullptr;
 	} else {
 		List_AddChannelTail(&jcs->activeChannels, jc);
 	}
@@ -256,21 +256,20 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 	jc_* chan = List_GetChannel(&jcs->freeChannels);
 	jc_* chan2;
 	jc_** REF_chan2 = &chan2;
-	STACK_PAD_VAR(6);
-	if (chan == NULL) {
+	STACK_PAD_VAR(5);
+	if (chan == nullptr) {
 
 		if (FixAllocChannel(jcs, 1) == FALSE) {
 			return 0;
 		}
 		jcs->chanAllocCount++;
 		chan = List_GetChannel(&jcs->freeChannels);
-		if (chan == NULL) {
+		if (chan == nullptr) {
 			return 0;
 		}
 
-		if (jcs->voiceStealingMode == 1) {
 			chan2 = List_GetChannel(&jcs->releasingChannels);
-			if (chan2 == NULL) {
+			if (chan2 == nullptr) {
 				chan2 = List_GetChannel(&jcs->activeChannels);
 				if (chan2) {
 					List_CountChannel(&jcs->waitingChannels);
@@ -284,7 +283,6 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 					ForceStopDSPchannel(chan2->dspChannel);
 				}
 			}
-		}
 	}
 	Channel_Init(chan);
 	if (wave) {
@@ -303,8 +301,8 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 Perc_* PercRead(u32 a1, u32 a2)
 {
 	Bank_* bank = Bank_Get(a1);
-	if (bank == NULL) {
-		return NULL;
+	if (bank == nullptr) {
+		return nullptr;
 	}
 
 	return Bank_PercChange(bank, a2);
@@ -317,8 +315,8 @@ Inst_* InstRead(u32 a1, u32 a2)
 {
 
 	Bank_* bank = Bank_Get(a1);
-	if (bank == NULL) {
-		return NULL;
+	if (bank == nullptr) {
+		return nullptr;
 	}
 
 	return Bank_InstChange(bank, a2);
@@ -330,7 +328,7 @@ Inst_* InstRead(u32 a1, u32 a2)
 Vmap_* VmapRead(Inst_* inst, u8 a1, u8 a2)
 {
 	Vmap_* map = (Vmap_*)Bank_GetInstVmap(inst, a1, a2);
-	return !map ? NULL : map;
+	return !map ? nullptr : map;
 }
 
 /**
@@ -359,7 +357,7 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 	}
 
 	while (TRUE) {
-		if (chan == NULL) {
+		if (chan == nullptr) {
 			break;
 		}
 
@@ -382,7 +380,7 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 
 	chan = mgr->releasingChannels;
 	while (TRUE) {
-		if (chan == NULL) {
+		if (chan == nullptr) {
 			break;
 		}
 
@@ -426,7 +424,7 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 	if (id && poly) {
 
 		while (TRUE) {
-			if (chan == NULL) {
+			if (chan == nullptr) {
 				break;
 			}
 
@@ -462,15 +460,11 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 void Init_1shot(jcs_* jcs, u32 id)
 {
 	if (jcs->chanCount != 0) {
-		FixReleaseChannelAll(jcs);
+		int fix_release_channel = FixReleaseChannelAll(jcs);
 	}
 	InitJcs(jcs);
-	FixAllocChannel(jcs, id);
-	if (id == 0) {
-		jcs->voiceStealingMode = 0;
-	} else {
-		jcs->voiceStealingMode = 1;
-	}
+	int alloc = FixAllocChannel(jcs, id);
+
 
 	STACK_PAD_VAR(2);
 }
@@ -505,6 +499,7 @@ void Stop_1Shot_R(jc_* jc, u16 id)
  */
 void AllStop_1Shot(jcs_* jcs)
 {
+	List_GlobalChannel();
 	List_CountChannel(&jcs->freeChannels);
 	List_CountChannel(&jcs->activeChannels);
 	List_CountChannel(&jcs->releasingChannels);
@@ -534,7 +529,7 @@ static BOOL Extra_Update(jc_* jc, JCSTATUS status)
 		jc->pitchSweepSteps--;
 
 		if (jc->pitchSweepSteps == 0) {
-			jc->pitchSweepUpdater = NULL;
+			jc->pitchSweepUpdater = nullptr;
 		}
 	}
 	return FALSE;
@@ -547,7 +542,7 @@ void SetPitchTarget_1Shot(jc_* jc, f32 pitch, u32 steps)
 {
 	if (steps == 0) {
 		jc->currentPitch      = pitch;
-		jc->pitchSweepUpdater = NULL;
+		jc->pitchSweepUpdater = nullptr;
 		return;
 	}
 
@@ -566,7 +561,7 @@ void SetKeyTarget_1Shot(jc_* jc, u8 key, u32 steps)
 		return;
 	}
 
-	if (jc->logicalChanType == 2 || jc->waveData == NULL) {
+	if (jc->logicalChanType == 2 || jc->waveData == nullptr) {
 		pitchKey = key;
 	} else {
 		pitchKey = key + 60 - jc->waveData->key;
@@ -671,7 +666,7 @@ void CheckChan(jc_* jc)
  * @TODO: Documentation
  * @note UNUSED Size: 0000AC
  */
-void PrintChan( char* str, jc_* jc, u32 id)
+void PrintChan(char* str, jc_* jc, u32 id)
 {
 	// UNUSED FUNCTION
 }
@@ -685,7 +680,7 @@ void FlushRelease_1Shot(jcs_* jcs)
 
 	for (u32 i = 0; i < count; i++) {
 		jc_* chan = List_GetChannel(&jcs->releasingChannels);
-		if (chan == NULL) {
+		if (chan == nullptr) {
 			break;
 		}
 
@@ -729,7 +724,10 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 				if ((flag & 0xff) == 0) {
 					test2 = 1;
 				}
-				jc->dspChannel->prio = test2;
+
+				if (jc->dspChannel->prio < (u8)test2) {
+					jc->dspChannel->prio = test2;
+				}
 			}
 		}
 		jc->noteId = -1;
@@ -758,7 +756,7 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 		}
 		jc->note           = -1;
 		jc->noteId         = -1;
-		jc->updateCallback = NULL;
+		jc->updateCallback = nullptr;
 	}
 	return FALSE;
 
@@ -771,19 +769,19 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 u32 One_CheckInstWave(SOUNDID_ sound)
 {
 	Inst_* inst = InstRead(sound.bytes[0], sound.bytes[1]);
-	if (inst == NULL) {
+	if (inst == nullptr) {
 		return 1;
 	}
 
 	// TODO: fix this conversion to something wave-related once we've sorted that out
 	int* map = (int*)VmapRead(inst, sound.bytes[2], sound.bytes[3]);
-	if (map == NULL) {
+	if (map == nullptr) {
 		return 2;
 	}
 
 	// clearly need something better than map[1]
 	CtrlGroup_* group = WaveidToWavegroup(map[1], sound.bytes[0]);
-	if (group == NULL) {
+	if (group == nullptr) {
 		return 3;
 	}
 
@@ -822,28 +820,28 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	BOOL test = FALSE;
 
 	inst = InstRead(sound.bytes[0], sound.bytes[1]);
-	if (inst == NULL) {
-		return NULL;
+	if (inst == nullptr) {
+		return nullptr;
 	}
 
 	testPercMap* map = (testPercMap*)VmapRead(inst, sound.bytes[2], sound.bytes[3]);
-	if (map == NULL) {
-		return NULL;
+	if (map == nullptr) {
+		return nullptr;
 	}
 
 	CtrlGroup_* group = WaveidToWavegroup(map->_04, sound.bytes[0]);
-	if (group == NULL) {
-		return NULL;
+	if (group == nullptr) {
+		return nullptr;
 	}
 
 	wave = GetSoundHandle(group, map->_04);
-	if (wave == NULL) {
-		return NULL;
+	if (wave == nullptr) {
+		return nullptr;
 	}
 
 	chan = __Oneshot_GetLogicalChannel(jcs, (CtrlWave_*)wave);
-	if (chan == NULL) {
-		return NULL;
+	if (chan == nullptr) {
+		return nullptr;
 	}
 
 	int val = sound.bytes[2] + 60 - wave->data->key;
@@ -914,31 +912,31 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	u32* idp = &id;
 
 	perc = PercRead(sound.bytes[0], sound.bytes[1]);
-	if (perc == NULL) {
-		return NULL;
+	if (perc == nullptr) {
+		return nullptr;
 	}
 
 	testPercMap* map   = (testPercMap*)Bank_GetPercVmap(perc, sound.bytes[2], sound.bytes[3]);
 	testPercMap** mapp = &map;
-	if (map == NULL) {
-		return NULL;
+	if (map == nullptr) {
+		return nullptr;
 	}
 
 	u32 x;
 
 	CtrlGroup_* group = WaveidToWavegroup(map->_04, sound.bytes[0]);
-	if (group == NULL) {
-		return NULL;
+	if (group == nullptr) {
+		return nullptr;
 	}
 
 	WaveID_* wave = GetSoundHandle(group, map->_04);
-	if (wave == NULL) {
-		return NULL;
+	if (wave == nullptr) {
+		return nullptr;
 	}
 
 	chan = __Oneshot_GetLogicalChannel(jcs, (CtrlWave_*)wave);
-	if (chan == NULL) {
-		return NULL;
+	if (chan == nullptr) {
+		return nullptr;
 	}
 
 	chan->velocity = sound.bytes[3];
@@ -979,9 +977,9 @@ jc_* Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	int pit;
 	jcs_* mgr = jcs;
 
-	chan = __Oneshot_GetLogicalChannel(mgr, NULL);
-	if (chan == NULL) {
-		return NULL;
+	chan = __Oneshot_GetLogicalChannel(mgr, nullptr);
+	if (chan == nullptr) {
+		return nullptr;
 	}
 
 	chan->chanData        = sound.bytes[1] - 0xf0;

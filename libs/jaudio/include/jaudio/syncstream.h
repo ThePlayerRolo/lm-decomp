@@ -26,7 +26,6 @@ int StreamSyncPlayAudio(f32, u32, int, int);
 BOOL StreamSyncStopAudio(u32);
 void StreamChgPitch(void);
 void StreamChgVolume(u32, int, int);
-void StreamChgMixLevel(u32, int, int);
 int StreamGetCurrentFrame(u32, u32);
 BOOL StreamSetDVDPause(u32, BOOL);
 void StreamCheckRemainBuffers(void);
@@ -63,15 +62,17 @@ struct StreamHeader_ {
 	u32 _10[4];      // _10, unused
 };
 
+// TODO: This union and struct have incorrect offsets and sizes  and I am going crazy trying to make it work - ThePlayerRolo
 // size 0x2420
 union UNION_0x2420 {
 	StreamHeader_ header; // _00
-	u8 data[0x2420];      // _20
+	// TODO: size is 0x1200
+	u8 data[0x400];      // _20
 };
 
-// CONFIRMED SIZE: 0x21A50
+// CONFIRMED SIZE: 0x1518C
 struct StreamCtrl_ {
-	union UNION_0x2420 data[6];   // _00
+	union UNION_0x2420 data[4];   // _00
 	s16 leftChanBufs[2][0x2000];  // _0D8C0
 	s16 rightChanBufs[2][0x2000]; // _158C0
 	s16 loopBufs[2][0x1000];      // _1D8C0, PCM data?
@@ -103,7 +104,6 @@ struct StreamCtrl_ {
 	s16 leftAdpcmState[4];        // _21A18
 	s16 rightAdpcmState[4];       // _21A20
 	u16 volume[2];                // _21A28
-	u16 mixLevel[2];              // _21A28
 	f32 pitchRatio;               // _21A30
 	u8 isFromFile;                // _21A34
 	u32 updateFlags;              // _21A38

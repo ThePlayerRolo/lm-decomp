@@ -11,7 +11,7 @@ BEGIN_SCOPE_EXTERN_C
 //! There's something iffy going on with the value 0xC0.
 //! It appears in seqsetup with flags regarding opening tracks,
 //! It appears to do with command id(s) for some reason
-//! It's everywhere, but why? Why, J(esus)System?
+//! It's everywhere, but why? Why, JSystem?
 
 typedef struct seqp_ seqp_;
 typedef struct TrackPort_ TrackPort_;
@@ -215,8 +215,9 @@ union URegisterParam_ {
 /**
  * @brief This struct is analogous to `JASTrack` of later JAudio.
  *
- * @note Size: 0x434 (Confirmed by `Jaf_HandleToSeq`).
- */
+ * @note Size: 0x430
+
+*/
 struct seqp_ {
 	u8* seqData;                       // _000
 	u32 programCounter;                // _004
@@ -240,12 +241,10 @@ struct seqp_ {
 	u16 activeSoundIds[8];             // _0BC
 	u8 noteGateTime;                   // _0CC
 	u8 lastVelocity;                   // _0CD
-	u8 _CE[0x0d0 - 0x0ce];             // _0CE
 	u32 noteDuration;                  // _0D0
 	u8 noteFlags;                      // _0D4
 	u8 lastNote;                       // _0D5
 	u8 isGateMode;                     // _0D6, boolean-like
-	u8 _D7[0x0d8 - 0x0d7];             // _0D7
 	jcs_ parentController;             // _0D8
 	TimedParam_ timedParam;            // _14C
 	URegisterParam_ regParam;          // _26C
@@ -286,9 +285,7 @@ struct seqp_ {
 	u8 isRegistered;                   // _3E2
 	u8 needsTempoSync;                 // _3E3, boolean-like
 	u8 isAllocated;                    // _3E4
-	u8 _3E5[0x3e8 - 0x3e5];            // _3E5
-	Oscbuf_ oscillatorParams[2];       // _3E8
-	u8 _418[0x434 - 0x418];            // _400
+	u8 _3E5[0x1C];            // _3E5
 };
 
 extern s16 CUTOFF_TO_IIR_TABLE[128][4];

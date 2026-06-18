@@ -37,7 +37,7 @@ static u32 first = TRUE;
 /**
  * @TODO: Documentation
  */
-void Jaf_InitSeqArchive2( char* barcFilepath, u8* barcData, u8* param_3)
+void Jaf_InitSeqArchive2(char* barcFilepath, u8* barcData, u8* param_3)
 {
 	STACK_PAD_VAR(2);
 

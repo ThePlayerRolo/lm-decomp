@@ -126,6 +126,15 @@ Sato/EnemyStrategyInit.cpp:
 JSystem/JAudio/JAInterface/JAIBasic.cpp:
 	.text       start:0x8018E680 end:0x80190E68
 	.ctors      start:0x8020BDA0 end:0x8020BDA4
+	.bss        start:0x803F0248 end:0x803F0260
+	.sbss       start:0x804D9270 end:0x804D9280
+	.sdata2     start:0x804DD1A0 end:0x804DD1B8
+
+JSystem/JAudio/JAInterface/JAIAnimation.cpp:
+	.text       start:0x8019B424 end:0x8019BE00
+
+jaudio/dummyprobe.c:
+	.text       start:0x8019BE00 end:0x8019BE40
 
 jaudio/aictrl.c:
 	.text       start:0x8019BE40 end:0x8019C620
@@ -247,13 +256,78 @@ jaudio/aramcall.c:
 	.sdata      start:0x804D7938 end:0x804D7940
 	.sbss       start:0x804D9410 end:0x804D9418
 
-jaudio/hvqm_play.c:
-	.bss        start:0x804CFD7C end:0x804CFF5C align:4 common
-
 jaudio/ja_calc.c:
 	.text       start:0x801A3B40 end:0x801A3C40
 	.bss        start:0x804588A0 end:0x80458CA8
 	.sdata2     start:0x804DD388 end:0x804DD3A0
+
+jaudio/fat.c:
+	.text       start:0x801A3C40 end:0x801A4040
+	.bss        start:0x80458CA8 end:0x804598A8
+	.sbss       start:0x804D9418 end:0x804D9420
+
+jaudio/cmdstack.c:
+	.text       start:0x801A4040 end:0x801A42C0
+	.sbss       start:0x804D9420 end:0x804D9430
+
+jaudio/virload.c:
+	.text       start:0x801A42C0 end:0x801A4740
+	.bss        start:0x804598A8 end:0x80459F28
+	.sbss       start:0x804D9430 end:0x804D9440
+	.sdata2     start:0x804DD3A0 end:0x804DD3A8
+
+jaudio/heapctrl.c:
+	.text       start:0x801A4740 end:0x801A4B40
+	.sbss       start:0x804D9440 end:0x804D9448
+
+jaudio/jammain_2.c:
+	.text       start:0x801A4B40 end:0x801A8CA0
+	.data       start:0x80391288 end:0x80391548
+	.bss        start:0x80459F28 end:0x8045A048
+	.sbss       start:0x804D9448 end:0x804D9458
+	.sdata2     start:0x804DD3A8 end:0x804DD3F0
+
+jaudio/noteon.c:
+	.text       start:0x801A8CA0 end:0x801A91E0
+	.sdata2     start:0x804DD3F0 end:0x804DD3F8
+
+jaudio/seqsetup.c:
+	.text       start:0x801A91E0 end:0x801A9E20
+	.bss        start:0x8045A048 end:0x8049E4A0
+	.sdata2     start:0x804DD3F8 end:0x804DD408
+
+jaudio/centcalc.c:
+	.text       start:0x801A9E20 end:0x801A9F00
+	.data       start:0x80391948 end:0x80391A48
+	.sdata2     start:0x804DD408 end:0x804DD428
+
+jaudio/jamosc.c:
+	.text       start:0x801A9F00 end:0x801AA380
+	.data       start:0x80391A48 end:0x80391B30
+	.sdata2     start:0x804DD428 end:0x804DD430
+
+jaudio/oneshot.c:
+	.text       start:0x801AA380 end:0x801ABA80
+	.data       start:0x80391B30 end:0x80391B70
+	.sdata      start:0x804D7940 end:0x804D7948
+	.sdata2     start:0x804DD430 end:0x804DD460
+
+jaudio/syncstream.c:
+	.text       start:0x801ABA80 end:0x801ACDE0
+	.bss        start:0x8049E4A0 end:0x804C87B8
+
+jaudio/interleave.c:
+	.text       start:0x801ACDE0 end:0x801ACFE0
+	.bss        start:0x804C87B8 end:0x804C87D8
+	.sdata      start:0x804D7948 end:0x804D7950
+
+jaudio/hvqm_play.c:
+	.text       start:0x801ACFE0 end:0x801ADEE4
+	.bss        start:0x804C87D8 end:0x804C8880
+	.bss        start:0x804CFD7C end:0x804CFF5C align:4 common
+	.sdata      start:0x804D7950 end:0x804D7958
+	.sbss       start:0x804D9460 end:0x804D94B8
+	.sdata2     start:0x804DD478 end:0x804DD480
 
 JSystem/J2D/J2DGrafContext.cpp:
 	.text       start:0x801ADEE4 end:0x801AE564
