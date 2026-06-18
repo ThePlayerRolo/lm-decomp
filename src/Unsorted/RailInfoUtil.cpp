@@ -41,6 +41,7 @@ const char* getLadderName(int ladderIndex) {
 }
 
 // Some mismatches due to the operator new for Koga::ToolData vs just calling the constructor, not sure why/how here
+// https://decomp.me/scratch/d7vM7
 int getLadderPathEntryCount(int ladderIndex) {
     Koga::ToolData* railInfo = Koga::GameModeUtil::getJmpResource("RailInfo");
     const char* ladderName = nullptr;
@@ -68,6 +69,7 @@ int getLadderPathEntryCount(int ladderIndex) {
 }
 
 // Similar to getLadderPathEntryCount, mismatch due to operator new.
+// https://decomp.me/scratch/vVvhu
 bool getLadderPositionByIndex(JGeometry::TVec3f* out, int ladderIndex, u32 entryIndex) {
     const char* pathName = getLadderName(ladderIndex);
     s32 maxIndex = -1;
