@@ -19,9 +19,20 @@ namespace Koga {
         }
 
         s32 getArraySize() const { return mArraySize; }
-        T getArrayMember(s32 idx) const { return mArr[idx]; }
+        T* getArrayMember(s32 idx) const { return &mArr[idx]; }
         T* getArray() { return mArr; }
-        T getMaxMember() const { return mArr[mArraySize]; }
+        T* getMaxMember() const { return &mArr[mArraySize]; }
+        
+        T* eraseMember(T* pIter) {
+            if (getMaxMember() - pIter - 1 > 0) {
+                for (T* curr = pIter; (curr + 1) != getMaxMember(); curr++) {
+                    *curr = *(curr + 1);
+                } 
+            }
+            
+            mArraySize -= 1;
+            return pIter;
+        }
 
         /* 0x00 */ T mArr[S];
         /* (0x4 * S) + 4 */ s32 mArraySize;
