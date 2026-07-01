@@ -756,6 +756,7 @@ config.libs = [
         Object(NonMatching, "Koga/EnAttackBase.cpp"),
         Object(NonMatching, "Koga/SimpleModeler.cpp"),
         Object(NonMatching, "Koga/CharacterColManager.cpp"),
+        Object(NonMatching, "Koga/EnManager.cpp"),
 
         # Unsorted
         Object(Matching, "Unsorted/staticData.cpp"),  # TODO Verify this is a seperate file
@@ -765,7 +766,8 @@ config.libs = [
         Object(NonMatching, "Unsorted/80007018.cpp"),
         Object(NonMatching, "Unsorted/LMDvdFileBlock.cpp"),
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
-        Object(NonMatching, "Unsorted/RailInfoUtil.cpp")
+        Object(NonMatching, "Unsorted/RailInfoUtil.cpp"),
+        Object(NonMatching, "Unsorted/800627D8.cpp"),
     ]),
 ]
 

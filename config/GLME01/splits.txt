@@ -37,6 +37,10 @@ Unsorted/80007018.cpp:
 Unsorted/LMDvdFileBlock.cpp:
 	.text       start:0x800071C0 end:0x80007398
 
+Unsorted/800627D8.cpp:
+	.text       start:0x800627D0 end:0x800627E8
+	.sbss       start:0x804D872C end:0x804D8730
+
 Unsorted/8006385C.cpp:
 	.text       start:0x8006385C end:0x80065DA4
 
@@ -103,6 +107,12 @@ Koga/EnAttackBase.cpp:
 	.text       start:0x800CF63C end:0x800CF6A8
 	.data       start:0x80361E78 end:0x80361FA4
 	.sdata      start:0x804D3AF8 end:0x804D3B20
+
+Koga/EnManager.cpp:
+	.text       start:0x800E4514 end:0x800E9DC8
+	.ctors      start:0x8020BC28 end:0x8020BC30
+	.data       start:0x80363BF8 end:0x80363CF8
+	.sdata      start:0x804D3E30 end:0x804D3E48
 
 Koga/CharacterEventObserver.cpp:
 	.text       start:0x800EA1B4 end:0x800EA454
