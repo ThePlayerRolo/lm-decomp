@@ -14,9 +14,14 @@ public:
     /* 0x18 */ virtual void vt_18();
     /* 0x1C */ virtual s32 vt_1C();
     /* 0x20 */ virtual void vt_20(JGeometry::TVec3f*);
+    /* 0x24 */ virtual void vt_24(void*); // Unsure of arg type.
 
 public:
     /* 0x78C */ s32 _78C;
 };
+
+// All of these are referenced in EnManager. No arg types or return types are guaranteed.
+void fn_80068F04(void*, void*); // lbl_8033B1B0 = character.cpp,  lbl_8033B1C0 = Character init failed
+void* fn_80069130(void*);
 
 #endif
