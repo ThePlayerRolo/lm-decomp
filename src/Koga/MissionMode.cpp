@@ -80,7 +80,7 @@ namespace Koga {
         sprintf(mapName, "%s%d.szp", "/Map/map", sCurMapNo);
         mMapArchive = (JKRArchive*)fn_80006930(mapName, nullptr);
 
-        mEnMgr->load(mMapArchive);
+        mEnMgr->loadCharacterInfo(mMapArchive);
         s32 jmpFileCount = mMapArchive->countFile("/jmp") - 2;
 
         if (jmpFileCount > 0) {
