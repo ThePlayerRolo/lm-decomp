@@ -2,7 +2,10 @@
 #define MESSAGE_H_
 
 #include "Koga/Array.hpp"
+#include "dolphin/types.h"
 #include <types.h>
+
+class ToolDataRef;
 
 class MessageReceiver;
 typedef bool (MessageReceiver::*MessageCallback1)(int arg0);
@@ -35,9 +38,9 @@ class IMessageReceiver {
 public:
     //Seems to be inlined where its used and doesn't show up in the final binary
     /* 0x08 */ inline virtual ~IMessageReceiver() { }
-    /* 0x0C */ virtual s32 vt_0C() = 0;
-    /* 0x10 */ virtual s32 vt_10(int arg0) = 0;
-    /* 0x14 */ virtual s32 vt_14(int arg0, int arg1) = 0;
+    /* 0x0C */ virtual BOOL vt_0C(ToolDataRef*) = 0;
+    /* 0x10 */ virtual BOOL vt_10(ToolDataRef*) = 0;
+    /* 0x14 */ virtual BOOL vt_14(ToolDataRef*, char*) = 0;
 };
 
 class MessageReceiver : public IMessageReceiver {
@@ -45,9 +48,9 @@ public:
     MessageReceiver();
 
     /* 0x08 */ virtual ~MessageReceiver();
-    /* 0x0C */ virtual s32 vt_0C();
-    /* 0x10 */ virtual s32 vt_10(int arg0);
-    /* 0x14 */ virtual s32 vt_14(int arg0, int arg1);
+    /* 0x0C */ virtual BOOL vt_0C(ToolDataRef*);
+    /* 0x10 */ virtual BOOL vt_10(ToolDataRef*);
+    /* 0x14 */ virtual BOOL vt_14(ToolDataRef*, char*);
 };
 
 #endif

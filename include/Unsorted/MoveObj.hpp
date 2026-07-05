@@ -11,6 +11,13 @@ public:
     /* 0x08 */ virtual ~MoveObj();
     /* 0x0C */ virtual void vt_0C(u16, u16, u16);
 
+    // Defined in the EnManager TU, but exist in this class based on the split, I think.
+    MoveObj* fn_800E7414(u32 id);
+    MoveObj* fn_800E7510(MoveObj*);
+    void fn_800E760C();
+    void fn_800E7628();
+    bool fn_800E7650();
+
     inline s32 get_3C() const { return _3C; }
 public:
     /* 0x004 */ u8 _0[0x38];

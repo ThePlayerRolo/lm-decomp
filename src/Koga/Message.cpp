@@ -1,4 +1,5 @@
 #include "Koga/Message.hpp"
+#include "dolphin/types.h"
 
 dummy_float_data()
 
@@ -6,11 +7,11 @@ MessageReceiver::MessageReceiver() {}
 
 MessageReceiver::~MessageReceiver() {}
 
-s32 MessageReceiver::vt_0C() { return 0; }
+BOOL MessageReceiver::vt_0C(ToolDataRef* param_1) { return 0; }
 
-s32 MessageReceiver::vt_10(int arg0) { return 0; }
+BOOL MessageReceiver::vt_10(ToolDataRef* param_1) { return 0; }
 
-s32 MessageReceiver::vt_14(int arg0, int arg1) { return 0; }
+BOOL MessageReceiver::vt_14(ToolDataRef* param_1, char* param_2) { return 0; }
 
 //https://decomp.me/scratch/FS7IN
 MessageSender::MessageSender() { }

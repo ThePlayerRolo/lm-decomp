@@ -4,6 +4,9 @@
 #include <types.h>
 #include <JSystem/JORReflexible.hpp>
 
+class ToolDataRef;
+class unkEnCharacter;
+
 namespace Koga {
     class EnTypesManager : public JORReflexible {
     public:
@@ -22,5 +25,13 @@ namespace Koga {
     };
 
 };
+
+// All of these are referenced in EnManager. No arg types or return types are guaranteed.
+s32 fn_800DAB18(char*);
+s32 fn_800DABA4(ToolDataRef);
+s32 fn_800DAC84(s32);
+void* fn_800DAD00(void*);
+unkEnCharacter* fn_800DB034(void*);
+void* fn_800DB06C(int);
 
 #endif
