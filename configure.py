@@ -765,6 +765,7 @@ config.libs = [
         Object(NonMatching, "Unsorted/80007018.cpp"),
         Object(NonMatching, "Unsorted/LMDvdFileBlock.cpp"),
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
+        Object(NonMatching, "Unsorted/80007398.cpp"),
     ]),
 ]
 
