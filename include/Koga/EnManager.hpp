@@ -6,9 +6,11 @@
 #include <JSystem/JORReflexible.hpp>
 
 #include "Koga/Message.hpp"
+
 class EnemyStrategy;
 class unkEnCharacter;
 class JKRArchive;
+class MoveObj;
 
 namespace Koga {
     class ToolData;
@@ -221,6 +223,13 @@ namespace Koga {
         static s32 sAppearPointSlotIndex;
     };
 };
+
+//MoveObj Functions maybe?
+MoveObj* fn_800E7414(u32 id);
+MoveObj* fn_800E7510(MoveObj*);
+void fn_800E760C();
+void fn_800E7628();
+bool fn_800E7650();
 
 // Maybe apart of AppearPointSlot? Looks like compiler generated but unsure
 void fn_800E61C0();
