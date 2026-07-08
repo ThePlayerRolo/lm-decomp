@@ -152,8 +152,8 @@ namespace Koga {
         return out;
     }
 
-    #pragma dont_inline on
     JGeometry::TVec3f* EnManager::fn_800E5564(s32 param_1) {
+        FORCE_DONT_INLINE;
         if (_E44 != 0) {
             // This probably pulls 0x0 from whatever object this is
             return reinterpret_cast<JGeometry::TVec3f*>(fn_800AD39C(param_1));
@@ -161,10 +161,9 @@ namespace Koga {
 
         return &_E08[param_1].mPosition;
     }
-    #pragma dont_inline reset
 
-    #pragma dont_inline on
     u32 Koga::EnManager::fn_800E55AC(s32 param_1) {
+        FORCE_DONT_INLINE;
         if (_E44 != 0) {
             // This probably pulls 0x24 from whatever object this is
             return reinterpret_cast<u32>(fn_800AD39C(param_1));
@@ -172,16 +171,15 @@ namespace Koga {
 
         return _E08[param_1]._18;
     }
-    #pragma dont_inline reset
 
     s32 EnManager::fn_800E55F0(s32 appearSlotIndex) {
         return _E08[appearSlotIndex]._0;
     }
 
-    #pragma dont_inline on 
     // Based on ObjDiff, this seems to do some copy constructor stuff but the TVec3f struct seems to give me a lot of issues in this class
     // Also no-inline temproarily because it spills into the other function.
     s32 EnManager::fn_800E5660(JGeometry::TVec3f* param_1, JGeometry::TVec3f* out, f32 param_2) {
+        FORCE_DONT_INLINE;
         JGeometry::TVec3f localOut;
         s32 result = fn_800E5784(param_1, &localOut);
 
@@ -195,7 +193,6 @@ namespace Koga {
 
         return -1;
     }
-    #pragma dont_inline reset
 
     s32 EnManager::fn_800E5784(JGeometry::TVec3f* param_1, JGeometry::TVec3f* out) {
         int returnVal = -1;
@@ -232,8 +229,8 @@ namespace Koga {
         return returnVal;
     }
 
-    #pragma dont_inline on
     s32 EnManager::fn_800E5868(s32 param_1, s32 param_2) {
+        FORCE_DONT_INLINE;
         unkEnManager1* temp = fn_800E58D4(param_1, nullptr, -1);
         if (temp == nullptr) return -1;
 
@@ -244,7 +241,6 @@ namespace Koga {
         void* tempObj = temp->fn_800E9C5C();
         //return tempObj->_38;
     }
-    #pragma dont_inline reset
 
     void EnManager::fn_800E59D4(s32 idx) {
         unkEnManager1* temp = _4;
@@ -470,8 +466,8 @@ ToolDataRef ToolDataRef::findInfoTableName(const char* name) {
 }
 
 // Needed to match isNameValid/Money for now, otherwise it inlines this function.
-#pragma dont_inline on
 const char* ToolDataRef::getName() {
+    FORCE_DONT_INLINE;
     const char* name;
 
     if (isValid()) {
@@ -479,7 +475,6 @@ const char* ToolDataRef::getName() {
     }
     return name;
 }
-#pragma dont_inline reset
 
 const BOOL ToolDataRef::isNameValid() {
     BOOL nameValid = true;
