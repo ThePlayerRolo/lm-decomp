@@ -1,22 +1,20 @@
-#include "Unsorted/80007398.hpp"
+#include "Unsorted/LMDisplayUtil.hpp"
 #include "Unsorted/80005EB8.hpp"
 #include "Unsorted/GamePad.hpp"
 #include <JSystem/JKernel/JKRExpHeap.hpp>
 #include <JSystem/JUtility/JUTDirectPrint.hpp>
+#include <dolphin/gx.h>
 #include <dolphin/os.h>
 #include <dolphin/vi.h>
-#include <dolphin/gx.h>
 
-//externs
+// externs
 extern void fn_80047444(s32);
-
-
 
 struct LMVIMessageQueue {
     /* 0x00 */ u32 _0;
     /* 0x04 */ u32 _4;
     /* 0x08 */ OSMessageQueue mMessageQueue;
-    /* 0x28 */ s32 mMsgArr[1]; // Msg
+    /* 0x28 */ s32 mMsgArr[1];  // Msg
 };
 
 // .bss start
@@ -25,42 +23,72 @@ GXRenderModeObj sIntRenderModeObj;
 // .bss end
 
 // .data start
-GXRenderModeObj sProgRenderModeObj = {
-    VI_TVMODE_NTSC_PROG,
-    640,
-    480,
-    480,
-    40,
-    0,
-    640,
-    480,
-    VI_XFBMODE_SF,
-    0,
-    0,
-    {
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-        { 6, 6, },
-    },
-    { 0,0, 26,12,26, 0,0  }
-};
+GXRenderModeObj sProgRenderModeObj = {VI_TVMODE_NTSC_PROG,
+                                      640,
+                                      480,
+                                      480,
+                                      40,
+                                      0,
+                                      640,
+                                      480,
+                                      VI_XFBMODE_SF,
+                                      0,
+                                      0,
+                                      {
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                          {
+                                              6,
+                                              6,
+                                          },
+                                      },
+                                      {0, 0, 26, 12, 26, 0, 0}};
 
-Vec lbl_8021DA40 = { 0, 0,0 };
+Vec lbl_8021DA40 = {0, 0, 0};
 
-Mtx sDefaultMtx = {
-    {1.0f, 0.0f, 0.0f, 0.0f},
-    {0.0f, 1.0f, 0.0f, 0.0f},
-    {0.0f, 0.0f, 1.0f, 0.0f}
-};
+Mtx sDefaultMtx = {{1.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f, 0.0f}};
 // .data end
 
 // .sbss start
@@ -85,10 +113,10 @@ GXRenderModeObj* sDefaultRenderModes[2] = {
 };
 // .sdata end
 
-static void configureRenderDisplay();
+static void LMConfigureRenderDisplay();
 static void postRetraceCallback(u32 retraceCount);
 
-void initDisplayInternal(LMVISettings* dst) {
+void LMInitDisplayInternal(LMVISettings* dst) {
     VISetBlack(TRUE);
     sIntRenderModeObj = GXNtsc480IntDf;
     sIntRenderModeObj.vfilter[0] = 6;
@@ -140,26 +168,26 @@ void initDisplayInternal(LMVISettings* dst) {
     }
 
     lbl_804D804C[0] = lbl_804D803C;
-    void* temp  = sMainFrameBuffer;
+    void* temp = sMainFrameBuffer;
     lbl_804D804C[1] = lbl_804D8040;
 
     VISetNextFrameBuffer(temp);
     sCurRenderModeObj = &sIntRenderModeObj;
-    configureRenderDisplay();
-    //Temp to match stack, its possible they used this for debugging
+    LMConfigureRenderDisplay();
+    // Temp to match stack, its possible they used this for debugging
     VIRetraceCallback cb = VISetPostRetraceCallback(postRetraceCallback);
 
     lbl_804D8014->changeGroupID(26);
 }
 
 void postRetraceCallback(u32 retraceCount) {
-  if (retraceCount - sVIMessageQueue._0 >= sVIMessageQueue._4) {
-    OSSendMessage(&sVIMessageQueue.mMessageQueue, (void *)0x444F4E45, OS_MESSAGE_NOBLOCK);
-  }
+    if (retraceCount - sVIMessageQueue._0 >= sVIMessageQueue._4) {
+        OSSendMessage(&sVIMessageQueue.mMessageQueue, (void*)0x444F4E45, OS_MESSAGE_NOBLOCK);
+    }
 }
 
 static void setNextVIFrameBuffer(LMVISettings* pSettings) {
-    //TODO: Remove this
+    // TODO: Remove this
     FORCE_DONT_INLINE;
     if ((pSettings->_0 & 1)) {
         VISetBlack(GX_FALSE);
@@ -175,8 +203,8 @@ static void setNextVIFrameBuffer(LMVISettings* pSettings) {
     }
 }
 
-void resetRenderDisplay() {
-    GXColor clearColor = {0,0,0,0};
+void LMResetRenderDisplay() {
+    GXColor clearColor = {0, 0, 0, 0};
     GXSetCopyClear(clearColor, 0xFFFFFF);
     GXSetColorUpdate(GX_TRUE);
     GXSetAlphaUpdate(GX_TRUE);
@@ -190,16 +218,15 @@ void resetRenderDisplay() {
     if (sCurRenderModeObj->aa) {
         GXSetPixelFmt(GX_PF_RGB565_Z16, GX_ZC_LINEAR);
         GXSetDither(GX_FALSE);
-    }
-    else {
+    } else {
         GXSetPixelFmt(GX_PF_RGBA6_Z24, GX_ZC_LINEAR);
         GXSetDither(GX_TRUE);
     }
 }
 
-static void configureRenderDisplay() {
+static void LMConfigureRenderDisplay() {
     VIConfigure(sCurRenderModeObj);
-    resetRenderDisplay();
+    LMResetRenderDisplay();
     GXCopyDisp(sMainFrameBuffer, GX_TRUE);
     GXCopyDisp(sMainFrameBuffer, GX_TRUE);
     GXFlush();
@@ -209,8 +236,8 @@ static void configureRenderDisplay() {
     VIWaitForRetrace();
 }
 
-void initDisplay() {
-    initDisplayInternal(&sVISettings);
+void LMInitDisplay() {
+    LMInitDisplayInternal(&sVISettings);
 }
 
 void fn_80007800() {
@@ -233,8 +260,7 @@ void fn_8000783C() {
 
     if ((sVISettings._0 & 1)) {
         VISetBlack(GX_FALSE);
-    }
-    else {
+    } else {
         VISetBlack(GX_TRUE);
     }
 
@@ -249,8 +275,8 @@ void fn_8000783C() {
     GXFlush();
 }
 
-void changeFrameBuffer() {
-    resetRenderDisplay();
+void LMChangeFrameBuffer() {
+    LMResetRenderDisplay();
     if (sVISettings._2 == true) {
         GXDrawDone();
         GXSetColorUpdate(GX_TRUE);
@@ -271,11 +297,12 @@ void changeFrameBuffer() {
 void fn_800079B0() {
     if (sCurRenderModeObj != sDefaultRenderModes[sRenderMode]) {
         sCurRenderModeObj = sDefaultRenderModes[sRenderMode];
-        configureRenderDisplay();
+        LMConfigureRenderDisplay();
     }
 }
 
-void defaultOrthoView() {
+// https://decomp.me/scratch/d7YKn
+void LMDefaultOrthoView() {
     GXSetScissor(0, 0, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight);
     GXSetViewportJitter(0.0f, 0.0f, sCurRenderModeObj->fbWidth, sCurRenderModeObj->xfbHeight, 0.0f, 1.875f, 1);
     Mtx orthoMtx;
@@ -320,6 +347,7 @@ void defaultOrthoView() {
     GXSetDstAlpha(GX_FALSE, 0xFF);
 }
 
+// https://decomp.me/scratch/tMgJK
 void LMSetViewportJitter(f32 left, f32 top, f32 width, f32 height, f32 near, f32 far) {
     f32 widthScale = sCurRenderModeObj->fbWidth / 640.0f;
 
@@ -338,6 +366,7 @@ void fn_80007E60(s32 param_1) {
     sVIMessageQueue._4 = param_1;
 }
 
+// https://decomp.me/scratch/BHaSG
 void fn_80007E70(bool param_1) {
     sVISettings._2 = param_1;
     if (param_1 == true) {
@@ -355,23 +384,24 @@ void fn_80007E70(bool param_1) {
         sMainFrameBuffer = lbl_804D803C;
 }
 
-void* getMainFrameBuffer() {
+void* LMGetMainFrameBuffer() {
     return sMainFrameBuffer;
 }
 
-void* getPrevMainFrameBuffer() {
+void* LMGetPrevMainFrameBuffer() {
     return sPrevMainFrameBuffer;
 }
 
-u32 getVIMessageQueueUnk4() {
+u32 LMGetVIMessageQueueUnk4() {
     return sVIMessageQueue._4;
 }
 
-void setIntRenderModeVFilter(u8 vfilterVal) {
-  sIntRenderModeObj.vfilter[0] = vfilterVal;
-  sIntRenderModeObj.vfilter[6] = vfilterVal;
-  sIntRenderModeObj.vfilter[2] = 26 - vfilterVal;
-  sIntRenderModeObj.vfilter[4] = 26 - vfilterVal;
+// https://decomp.me/scratch/jpyvK
+void LMSetIntRenderModeVFilter(u8 vfilterVal) {
+    sIntRenderModeObj.vfilter[0] = vfilterVal;
+    sIntRenderModeObj.vfilter[6] = vfilterVal;
+    sIntRenderModeObj.vfilter[2] = 26 - vfilterVal;
+    sIntRenderModeObj.vfilter[4] = 26 - vfilterVal;
 }
 
 void fn_80007F28() {
@@ -390,7 +420,8 @@ void fn_80007F28() {
 }
 
 void fn_80007F90() {
-    if (lbl_804D8058 != 1) return;
+    if (lbl_804D8058 != 1)
+        return;
 
     if (sGamePad->testRepeat(JUTGamePad::PRESS_LEFT)) {
         sProgressiveMode ^= 1;
@@ -412,7 +443,8 @@ void fn_80008004() {
         lbl_804D8068 = true;
     }
 
-    if (lbl_804D8058 != 2) return;
+    if (lbl_804D8058 != 2)
+        return;
 
     if (lbl_804D8060 <= 0) {
         lbl_804D8058 = 0;
@@ -424,7 +456,8 @@ void fn_80008004() {
 }
 
 void LMUpdateProgressiveMode() {
-    if (lbl_804D8058 != 1) return;
+    if (lbl_804D8058 != 1)
+        return;
 
     if (sProgressiveMode == OSGetProgressiveMode()) {
         lbl_804D8060 = 0;

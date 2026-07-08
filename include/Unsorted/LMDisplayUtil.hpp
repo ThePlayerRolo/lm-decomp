@@ -9,18 +9,18 @@ struct LMVISettings {
     /* 0x3 */ u8 _3;
 };
 
-void initDisplay();
+void LMInitDisplay();
 void fn_80007800();
-void changeFrameBuffer();
-void defaultOrthoView();
+void LMChangeFrameBuffer();
+void LMDefaultOrthoView();
 void LMSetViewportJitter(f32 left, f32 top, f32 width, f32 height, f32 near, f32 far);
 void fn_80007E50(u16);
 void fn_80007E60(s32);
 void fn_80007E70(bool);
-void* getMainFrameBuffer();
-void* getPrevMainFrameBuffer();
-u32 getVIMessageQueueUnk4();
-void setIntRenderModeVFilter(u8 vfilterVal);
+void* LMGetMainFrameBuffer();
+void* LMGetPrevMainFrameBuffer();
+u32 LMGetVIMessageQueueUnk4();
+void LMSetIntRenderModeVFilter(u8 vfilterVal);
 
 // Progressive mode related functions start
 void fn_80007F28();
