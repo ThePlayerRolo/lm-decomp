@@ -23,72 +23,47 @@ GXRenderModeObj sIntRenderModeObj;
 // .bss end
 
 // .data start
-GXRenderModeObj sProgRenderModeObj = {VI_TVMODE_NTSC_PROG,
-                                      640,
-                                      480,
-                                      480,
-                                      40,
-                                      0,
-                                      640,
-                                      480,
-                                      VI_XFBMODE_SF,
-                                      0,
-                                      0,
-                                      {
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                          {
-                                              6,
-                                              6,
-                                          },
-                                      },
-                                      {0, 0, 26, 12, 26, 0, 0}};
 
-Vec lbl_8021DA40 = {0, 0, 0};
+// clang-format off
+GXRenderModeObj sProgRenderModeObj = {
+    VI_TVMODE_NTSC_PROG,
+    640,
+    480,
+    480,
+    40,
+    0,
+    640,
+    480,
+    VI_XFBMODE_SF,
+    0,
+    0,
+    {
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+        { 6, 6, },
+    },
+    { 0,0, 26,12,26, 0,0  }
+};
+// clang-format on
+Vec lbl_8021DA40 = {0.0f, 0.0f, 0.0f};
 
-Mtx sDefaultMtx = {{1.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f, 0.0f}};
+// clang-format off
+Mtx sDefaultMtx = {
+    {1.0f, 0.0f, 0.0f, 0.0f},
+    {0.0f, 1.0f, 0.0f, 0.0f},
+    {0.0f, 0.0f, 1.0f, 0.0f}
+};
+// clang-format on
+
 // .data end
 
 // .sbss start
