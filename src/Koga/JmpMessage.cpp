@@ -2,6 +2,10 @@
 #include "Koga/JmpMessage.hpp"
 #include "Koga/ToolData.hpp"
 
+#include "Unsorted/InGameFlagsUtil.hpp"
+
+#include <JSystem/JGeometry/JGVec3.hpp>
+
 dummy_float_data()
 
 extern int lbl_804D80B0;
@@ -15,7 +19,7 @@ JmpMessageSender::JmpMessageSender() {
 
 JmpMessageSender::~JmpMessageSender() { }
 
-BOOL JmpMessageSender::fn_800EA900(Koga::ToolData* pData) {
+BOOL JmpMessageSender::add(Koga::ToolData* pData) {
     if (_CBC.getArraySize() >= 10) {
         return FALSE;
     }
@@ -26,16 +30,23 @@ BOOL JmpMessageSender::fn_800EA900(Koga::ToolData* pData) {
     return true;
 }
 
-BOOL JmpMessageSender::fn_800EA958(Koga::ToolData* pData) {
-    Koga::ToolData* newData;
-    Koga::ToolData* maxData = _CBC.mArr[_CBC.mArraySize];
+BOOL JmpMessageSender::remove(Koga::ToolData* pData) {
+    Koga::ToolData** newData;
+    Koga::ToolData** maxData = &_CBC.mArr[_CBC.mArraySize];
 
-    for (newData = _CBC.mArr[0]; newData != maxData && newData != pData; newData++) { }
+    for (newData = _CBC.mArr; newData != maxData && *newData != pData; newData++) {}
 
-    if (newData == _CBC.getMaxMember())  {
-         return 0;
+    bool removed = false;
+    if (newData == maxData) {
+        removed = true;
+    } else {
+        _CBC.removeJmp(newData);
+        removed = false;
     }
-    else if (_CBC.fn_800EBBA8(newData) == nullptr) return 0;
+
+    if (!removed) {
+        return false;
+    }
 
     fn_800EB634(pData, 0, true);
     return true;
@@ -46,12 +57,12 @@ BOOL JmpMessageSender::fn_800EAA00(const char* param_1, int param_2) {
     for (newData = *_CBC.mArr; newData != _CBC.mArr[_CBC.mArraySize]; newData++) {
         s32 numEntries = newData->getDataEntryNum();
 
-        int codeNameCount = newData->searchItemInfo("Codename");
+        int codeNameCount = newData->searchItemInfo("CodeName");
 
         if (codeNameCount >= 0) {
             for (int i = 0; i < numEntries; i++) {
                 if (strcmp(newData->getStringValue(i, codeNameCount), param_1) == 0) {
-                    Koga::ToolData::JMapData* data = newData->getJMapData();
+                    const Koga::ToolData::JMapData* data = newData->getJMapData();
 
                     return vt_18(nullptr, (int)data, param_2);
                 }
@@ -74,14 +85,16 @@ void JmpMessageSender::vt_10() {
     fn_800EB528();
 }
 
+// https://decomp.me/scratch/ERI2l
 void JmpMessageSender::fn_800EB1DC() {
-    Koga::ToolData* newData;
+    Koga::ToolData** newData;
 
-    for (newData = _CBC.mArr[0]; newData != _CBC.mArr[_CBC.mArraySize]; newData++) {
-        fn_800EB634(newData, 0, false);
+    for (newData = _CBC.mArr; newData != &_CBC.mArr[_CBC.mArraySize]; newData++) {
+        fn_800EB634(*newData, 0, false);
     }
-    for (newData = _CBC.mArr[0]; newData != _CBC.mArr[_CBC.mArraySize]; newData++) {
-        fn_800EB634(newData, 1, false);
+
+    for (newData = _CBC.mArr; newData != &_CBC.mArr[_CBC.mArraySize]; newData++) {
+        fn_800EB634(*newData, 1, false);
     }
 }
 
@@ -114,33 +127,77 @@ void JmpMessageSender::fn_800EB5CC(u8* param_1) {
     }
 }
 
+// Need a few more functions decompiled to validate this and its name
 void JmpMessageSender::fn_800EB634(Koga::ToolData* pData, s32 param_2, bool param_3) {
     if (pData != nullptr) {
         s32 posX = pData->searchItemInfo("pos_x");
         s32 posY = pData->searchItemInfo("pos_y");
         s32 posZ = pData->searchItemInfo("pos_z");
-        s32 appearFlag = pData->searchItemInfo("appear_flag");
-        s32 disappearFlag = pData->searchItemInfo("disappear_flag");
-        s32 eventSetNo = pData->searchItemInfo("event_set_no");
+        s32 appearFlagIdx = pData->searchItemInfo("appear_flag");
+        s32 disappearFlagIdx = pData->searchItemInfo("disappear_flag");
+        s32 eventSetNoIdx = pData->searchItemInfo("event_set_no");
         s32 stay = pData->searchItemInfo("stay");
 
-        s32 local_6C = posX * 12;
-
         for (int i = 0; i < pData->getDataEntryNum(); i++) {
+            JGeometry::TVec3f eventPos;
+            eventPos.x = pData->getFloatValue(i, posX);
+            eventPos.y = pData->getFloatValue(i, posY);
+            eventPos.z = pData->getFloatValue(i, posZ);
+            //fn_80017ADC(eventPos, -1);
+
+            u32 appearFlagNo = 0;
+            u32 disappearFlagNo = 0;
+            u32 event_no_value = 0;
+            bool shouldEventRun = true; //there may be a better name, unsure currently.
+            bool appearFlagVal = true;
+            bool disappearFlagVal = true;
+            
+            if (appearFlagIdx > -1) {
+                appearFlagNo = pData->getExpectedUnsignedValue(i, appearFlagIdx);
+            }
+
+            if (disappearFlagIdx > -1) {
+                disappearFlagNo = pData->getExpectedUnsignedValue(i, disappearFlagIdx);
+            }
+
+            if (eventSetNoIdx > -1) {
+                event_no_value = pData->getExpectedUnsignedValue(i, eventSetNoIdx);
+            }
+
+            if (event_no_value == 0) {
+                shouldEventRun = false;
+            }
+            else {
+                // shouldEventRun = fn_8002B4B8((int)(short)event_no_val) // may not return a direct bool though, unsure
+            }
+
+            // If Event should always appear
+            if (appearFlagNo == 0) {
+                appearFlagVal = true;
+            } else {
+                appearFlagVal = getFlagValue(static_cast<u8>(appearFlagNo));
+            }
+
+            // If Event should never appear
+            if (disappearFlagNo == 0) {
+                disappearFlagVal = false;
+            } else {
+                disappearFlagVal = getFlagValue(static_cast<u8>(disappearFlagNo));
+            }
+
 
         }
         //s32
     }
 }
 
-Koga::ToolData* unkJmpMessageSender2::fn_800EBBA8(Koga::ToolData* pData) {
-    u32 val = (int)mArr[mArraySize - (int)pData];
-
-    if (val > 0) {
-        Koga::ToolData* curToolData = pData;
-
-        for (; curToolData->getJMapData() != mArr[mArraySize]->getJMapData(); curToolData = mArr[mArraySize]) {
-            curToolData->setJMapData(mArr[mArraySize]->getJMapData());
+Koga::ToolData** JmpToolList::removeJmp(Koga::ToolData** pData) {
+    if (&mArr[mArraySize] - pData - 1 > 0) {
+        Koga::ToolData** curr = pData;
+        
+        while (curr + 1 != &mArr[mArraySize]) {
+            *curr = *(curr + 1);
+            curr++;
         }
     }
 

@@ -26,13 +26,12 @@ public:
     /* 0xC80 */ s32 _C80;
 };
 
-class unkJmpMessageSender2 : public Koga::Array<Koga::ToolData*, 10> {
+class JmpToolList : public Koga::Array<Koga::ToolData*, 10> {
 public:
-    unkJmpMessageSender2() { }
-    ~unkJmpMessageSender2() { }
+    JmpToolList() { }
+    ~JmpToolList() { }
     void add(Koga::ToolData** member) { Koga::Array<Koga::ToolData*, 10>::add(member); }
-
-    Koga::ToolData* fn_800EBBA8(Koga::ToolData*);
+    Koga::ToolData** removeJmp(Koga::ToolData**);
 };
 
 class JmpMessageSender : public MessageSender, public JORReflexible {
@@ -44,8 +43,8 @@ public:
     /* 0x0C */ virtual void vt_0C();
     /* 0x10 */ virtual void vt_10();
 
-    BOOL fn_800EA900(Koga::ToolData* pData);
-    BOOL fn_800EA958(Koga::ToolData* pData);
+    BOOL add(Koga::ToolData* pData);
+    BOOL remove(Koga::ToolData* pData);
 
     void fn_800EB634(Koga::ToolData*, s32, bool);
     BOOL fn_800EAA00(const char*, int);
@@ -59,7 +58,7 @@ public:
 
 public:
     /* 0x038 */ unkJmpMessageSender1Arr _38;
-    /* 0xCBC */ unkJmpMessageSender2 _CBC;
+    /* 0xCBC */ JmpToolList _CBC;
     /* 0xCE8 */ u8 _CE8;
     /* 0xCE8 */ u8 _CE9[262];
 };

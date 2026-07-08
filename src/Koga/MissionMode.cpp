@@ -94,12 +94,12 @@ namespace Koga {
             }
             delete jmpFile;
         }
-        mJmpMsgSender->fn_800EA900(getMapSectionData("ObjInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("CharacterInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("KeyInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("GeneratorInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("EnemyInfo"));
-        mJmpMsgSender->fn_800EA900(getMapSectionData("ObserverInfo"));
+        mJmpMsgSender->add(getJmpResource("ObjInfo"));
+        mJmpMsgSender->add(getJmpResource("CharacterInfo"));
+        mJmpMsgSender->add(getJmpResource("KeyInfo"));
+        mJmpMsgSender->add(getJmpResource("GeneratorInfo"));
+        mJmpMsgSender->add(getJmpResource("EnemyInfo"));
+        mJmpMsgSender->add(getJmpResource("ObserverInfo"));
 
         mJmpMsgSender->addReceiver(mEnMgr);
     }
@@ -119,27 +119,27 @@ namespace Koga {
     // Toggles the loaded JMP tables between their blackout mode variants
     void MissionMode::toggleBlackoutTables(Mission mission) {
         switch (mission) {
-        case MISSION_BLACKOUT:
-            mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenEnemyInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenCharacterInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenObserverInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("TeidenKeyInfo"));
-
-            mJmpMsgSender->fn_800EA900(getMapSectionData("EnemyInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("CharacterInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("ObserverInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("KeyInfo"));
-            break;
         case MISSION_DEFAULT:
-            mJmpMsgSender->fn_800EA958(getMapSectionData("EnemyInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("CharacterInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("ObserverInfo"));
-            mJmpMsgSender->fn_800EA958(getMapSectionData("KeyInfo"));
+            mJmpMsgSender->remove(getJmpResource("TeidenEnemyInfo"));
+            mJmpMsgSender->remove(getJmpResource("TeidenCharacterInfo"));
+            mJmpMsgSender->remove(getJmpResource("TeidenObserverInfo"));
+            mJmpMsgSender->remove(getJmpResource("TeidenKeyInfo"));
 
-            mJmpMsgSender->fn_800EA900(getMapSectionData("TeidenEnemyInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("TeidenCharacterInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("TeidenObserverInfo"));
-            mJmpMsgSender->fn_800EA900(getMapSectionData("TeidenKeyInfo"));
+            mJmpMsgSender->add(getJmpResource("EnemyInfo"));
+            mJmpMsgSender->add(getJmpResource("CharacterInfo"));
+            mJmpMsgSender->add(getJmpResource("ObserverInfo"));
+            mJmpMsgSender->add(getJmpResource("KeyInfo"));
+            break;
+        case MISSION_BLACKOUT:
+            mJmpMsgSender->remove(getJmpResource("EnemyInfo"));
+            mJmpMsgSender->remove(getJmpResource("CharacterInfo"));
+            mJmpMsgSender->remove(getJmpResource("ObserverInfo"));
+            mJmpMsgSender->remove(getJmpResource("KeyInfo"));
+
+            mJmpMsgSender->add(getJmpResource("TeidenEnemyInfo"));
+            mJmpMsgSender->add(getJmpResource("TeidenCharacterInfo"));
+            mJmpMsgSender->add(getJmpResource("TeidenObserverInfo"));
+            mJmpMsgSender->add(getJmpResource("TeidenKeyInfo"));
             break;
         }
         mJmpMsgSender->vt_10();
@@ -155,7 +155,7 @@ namespace Koga {
 
 
     //https://decomp.me/scratch/FshSz
-    ToolData* MissionMode::getMapSectionData(const char* pName) {
+    ToolData* MissionMode::getJmpResource(const char* pName) {
         ToolData jmpToolData;
         jmpToolData.attach((ToolData::JMapData*)mMapArchive->getResource('JMP ', pName));
         ToolData* mapData = &mMapData[0];

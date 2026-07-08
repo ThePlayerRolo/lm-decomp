@@ -18,8 +18,8 @@ namespace Koga {
     public:
         /* TODO: Maybe change the name? */
         enum Mission {
-            MISSION_BLACKOUT,
             MISSION_DEFAULT,
+            MISSION_BLACKOUT,
         };
 
         MissionMode();
@@ -40,7 +40,7 @@ namespace Koga {
         void addJmpReceiver(void* pReceiver);
         void* getMapArchiveResource(const char* name, u32 type);
 
-        ToolData* getMapSectionData(const char* pName);
+        ToolData* getJmpResource(const char* pName);
 
         inline EnManager* getEnManager() { return mEnMgr; }
         inline EnemyGenManager* getEnemyGenManager() { return mEnGenMgr; }
