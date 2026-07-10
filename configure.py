@@ -759,7 +759,8 @@ config.libs = [
         Object(NonMatching, "Koga/EnManager.cpp"),
 
         # Unsorted
-        Object(Matching, "Unsorted/staticData.cpp"),  # TODO Verify this is a seperate file
+        Object(NonMatching, "Unsorted/bootScene.cpp"),
+        Object(NonMatching, "Unsorted/TitleScene.cpp"),
         Object(NonMatching, "Unsorted/LMDvdFile.cpp"),
         Object(NonMatching, "Unsorted/InGameFlagsUtil.cpp"),
         Object(NonMatching, "Unsorted/80006DF0.cpp"),
@@ -768,6 +769,8 @@ config.libs = [
         Object(NonMatching, "Unsorted/80005EB8.cpp"),
         Object(NonMatching, "Unsorted/RailInfoUtil.cpp"),
         Object(NonMatching, "Unsorted/800627D8.cpp"),
+        Object(NonMatching, "Unsorted/LMDisplayUtil.cpp"),
+        Object(NonMatching, "Unsorted/RailInfoUtil.cpp")
     ]),
 ]
 

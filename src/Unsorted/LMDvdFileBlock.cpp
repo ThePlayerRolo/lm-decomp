@@ -1,6 +1,6 @@
 #include "Unsorted/LMDvdFileBlock.hpp"
 
-s32 LMDvdFileInfoBlock::fn_800071C0() {
+s32 LMDvdFileInfoBlock::size() {
     return mLength + 0x1F & 0xFFFFFFE0;
 }
 

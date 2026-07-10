@@ -23,9 +23,6 @@ Unsorted/LMDvdFile.cpp:
 	.bss        start:0x8039AC38 end:0x8039CE60
 	.sbss       start:0x804D8028 end:0x804D8030
 
-Unsorted/staticData.cpp:
-	.data       start:0x8021E000 end:0x802FB380
-
 Unsorted/80006DF0.cpp:
 	.text       start:0x80006DF0 end:0x80007018
 	.bss        start:0x8039CE60 end:0x8039F2A0
@@ -36,6 +33,33 @@ Unsorted/80007018.cpp:
 
 Unsorted/LMDvdFileBlock.cpp:
 	.text       start:0x800071C0 end:0x80007398
+
+Unsorted/LMDisplayUtil.cpp:
+	.text       start:0x80007398 end:0x80008418
+	.ctors      start:0x8020BAC4 end:0x8020BAC8
+	.data       start:0x802181D0 end:0x8021DA80
+	.bss        start:0x803A3600 end:0x803A3810
+	.sdata      start:0x804CFF70 end:0x804CFF84
+	.sbss       start:0x804D8030 end:0x804D8078
+	.sdata2     start:0x804D9880 end:0x804D98A8
+
+Unsorted/aramStaticData.cpp:
+	.bss        start:0x803D34C8 end:0x803D3540
+
+Unsorted/bootScene.cpp:
+	.text       start:0x8000E46C end:0x8000EC98
+	.data       start:0x8021DFC0 end:0x802FF0A8
+	.sdata      start:0x804CFFB0 end:0x804CFFB8
+	.sbss       start:0x804D8110 end:0x804D8130
+	.sdata2     start:0x804D9A08 end:0x804D9A20
+
+Unsorted/TitleScene.cpp:
+	.text       start:0x8000EC98 end:0x8000EF58
+	.data       start:0x802FF0A8 end:0x802FF0D0
+
+Unsorted/TitleScreenPane.cpp:
+	.text       start:0x8003A430 end:0x8003AF2C
+	.ctors      start:0x8020BAEC end:0x8020BAF0
 
 Unsorted/800627D8.cpp:
 	.text       start:0x800627D0 end:0x800627E8

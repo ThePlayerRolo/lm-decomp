@@ -51,6 +51,8 @@ u32 OSGetVideoMode();
 void OSSetVideoMode(u32 mode);
 u8 OSGetLanguage();
 void OSSetLanguage(u8 language);
+u32 OSGetProgressiveMode();
+void OSSetProgressiveMode(u32 mode);
 
 #ifdef __cplusplus
 }

@@ -84,6 +84,13 @@ public:
 		MAINSTICK_RIGHT = 0x2000000,
 		MAINSTICK_DOWN  = 0x4000000,
 		MAINSTICK_UP    = 0x8000000,
+
+		PRESS_DPAD = (DPAD_LEFT | DPAD_RIGHT | DPAD_DOWN | DPAD_UP),
+
+		PRESS_LEFT  = (DPAD_LEFT | MAINSTICK_LEFT),
+		PRESS_RIGHT = (DPAD_RIGHT | MAINSTICK_RIGHT),
+		PRESS_DOWN  = (DPAD_DOWN | MAINSTICK_DOWN),
+		PRESS_UP    = (DPAD_UP | MAINSTICK_UP),
 	};
 
 	JUTGamePad(JUTGamePad::EPadPort port);
@@ -138,7 +145,8 @@ public:
 	JUTGamePadRecord* getPadRecord() const { return mPadRecord; }
 
 	u32 testTrigger(u32 button) const { return mButton.mTrigger & button; }
-
+	u32 testButton(u32 button) const { return mButton.mButton & button; }
+	u32 testRepeat(u32 button) const { return mButton.mRepeat & button; }
 
 	void stopMotorWave() { mRumble.stopPatternedRumbleAtThePeriod(); }
 	void stopMotor() { mRumble.stopMotor(mPortNum); }

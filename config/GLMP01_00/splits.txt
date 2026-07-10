@@ -12,5 +12,5 @@ Sections:
 	.sbss       type:bss align:32
 	.sdata2     type:rodata align:32
 
-Unsorted/staticData.cpp:
+Unsorted/bootScene.cpp:
 	.data       start:0x80223160 end:0x80303FC0

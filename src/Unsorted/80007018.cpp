@@ -26,8 +26,8 @@ void fn_80007040(DvdThread2Callback cb) {
     OSSendMessage(&sDvdThread2._310, nullptr, OS_MESSAGE_NOBLOCK);
 }
 
-void fn_80007090() {
-    OSReceiveMessage(&sDvdThread2._334, nullptr, OS_MESSAGE_NOBLOCK);
+int fn_80007090() {
+    return OSReceiveMessage(&sDvdThread2._334, nullptr, OS_MESSAGE_NOBLOCK);
 }
 
 static void* createThreadCallback(void*) {
