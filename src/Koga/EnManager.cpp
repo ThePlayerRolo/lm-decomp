@@ -44,8 +44,8 @@ namespace Koga {
             AppearPointSlot* appearPoint = &_E08[j];
             unkEnCharacter* temp4 = fn_800E5A14(nullptr);
             currElm->fn_800E9A0C(temp4);
-            // Fabricated line to avoid some angry error
-            appearPoint->_0 = reinterpret_cast<int>(currElm->fn_800E9C5C()); // also gets _38 from this?;
+            void* someObj = currElm->fn_800E9C5C();
+            //appearPoint->_0 = someObj->_38; // also gets _38 from this?;
             fn_800BF8B8(currElm->_0, appearPoint->mCharacter.getToolData(), appearPoint->mCharacter.getEntryIndex());
             currElm->fn_800E9CDC();
         }
@@ -148,7 +148,8 @@ namespace Koga {
         FORCE_DONT_INLINE;
         if (_E44 != 0) {
             // This probably pulls 0x0 from whatever object this is
-            return reinterpret_cast<JGeometry::TVec3f*>(fn_800AD39C(param_1));
+            void* someObj = fn_800AD39C(param_1);
+            //return someObj->_0; // At least, thats what it looks like?
         }
 
         return &_E08[param_1].mPosition;
@@ -157,8 +158,8 @@ namespace Koga {
     u32 Koga::EnManager::fn_800E55AC(s32 param_1) {
         FORCE_DONT_INLINE;
         if (_E44 != 0) {
-            // This probably pulls 0x24 from whatever object this is
-            return reinterpret_cast<u32>(fn_800AD39C(param_1));
+            void* someObj = fn_800AD39C(param_1);
+            //return someObj->_24; // This probably pulls 0x24 from whatever object this is
         }
 
         return _E08[param_1]._18;
@@ -170,10 +171,10 @@ namespace Koga {
 
     // Based on ObjDiff, this seems to do some copy constructor stuff but the TVec3f struct seems to give me a lot of issues in this class
     // Also no-inline temproarily because it spills into the other function.
-    s32 EnManager::fn_800E5660(JGeometry::TVec3f* param_1, JGeometry::TVec3f* out, f32 param_2) {
+    s32 EnManager::fn_800E5660(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* out, f32 param_2) {
         FORCE_DONT_INLINE;
         JGeometry::TVec3f localOut;
-        s32 result = fn_800E5784(param_1, &localOut);
+        s32 result = fn_800E5784(pParam_1, &localOut);
 
         if (out != nullptr) {
             *out = localOut;
@@ -186,7 +187,7 @@ namespace Koga {
         return -1;
     }
 
-    s32 EnManager::fn_800E5784(JGeometry::TVec3f* param_1, JGeometry::TVec3f* out) {
+    s32 EnManager::fn_800E5784(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* out) {
         int returnVal = -1;
         int maxAppear = getMaxAppearSlotIndex();
         f32 lowVal = MAX_FLOAT;
@@ -198,15 +199,16 @@ namespace Koga {
         for (int i = 0; i < maxAppear; i++) {
             JGeometry::TVec3f* tVar;
             if (_E44 != 0) {
-                // This probably pulls from 0x0 offset of whatever object this returns
-                tVar = reinterpret_cast<JGeometry::TVec3f*>(fn_800AD39C(i));
+            // This probably pulls 0x0 from whatever object this is
+            void* someObj = fn_800AD39C(i);
+            //tVar = someObj->_0; // At least thats what it looks like
             } else {
                 AppearPointSlot* tempVar = &_E08[i];
                 tVar = &tempVar->mPosition;
             }
 
             JGeometry::TVec3f localOut;
-            PSVECSubtract(tVar, param_1, &localOut);
+            PSVECSubtract(tVar, pParam_1, &localOut);
             f32 localMag = VECMag(localOut);
 
             if (localMag < lowVal) {
@@ -244,12 +246,12 @@ namespace Koga {
         temp[param_1].fn_800E9B44();
     }
 
-    void EnManager::fn_800E5E78(const char* param_1) {
+    void EnManager::fn_800E5E78(const char* pCreateName) {
         unkEnManager2* it = _804.mArr;
         unkEnManager1* end = &_4[0x80];
 
         while (it != &_804.mArr[_804.mArraySize]) {
-            if (strcmp(it->getCreateName(), param_1) != 0) {
+            if (strcmp(it->getCreateName(), pCreateName) != 0) {
                 it++;
                 continue;
             }
@@ -289,8 +291,8 @@ unkEnManager2::unkEnManager2() {
     _8 = -1;
 }
 
-unkEnManager2::unkEnManager2(const ToolDataRef& pDest) {
-    mCharacter = pDest;
+unkEnManager2::unkEnManager2(const ToolDataRef& rDest) {
+    mCharacter = rDest;
     _8 = fn_800DABA4(mCharacter);
 }
 
@@ -319,14 +321,14 @@ ToolDataRef unkEnManager2::fn_800E6134() const {
     return mCharacter;
 }
 
-void AppearPointSlot::init(JGeometry::TVec3f* pos, Koga::ToolData* pCharInfo, int entryIndex) {
+void AppearPointSlot::init(JGeometry::TVec3f* pPos, Koga::ToolData* pCharInfo, int entryIndex) {
     mCharacter.setToolData(pCharInfo);
     mCharacter.setEntryIndex(entryIndex);
-    mPosition = *pos;
+    mPosition = *pPos;
 }
 
-void AppearPointSlot::fn_800E616C(JGeometry::TVec3f* pos) {
-    _18 = fn_80017ADC(*pos, -1);
+void AppearPointSlot::fn_800E616C(JGeometry::TVec3f* pParam_1) {
+    _18 = fn_80017ADC(*pParam_1, -1);
 }
 
 unkEnManager1::unkEnManager1() {
@@ -435,16 +437,16 @@ ToolDataRef ToolDataRef::fn_800E8658(s32 param_1, s32 param_2, s32 param_3) {
     return ToolDataRef::findInfoTableName(itemName);;
 }
 
-ToolDataRef::ToolDataRef(const ToolDataRef* src) {
-    setToolData(src->mToolData);
-    setEntryIndex(src->mEntryIndex);
+ToolDataRef::ToolDataRef(const ToolDataRef* pSrc) {
+    setToolData(pSrc->mToolData);
+    setEntryIndex(pSrc->mEntryIndex);
 }
 
-ToolDataRef ToolDataRef::findInfoTableName(const char* name) {
+ToolDataRef ToolDataRef::findInfoTableName(const char* pName) {
     ToolDataRef temp;
     Koga::ToolData* itemInfo = Koga::GameModeUtil::getJmpResource("iteminfotable");
     int fieldIndex = itemInfo->searchItemInfo("name");
-    int charFound = itemInfo->findEntryByValue(fieldIndex, name, 0);
+    int charFound = itemInfo->findEntryByValue(fieldIndex, pName, 0);
 
     if (charFound == -1) {
         temp.setToolData(nullptr);
@@ -502,7 +504,7 @@ namespace Koga {
         return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E55AC(appearSlotIndex);
     }
 
-    BOOL EnManager::fn_800E95C0(s32 expectedPoint, JGeometry::TVec3f* param_1, u16* param_2) {
+    BOOL EnManager::fn_800E95C0(s32 expectedPoint, JGeometry::TVec3f* pParam_1, u16* out) {
         ToolDataRef appearEntry = Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5488(expectedPoint);
         ToolData* pCharInfo = appearEntry.getToolData();
         s32 entryIndex = appearEntry.getEntryIndex();
@@ -516,29 +518,29 @@ namespace Koga {
             return false;
         }
         
-        pCharInfo->getValue(entryIndex, "pos_x", &param_1->x);
-        pCharInfo->getValue(entryIndex, "pos_y", &param_1->y);
-        pCharInfo->getValue(entryIndex, "pos_z", &param_1->z);
+        pCharInfo->getValue(entryIndex, "pos_x", &pParam_1->x);
+        pCharInfo->getValue(entryIndex, "pos_y", &pParam_1->y);
+        pCharInfo->getValue(entryIndex, "pos_z", &pParam_1->z);
 
-        if (param_2 != nullptr) {
+        if (out != nullptr) {
             u32 dir = 0;
             pCharInfo->getValue(entryIndex, "dir_y", &dir);
-            *param_2 = dir;
+            *out = dir;
         }
 
         return true;
     }
 
-    s32 EnManager::fn_800E96B8(JGeometry::TVec3f* param_1, JGeometry::TVec3f* param_2, f32 param_3) {
-        return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5660(param_1, param_2, param_3);
+    s32 EnManager::fn_800E96B8(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* pParam_2, f32 param_3) {
+        return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5660(pParam_1, pParam_2, param_3);
     }
 
-    s32 EnManager::fn_800E96E8(JGeometry::TVec3f* param_1, JGeometry::TVec3f* param_2) {
-        return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E56E4(param_1, param_2);
+    s32 EnManager::fn_800E96E8(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* pParam_2) {
+        return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E56E4(pParam_1, pParam_2);
     }
 
-    s32 EnManager::fn_800E971C(JGeometry::TVec3f* param_1, JGeometry::TVec3f* param_2) {
-        return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5784(param_1, param_2);
+    s32 EnManager::fn_800E971C(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* pParam_2) {
+        return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5784(pParam_1, pParam_2);
     }
 
     void* EnManager::fn_800E9750(s32 param_1) {
@@ -560,9 +562,9 @@ unkEnManager1::~unkEnManager1() {
     }
 }
 
-void unkEnManager1::fn_800E9A0C(void* param_1) {
-    _0 = reinterpret_cast<unkEnCharacter*>(param_1);
-    // _8 = fn_800DAC84(param_1); // This should be getting the 0x808 offset of param_1, then a secondary 0x3C offset?
+void unkEnManager1::fn_800E9A0C(void* pParam_1) {
+    //_0 = pParam_1; // It could just be a pointer to an unkEnCharacter object?
+    // _8 = fn_800DAC84(pParam_1); // This should be getting the 0x808 offset of param_1, then a secondary 0x3C offset?
     mState = INACTIVE_CHARSTATE;
     _C = 0;
 }
