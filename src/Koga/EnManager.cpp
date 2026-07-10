@@ -14,12 +14,14 @@
 
 namespace Koga {
 
+    // https://decomp.me/scratch/fWEep
     EnManager::EnManager() : mInfoTable(nullptr) {
         _E44 = 0;
         _804.mArraySize = 0;
         mInfoTable = new ToolData();
     }
 
+    // https://decomp.me/scratch/FXGcc
     EnManager::~EnManager() {
         delete mInfoTable;
     }
@@ -30,6 +32,7 @@ namespace Koga {
         EnManager::fn_800E52BC(mInfoTable);
     }
 
+    // https://decomp.me/scratch/maIlk
     void EnManager::fn_800E46C0() {
         _E44 = 1;
         s32 maxPoint = getMaxAppearSlotIndex();
@@ -110,6 +113,7 @@ namespace Koga {
         }
     }
 
+    // https://decomp.me/scratch/9kvCn
     ToolDataRef EnManager::fn_800E5488(s32 expectedIndex) {
         ToolDataRef out;
         ToolData* pChar = mInfoTable;
@@ -144,6 +148,7 @@ namespace Koga {
         return out;
     }
 
+    // https://decomp.me/scratch/Ztuvi
     JGeometry::TVec3f* EnManager::fn_800E5564(s32 param_1) {
         FORCE_DONT_INLINE;
         if (_E44 != 0) {
@@ -155,6 +160,7 @@ namespace Koga {
         return &_E08[param_1].mPosition;
     }
 
+    // https://decomp.me/scratch/cBw99
     u32 Koga::EnManager::fn_800E55AC(s32 param_1) {
         FORCE_DONT_INLINE;
         if (_E44 != 0) {
@@ -187,6 +193,7 @@ namespace Koga {
         return -1;
     }
 
+    // https://decomp.me/scratch/AfFrv
     s32 EnManager::fn_800E5784(JGeometry::TVec3f* pParam_1, JGeometry::TVec3f* out) {
         int returnVal = -1;
         int maxAppear = getMaxAppearSlotIndex();
@@ -223,6 +230,7 @@ namespace Koga {
         return returnVal;
     }
 
+    // https://decomp.me/scratch/shICK
     s32 EnManager::fn_800E5868(s32 param_1, s32 param_2) {
         FORCE_DONT_INLINE;
         unkEnManager1* temp = fn_800E58D4(param_1, nullptr, -1);
@@ -236,16 +244,19 @@ namespace Koga {
         //return tempObj->_38;
     }
 
+    // https://decomp.me/scratch/cYSVu
     void EnManager::fn_800E59D4(s32 idx) {
         unkEnManager1* temp = _4;
         temp[idx].fn_800E9ACC();
     }
 
+    // https://decomp.me/scratch/fm1ig
     void EnManager::fn_800E5ABC(s32 param_1) {
         unkEnManager1* temp = _4;
         temp[param_1].fn_800E9B44();
     }
 
+    // https://decomp.me/scratch/3EURE
     void EnManager::fn_800E5E78(const char* pCreateName) {
         unkEnManager2* it = _804.mArr;
         unkEnManager1* end = &_4[0x80];
@@ -291,11 +302,13 @@ unkEnManager2::unkEnManager2() {
     _8 = -1;
 }
 
+// https://decomp.me/scratch/IqD70
 unkEnManager2::unkEnManager2(const ToolDataRef& rDest) {
     mCharacter = rDest;
     _8 = fn_800DABA4(mCharacter);
 }
 
+// https://decomp.me/scratch/6sXfk
 u32 unkEnManager2::fn_800E601C() {
     JGeometry::TVec3f pos;
 
@@ -306,6 +319,7 @@ u32 unkEnManager2::fn_800E601C() {
     return fn_80017ADC(pos, -1);
 }
 
+// https://decomp.me/scratch/cfVnh
 const char* unkEnManager2::getCreateName() {
     const ToolDataRef vRef = fn_800E6134();
     const char* create_name;
@@ -317,6 +331,7 @@ const char* unkEnManager2::getCreateName() {
     return create_name;
 }
 
+// https://decomp.me/scratch/bq3Q2
 ToolDataRef unkEnManager2::fn_800E6134() const {
     return mCharacter;
 }
@@ -341,6 +356,7 @@ unkEnManager3::unkEnManager3() {}
 
 unkEnManager3::~unkEnManager3() {}
 
+// https://decomp.me/scratch/vwGnl
 void unkEnManager3::add(unkEnManager2* param_1) {
     add(param_1);
 }
@@ -350,6 +366,7 @@ unkEnManager2* unkEnManager3::remove(unkEnManager2* pStartElm) {
 }
 
 // Does not match due to some ToolData inline shenanigans. Seems to match more as a u32 input though than u8
+// https://decomp.me/scratch/PdZKG
 ToolDataRef ToolDataRef::fn_800E82D8(u32 param_1) {
     ToolDataRef vRef;
     if (param_1 == -1) {
@@ -376,6 +393,7 @@ ToolDataRef ToolDataRef::fn_800E82D8(u32 param_1) {
 
 
 // Does not match due to some ToolData inline shenanigans
+// https://decomp.me/scratch/iXsZ8
 ToolDataRef ToolDataRef::fn_800E84CC(s32 param_1) {
     ToolDataRef vRef;
     Koga::ToolData* itemAppear = Koga::GameModeUtil::getJmpResource("itemappeartable");
@@ -399,6 +417,7 @@ ToolDataRef ToolDataRef::fn_800E84CC(s32 param_1) {
     return vRef;
 }
 
+// https://decomp.me/scratch/mcYqn
 ToolDataRef ToolDataRef::fn_800E8658(s32 param_1, s32 param_2, s32 param_3) {
     ToolDataRef tmp;
     Koga::ToolData* itemFishing = Koga::GameModeUtil::getJmpResource("itemfishingtable");
@@ -442,6 +461,7 @@ ToolDataRef::ToolDataRef(const ToolDataRef* pSrc) {
     setEntryIndex(pSrc->mEntryIndex);
 }
 
+// https://decomp.me/scratch/qYZ9J
 ToolDataRef ToolDataRef::findInfoTableName(const char* pName) {
     ToolDataRef temp;
     Koga::ToolData* itemInfo = Koga::GameModeUtil::getJmpResource("iteminfotable");
@@ -460,6 +480,7 @@ ToolDataRef ToolDataRef::findInfoTableName(const char* pName) {
 }
 
 // Needed to match isNameValid/Money for now, otherwise it inlines this function.
+// https://decomp.me/scratch/JdML7
 const char* ToolDataRef::getName() {
     FORCE_DONT_INLINE;
     const char* name;
@@ -470,6 +491,8 @@ const char* ToolDataRef::getName() {
     return name;
 }
 
+// Matches except one instruction. Also depends on the getName above to not inline.
+// https://decomp.me/scratch/wZ68w
 const BOOL ToolDataRef::isNameValid() {
     BOOL nameValid = true;
 
@@ -482,6 +505,8 @@ const BOOL ToolDataRef::isNameValid() {
     return nameValid;
 }
 
+// Matches except one instruction. Also depends on the getName above to not inline.
+// https://decomp.me/scratch/WT1gF
 const BOOL ToolDataRef::isNameMoney() {
     BOOL nameValid = true;
 
@@ -496,14 +521,17 @@ const BOOL ToolDataRef::isNameMoney() {
  
 namespace Koga {
 
+    // Matches but underlying function gets inlined, causing no match currently.
     JGeometry::TVec3f* EnManager::fn_800E9568(s32 appearSlotIndex) {
         return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5564(appearSlotIndex);
     }
 
+    // Matches but underlying function gets inlined, causing no match currently.
     s32 EnManager::fn_800E9594(s32 appearSlotIndex) {
         return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E55AC(appearSlotIndex);
     }
 
+    // https://decomp.me/scratch/Zhrs6
     BOOL EnManager::fn_800E95C0(s32 expectedPoint, JGeometry::TVec3f* pParam_1, u16* out) {
         ToolDataRef appearEntry = Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5488(expectedPoint);
         ToolData* pCharInfo = appearEntry.getToolData();
@@ -551,17 +579,20 @@ namespace Koga {
         return Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5868(param_1, param_2);
     }
 
+    // https://decomp.me/scratch/fDI0r
     void EnManager::fn_800E97B0(s32 param_1) {
         Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E59D4(param_1);
     }
 }
 
+// https://decomp.me/scratch/LLh5c
 unkEnManager1::~unkEnManager1() {
     if (_0 != nullptr) {
         // Call some destructor through _0+0x804
     }
 }
 
+// https://decomp.me/scratch/EmrGG
 void unkEnManager1::fn_800E9A0C(void* pParam_1) {
     //_0 = pParam_1; // It could just be a pointer to an unkEnCharacter object?
     // _8 = fn_800DAC84(pParam_1); // This should be getting the 0x808 offset of param_1, then a secondary 0x3C offset?
@@ -569,6 +600,7 @@ void unkEnManager1::fn_800E9A0C(void* pParam_1) {
     _C = 0;
 }
 
+// https://decomp.me/scratch/IUVOm
 BOOL unkEnManager1::fn_800E9A58(u32) {
     mState = INACTIVE_CHARSTATE;
     _C = 0;
