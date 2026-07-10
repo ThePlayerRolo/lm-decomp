@@ -20,8 +20,6 @@ namespace Koga {
     class CharacterEvent;
 }
 
-const f32 MAX_FLOAT = 3.4028235E+38;
-
 // Fabricated name, subject to change
 class AppearPointSlot {
 public:

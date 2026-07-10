@@ -3,6 +3,7 @@
 
 #include <dolphin/macros.h>
 
+#define MAX_FLOAT 3.4028235E+38f;
 
 #define dummy_float_data() \
     static f32 dummy_float_data[6] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
