@@ -3,6 +3,7 @@
 
 #include <types.h>
 #include <JSystem/JORReflexible.hpp>
+#include <JSystem/JGeometry/JGVec3.hpp>
 
 // Very similar to https://github.com/doldecomp/sms/blob/main/include/MarioUtil/ToolData.hpp
 // But searchItemInfo() isn't inlined here, and there are more getValue*() variants.
@@ -124,5 +125,52 @@ public:
     };
 }
 
+// Fabricated, a better name probably would be worth looking into.
+// Defined in EnManager Split.
+class ToolDataRef {
+    public:
+        inline ToolDataRef() {}
+
+        inline Koga::ToolData* getToolData() { return mToolData; }
+        inline void setToolData(Koga::ToolData* pData) { mToolData = pData; }
+        inline s32 getEntryIndex() { return mEntryIndex; }
+        inline void setEntryIndex(s32 entryIndex) { mEntryIndex = entryIndex; }
+        
+        bool inline isValid() const { return (mToolData != nullptr && mEntryIndex >= 0); }
+
+        // currently un-used but could be useful based on some of the functions in this struct/class
+        // They could also have one for like checking if character name is nothing (its used a few times)
+        inline const char* getCharacterName() {
+            const char* charName;
+            if (isValid()) {
+                getToolData()->getValue(mEntryIndex, "character_name", &charName);
+            }
+
+            return charName;
+        }
+
+        void init(Koga::ToolData*, s32);
+        ToolDataRef(const ToolDataRef*);
+
+        static ToolDataRef findInfoTableName(const char*);
+        const char* getName();
+        void fn_800E8E0C(u8*);
+        s32 fn_800E8E78() const; // Probably uses an inline, see getCharacterName;
+        s32 fn_800E8EF4(JGeometry::TVec3f*, JGeometry::TVec3f*);
+        const BOOL isNameValid();
+        const BOOL isNameMoney();
+        const BOOL fn_800E9290(); // Something with character_name
+        const BOOL fn_800E9358(s32); // Something with character_name and OpenDoorNo
+        const BOOL fn_800E9464(); // Something with character_name and checking if getName is nothing.
+
+        // To be verified if static / part of this class (makes sense at least if they return ToolDataRef types)
+        static ToolDataRef fn_800E82D8(u32); // handles treasuretable spawning items in chests.
+        static ToolDataRef fn_800E84CC(s32); // handles itemappearing after defeating
+        static ToolDataRef fn_800E8658(s32, s32, s32); // handles itemfishing, which spawns as luigi continues to suck.
+
+    private:
+        /* 0x0 */ Koga::ToolData* mToolData;
+        /* 0x4 */ s32 mEntryIndex;
+};
 
 #endif

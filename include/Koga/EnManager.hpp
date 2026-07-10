@@ -6,6 +6,9 @@
 #include <JSystem/JORReflexible.hpp>
 
 #include "Koga/Message.hpp"
+#include "Koga/ToolData.hpp"
+
+
 class EnemyStrategy;
 class unkEnCharacter;
 class JKRArchive;
@@ -18,40 +21,6 @@ namespace Koga {
 }
 
 const f32 MAX_FLOAT = 3.4028235E+38;
-
-// Fabricated, a better name probably would be worth looking into.
-struct ToolDataRef {
-    inline ToolDataRef() {}
-
-    void init(Koga::ToolData*, s32);
-    ToolDataRef(const ToolDataRef*);
-
-    // Based on what little I investigation I have done with the VT functions
-    bool inline isValid() const { return (mInfoTable != nullptr && mEntryIndex >= 0); }
-
-    // currently un-used but could be useful based on some of the functions in this struct/class
-    // They could also have one for like checking if character name is nothing (its used a few times)
-    inline const char* getCharacterName();
-
-    static ToolDataRef findInfoTableName(const char*);
-    const char* getName();
-    void fn_800E8E0C(u8*);
-    s32 fn_800E8E78() const; // Probably uses an inline, see getCharacterName;
-    s32 fn_800E8EF4(JGeometry::TVec3f*, JGeometry::TVec3f*);
-    const BOOL isNameValid();
-    const BOOL isNameMoney();
-    const BOOL fn_800E9290(); // Something with character_name
-    const BOOL fn_800E9358(s32); // Something with character_name and OpenDoorNo
-    const BOOL fn_800E9464(); // Something with character_name and checking if getName is nothing.
-
-    // To be verified if static / part of this class (makes sense at least if they return ToolDataRef types)
-    static ToolDataRef fn_800E82D8(u32); // handles treasuretable spawning items in chests.
-    static ToolDataRef fn_800E84CC(s32); // handles itemappearing after defeating
-    static ToolDataRef fn_800E8658(s32, s32, s32); // handles itemfishing, which spawns as luigi continues to suck.
-
-    /* 0x0 */ Koga::ToolData* mInfoTable;
-    /* 0x4 */ s32 mEntryIndex;
-};
 
 // Fabricated name, subject to change or changed to a class instead
 struct AppearPointSlot {

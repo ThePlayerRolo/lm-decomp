@@ -5,19 +5,11 @@
 #include "Koga/MissionMode.hpp"
 #include "Unsorted/800627D8.hpp"
 #include "Unsorted/AssortedEnManager.hpp"
+#include "types.h"
 
 #include <JSystem/JKernel/JKRArchive.hpp>
 #include <dolphin/mtx.h>
 #include <string.h>
-
-const char* ToolDataRef::getCharacterName() {
-    const char* charName;
-    if (isValid()) {
-        mInfoTable->getValue(mEntryIndex, "character_name", &charName);
-    }
-
-    return charName;
-}
 
 
 namespace Koga {
@@ -54,7 +46,7 @@ namespace Koga {
             currElm->fn_800E9A0C(temp4);
             // Fabricated line to avoid some angry error
             appearPoint->_0 = reinterpret_cast<int>(currElm->fn_800E9C5C()); // also gets _38 from this?;
-            fn_800BF8B8(currElm->_0, appearPoint->mCharacter.mInfoTable, appearPoint->mCharacter.mEntryIndex);
+            fn_800BF8B8(currElm->_0, appearPoint->mCharacter.getToolData(), appearPoint->mCharacter.getEntryIndex());
             currElm->fn_800E9CDC();
         }
 
@@ -142,11 +134,11 @@ namespace Koga {
 
         ToolData* pCharFinal = mInfoTable;
         if (pCharFinal->getDataEntryNum() <= idx) {
-            out.mInfoTable = nullptr;
-            out.mEntryIndex = -1;
+            out.setToolData(nullptr);
+            out.setEntryIndex(-1);
         } else {
-            out.mInfoTable = pCharFinal;
-            out.mEntryIndex = idx;
+            out.setToolData(pCharFinal);
+            out.setEntryIndex(idx);
         }
 
         return out;
@@ -264,8 +256,8 @@ namespace Koga {
 
             // Some sort of missing struct missing here?
             s32 itEight = it->_8;
-            s32 entryIndex = it->mCharacter.mEntryIndex;
-            ToolData* charInfo = it->mCharacter.mInfoTable;
+            s32 entryIndex = it->mCharacter.getEntryIndex();
+            ToolData* charInfo = it->mCharacter.getToolData();
             s32 someVal = fn_800DAC84(itEight);
             unkEnManager1* p = &_4[0];
 
@@ -305,9 +297,9 @@ unkEnManager2::unkEnManager2(const ToolDataRef& pDest) {
 u32 unkEnManager2::fn_800E601C() {
     JGeometry::TVec3f pos;
 
-    mCharacter.mInfoTable->getValue(mCharacter.mEntryIndex, "pos_x", &pos.x);
-    mCharacter.mInfoTable->getValue(mCharacter.mEntryIndex, "pos_y", &pos.y);
-    mCharacter.mInfoTable->getValue(mCharacter.mEntryIndex, "pos_z", &pos.z);
+    mCharacter.getToolData()->getValue(mCharacter.getEntryIndex(), "pos_x", &pos.x);
+    mCharacter.getToolData()->getValue(mCharacter.getEntryIndex(), "pos_y", &pos.y);
+    mCharacter.getToolData()->getValue(mCharacter.getEntryIndex(), "pos_z", &pos.z);
 
     return fn_80017ADC(pos, -1);
 }
@@ -317,7 +309,7 @@ const char* unkEnManager2::getCreateName() {
     const char* create_name;
     
     if (vRef.isValid()) {
-        mCharacter.mInfoTable->getValue(mCharacter.mEntryIndex, "create_name", &create_name);
+        mCharacter.getToolData()->getValue(mCharacter.getEntryIndex(), "create_name", &create_name);
     }
 
     return create_name;
@@ -328,8 +320,8 @@ ToolDataRef unkEnManager2::fn_800E6134() const {
 }
 
 void AppearPointSlot::init(JGeometry::TVec3f* pos, Koga::ToolData* pCharInfo, int entryIndex) {
-    mCharacter.mInfoTable = pCharInfo;
-    mCharacter.mEntryIndex = entryIndex;
+    mCharacter.setToolData(pCharInfo);
+    mCharacter.setEntryIndex(entryIndex);
     mPosition = *pos;
 }
 
@@ -359,24 +351,24 @@ unkEnManager2* unkEnManager3::remove(unkEnManager2* pStartElm) {
 ToolDataRef ToolDataRef::fn_800E82D8(u32 param_1) {
     ToolDataRef vRef;
     if (param_1 == -1) {
-        vRef.mEntryIndex = -1;
+        vRef.setEntryIndex(-1);
         return vRef;
     }
 
     Koga::ToolData* treasureTable = Koga::GameModeUtil::getJmpResource("treasuretable");
     if (treasureTable == nullptr) {
-        vRef.mEntryIndex = -1;
+        vRef.setEntryIndex(-1);
         return vRef;
     }
 
     int roomNo = treasureTable->findEntryByValue(treasureTable->searchItemInfo("room"), param_1 & 0xFF, 0);
     if (roomNo == -1) {
-        vRef.mEntryIndex = -1;
+        vRef.setEntryIndex(-1);
         return vRef;
     }
 
-    vRef.mInfoTable = treasureTable;
-    vRef.mEntryIndex = roomNo;
+    vRef.setToolData(treasureTable);
+    vRef.setEntryIndex(roomNo);
     return vRef;
 }
 
@@ -387,15 +379,15 @@ ToolDataRef ToolDataRef::fn_800E84CC(s32 param_1) {
     Koga::ToolData* itemAppear = Koga::GameModeUtil::getJmpResource("itemappeartable");
     
     if (itemAppear == nullptr) {
-        vRef.mInfoTable = nullptr;
-        vRef.mEntryIndex = -1;
+        vRef.setToolData(nullptr);
+        vRef.setEntryIndex(-1);
         return ToolDataRef(&vRef);
     }
 
     int entryIdx = fn_800E85C8(param_1);
     if (entryIdx > itemAppear->getDataEntryNum()) {
-        vRef.mInfoTable = nullptr;
-        vRef.mEntryIndex = -1;
+        vRef.setToolData(nullptr);
+        vRef.setEntryIndex(-1);
         return ToolDataRef(&vRef);
     }
 
@@ -410,14 +402,14 @@ ToolDataRef ToolDataRef::fn_800E8658(s32 param_1, s32 param_2, s32 param_3) {
     Koga::ToolData* itemFishing = Koga::GameModeUtil::getJmpResource("itemfishingtable");
 
     if (itemFishing == nullptr) {
-        tmp.mInfoTable = nullptr;
-        tmp.mEntryIndex = -1;
+        tmp.setToolData(nullptr);
+        tmp.setEntryIndex(-1);
         return ToolDataRef(&tmp);
     }
 
     if (param_1 <= itemFishing->getDataEntryNum()) {
-        tmp.mInfoTable = nullptr;
-        tmp.mEntryIndex = -1;
+        tmp.setToolData(nullptr);
+        tmp.setEntryIndex(-1);
         return ToolDataRef(&tmp);
     }
 
@@ -435,8 +427,8 @@ ToolDataRef ToolDataRef::fn_800E8658(s32 param_1, s32 param_2, s32 param_3) {
 
     const char* itemName = itemFishing->getStringValue(param_2, param_3);
     if (strcmp(itemName, "-") == 0) {
-        tmp.mInfoTable = nullptr;
-        tmp.mEntryIndex = -1;
+        tmp.setToolData(nullptr);
+        tmp.setEntryIndex(-1);
         return ToolDataRef(&tmp); 
     }
 
@@ -444,8 +436,8 @@ ToolDataRef ToolDataRef::fn_800E8658(s32 param_1, s32 param_2, s32 param_3) {
 }
 
 ToolDataRef::ToolDataRef(const ToolDataRef* src) {
-    mInfoTable = src->mInfoTable;
-    mEntryIndex = src->mEntryIndex;
+    setToolData(src->mToolData);
+    setEntryIndex(src->mEntryIndex);
 }
 
 ToolDataRef ToolDataRef::findInfoTableName(const char* name) {
@@ -455,11 +447,11 @@ ToolDataRef ToolDataRef::findInfoTableName(const char* name) {
     int charFound = itemInfo->findEntryByValue(fieldIndex, name, 0);
 
     if (charFound == -1) {
-        temp.mInfoTable = nullptr;
-        temp.mEntryIndex = -1;
+        temp.setToolData(nullptr);
+        temp.setEntryIndex(-1);
     } else {
-        temp.mInfoTable = itemInfo;
-        temp.mEntryIndex = charFound;
+        temp.setToolData(itemInfo);
+        temp.setEntryIndex(charFound);
     }
 
     return temp;
@@ -471,7 +463,7 @@ const char* ToolDataRef::getName() {
     const char* name;
 
     if (isValid()) {
-        mInfoTable->getValue(mEntryIndex, "name", &name);
+        getToolData()->getValue(mEntryIndex, "name", &name);
     }
     return name;
 }
@@ -512,8 +504,8 @@ namespace Koga {
 
     BOOL EnManager::fn_800E95C0(s32 expectedPoint, JGeometry::TVec3f* param_1, u16* param_2) {
         ToolDataRef appearEntry = Koga::MissionMode::getMissionMode()->getEnManager()->fn_800E5488(expectedPoint);
-        ToolData* pCharInfo = appearEntry.mInfoTable;
-        s32 entryIndex = appearEntry.mEntryIndex;
+        ToolData* pCharInfo = appearEntry.getToolData();
+        s32 entryIndex = appearEntry.getEntryIndex();
         bool bPointFound = false;
 
         if (pCharInfo != nullptr && 0 <= entryIndex) { //if (appearEntry.isValid()) { 
