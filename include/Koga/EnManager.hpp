@@ -22,7 +22,7 @@ namespace Koga {
 
 const f32 MAX_FLOAT = 3.4028235E+38;
 
-// Fabricated name, subject to change or changed to a class instead
+// Fabricated name, subject to change
 class AppearPointSlot {
 public:
     void init(JGeometry::TVec3f*, Koga::ToolData*, int);
