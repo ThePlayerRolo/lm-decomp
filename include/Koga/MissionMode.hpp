@@ -28,7 +28,7 @@ namespace Koga {
         /* 0x08 */ virtual void vt_8(s16);
 
         /* 0x0C */ virtual void init();
-        /* 0x10 */ virtual void vt_10();
+        /* 0x10 */ virtual void loadEnemyInfo();
         /* 0x14 */ virtual void vt_14();
         /* 0x18 */ virtual void vt_18();
 

@@ -3,17 +3,17 @@
 
 TBaseParam::TBaseParam(TParams* params, const char* paramName,
                        unsigned short code)
-    : keyCode(code)
-    , name(paramName)
-    , next(nullptr)
+    : mHash(code)
+    , mName(paramName)
+    , mNext(nullptr)
 {
 	TBaseParam* root = params->mHead;
 	if (root != nullptr) {
 		TBaseParam* param = root;
-		while (param->next != nullptr) {
-			param = param->next;
+		while (param->mNext != nullptr) {
+			param = param->mNext;
 		}
-		param->next = this;
+		param->mNext = this;
 		return;
 	}
 
@@ -34,8 +34,8 @@ void TParams::load(JSUMemoryInputStream& stream)
 			stream.readString(buffer, 0x50);
 
 			TBaseParam* param;
-			for (param = mHead; param != nullptr; param = param->next) {
-				if (keyCode == param->keyCode && !strcmp(buffer, param->name)) {
+			for (param = mHead; param != nullptr; param = param->mNext) {
+				if (keyCode == param->mHash && !strcmp(buffer, param->mName)) {
 					param->load(stream);
 					break;
 				}

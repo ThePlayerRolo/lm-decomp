@@ -134,9 +134,13 @@ Sato/EnemyStrategy.cpp:
 	.sdata      start:0x804D2E60 end:0x804D2E78
 
 Koga/EnAttackBase.cpp:
-	.text       start:0x800CF63C end:0x800CF6A8
+	.text       start:0x800CF63C end:0x800CF854
+	.ctors      start:0x8020BBD8 end:0x8020BBDC
 	.data       start:0x80361E78 end:0x80361FA4
 	.sdata      start:0x804D3AF8 end:0x804D3B20
+
+Koga/EnTypesManager.cpp:
+	.text       start:0x800DA498 end:0x800DB168
 
 Koga/EnManager.cpp:
 	.text       start:0x800E4514 end:0x800E9DC8

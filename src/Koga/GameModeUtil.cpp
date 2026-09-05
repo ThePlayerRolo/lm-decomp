@@ -10,8 +10,8 @@ namespace Koga { namespace GameModeUtil {
         GameModeBase::sCurrentGameMode = MissionMode::create();
     }
 
-    void fn_800B9D40() {
-        GameModeBase::sCurrentGameMode->vt_10();
+    void curGameModeLoadEnemyInfo() {
+        GameModeBase::sCurrentGameMode->loadEnemyInfo();
     }
 
     void fn_800B9D70() {

@@ -13,9 +13,10 @@ public:
 	// Seems to be replaced by JDrama::TNameRef::calcKeyCode in SMS
 	static u16 calcKeyCode(const char* pFileName);
 
-	TBaseParam* next;
-	const char* name;
-    u16 keyCode;
+	/* 0x4 */ TBaseParam* mNext;
+	/* 0x8 */ const char* mName;
+    /* 0xC */ u16 mHash;
+	/* 0xE */ u16 mType;
 };
 
 #endif

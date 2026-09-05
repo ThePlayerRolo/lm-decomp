@@ -757,6 +757,7 @@ config.libs = [
         Object(NonMatching, "Koga/SimpleModeler.cpp"),
         Object(NonMatching, "Koga/CharacterColManager.cpp"),
         Object(NonMatching, "Koga/EnManager.cpp"),
+        Object(NonMatching, "Koga/EnTypesManager.cpp"),
 
         # Unsorted
         Object(NonMatching, "Unsorted/bootScene.cpp"),
