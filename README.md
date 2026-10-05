@@ -2,6 +2,7 @@ Luigi's Mansion
 [![Build Status]][actions] [![Code Progress_USA]][progress] [![Data Progress_USA]][progress][![Code Progress_JPN]][progress] [![Data Progress_JPN]][progress] [![Code Progress_PAL_00]][progress] [![Data Progress_PAL_00]][progress] [![Code Progress_PAL_01]][progress] [![Data Progress_PAL_01]][progress]
 =============
 
+Check out https://github.com/SomeJakeGuy/lm-decomp!
 [Build Status]: https://github.com/theplayerrolo/lm-decomp/actions/workflows/build.yml/badge.svg
 [actions]: https://github.com/theplayerrolo/lm-decomp/actions/workflows/build.yml
 
