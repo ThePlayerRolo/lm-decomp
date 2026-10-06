@@ -1,8 +1,6 @@
 Luigi's Mansion
 [![Build Status]][actions] [![Code Progress_USA]][progress] [![Data Progress_USA]][progress][![Code Progress_JPN]][progress] [![Data Progress_JPN]][progress] [![Code Progress_PAL_00]][progress] [![Data Progress_PAL_00]][progress] [![Code Progress_PAL_01]][progress] [![Data Progress_PAL_01]][progress]
 =============
-
-Check out https://github.com/SomeJakeGuy/lm-decomp!
 [Build Status]: https://github.com/theplayerrolo/lm-decomp/actions/workflows/build.yml/badge.svg
 [actions]: https://github.com/theplayerrolo/lm-decomp/actions/workflows/build.yml
 
@@ -16,6 +14,8 @@ Check out https://github.com/SomeJakeGuy/lm-decomp!
 [Data Progress_PAL_01]: https://decomp.dev/theplayerrolo/lm-decomp/GLMP01_01.svg?mode=shield&measure=data&label=PAL%20Rev%201%20Data
 [progress]: https://decomp.dev/theplayerrolo/lm-decomp
 
+
+**NOTE: This is outdated! Check out https://github.com/SomeJakeGuy/lm-decomp!**
 A work-in-progress decompilation of Luigi's Mansion.
 
 This repository does **not** contain any game assets or assembly whatsoever. An existing copy of the game is required.
