@@ -15,7 +15,7 @@ Luigi's Mansion
 [progress]: https://decomp.dev/theplayerrolo/lm-decomp
 
 
-**NOTE: This is outdated! Check out https://github.com/SomeJakeGuy/lm-decomp!** <br>
+##**NOTE: This is outdated! Check out https://github.com/SomeJakeGuy/lm-decomp!** <br>
 A work-in-progress decompilation of Luigi's Mansion.
 
 This repository does **not** contain any game assets or assembly whatsoever. An existing copy of the game is required.
